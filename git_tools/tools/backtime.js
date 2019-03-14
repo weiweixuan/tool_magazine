@@ -55,7 +55,7 @@ backTime.prototype = {
 function getDateTimeStamp(dateStr) {
     return Date.parse(dateStr.replace(/-/gi, "/"));
   }
-module.exports = {
+export default {
     backTime:backTime,
     getDateTimeStamp:getDateTimeStamp
 }
