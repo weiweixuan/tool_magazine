@@ -10,6 +10,41 @@
     <script>
          let str = 'dfjlkdgweiwerjwnvkfkfjlwekfjwleiewnfwfiwjliwjflwfjipvodbpewejwkelfj';
         // 判断str中出现哪些字母和出现的次数
+        // 解：用对象
+        function Show_count_obj(str) {
+            let obj = {};
+            for(item of str){
+                if(obj[item]==undefined){
+                    obj[item]=1;
+                }else{
+                    obj[item]++
+                }
+            }
+            return obj;
+          }
+          let res = Show_count_obj(str);
+          console.log(res);
+
+        //   用数组，并为之升序排序
+        function Show_count_arr(str){
+            let arr = [];
+            for(let i=0;i<str.length;i++){
+                let Switch = true;
+                for(let j=0;j<arr.length;j++){
+                    if(str[i]==arr[j][0]){
+                        arr[j][1]++;
+                        Switch = false;
+                        break;
+                    }
+                }
+                if(Switch){
+                    arr.push([str[i],1]);
+                }
+            }
+            return arr.sort((a,b)=>a[1]-b[1]);
+        }
+        let res2 = Show_count_arr(str);
+        console.log(res2);
     </script>
 </body>
 </html>
