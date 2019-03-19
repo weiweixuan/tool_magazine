@@ -32,6 +32,19 @@
             console.log('promise2');
         });
         console.log('script end');
+
+        // 答，在Chrome 66和node v10中（不同版本promise.then(...)和await 后面的代码执行顺序不一致）
+        // script start
+        // async1 start
+        // async2
+        // promise1
+        // script end
+        // promise2
+        // async1 end
+        // setTimeout
+//         遇到异步会添加一个微任务，等宏任务执行完毕，就会检查是否有微任务，如果有就执行，没有的话就会执行宏任务，以此循环；
+// 注意点1：异步会添加到微任务队列，宏任务执行完毕后执行微任务时，Promise的异步要比async的优先，所以优先执行；
+// 注意点2：定时器的异步是在下个宏任务的开始，所有最后执行；
     </script>
 </body>
 
