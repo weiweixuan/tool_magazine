@@ -10,10 +10,26 @@
 
 <body>
     <script>
+        function add(...arrs){
+            let res = 0;    //闭包缓存一个变量计算count
+           return (function scroll(...arr){
+                if(arr.length>1){
+                arr.forEach(item =>{
+                    res += item; 
+                });
+            }else{
+                res+=arr[0];
+            }
+            console.log(res);
+            return scroll;
+            })(...arrs);
+        }
+      
         // 实现这么一个函数,使之都能返回结果10
         add(1)(2, 3)(4)
         add(1)(2)(3)(4)
         add(1, 2, 3, 4)
+        
     </script>
 </body>
 
