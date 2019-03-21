@@ -27,6 +27,23 @@
     fun()
     console.log(person)
     console.log(a);
+
+    /*
+        1，js引擎单线程会由上往下依次执行，每个script标签是一个单独的执行区域，第一个报错了不影响下面的script执行
+        2，所有的script都在全局作用域下，声明的变量通用
+        3，函数会优先于变量声明，变量声明过后没赋值就是undefined，到赋值的地方才会有值
+        4，函数内部声明的变量是在函数作用域下，出了函数就访问不到了
+        如下：
+    */
+    console.log(v);
+    var v =1;
+    console.log(v);
+    function v(){
+        console.log(2);
+    }
+    console.log(v);
+    //fun 1 1 
+
     </script>
 </body>
 </html>
