@@ -12,9 +12,33 @@
     <script>
         // 下面代码中 a 在什么情况下会打印 1？
         // var a = ? ;
-        // if (a == 1 && a == 2 && a == 3) {
-        //     conso.log(1);
-        // }
+        // 方法1：
+        // let a = {
+        //     value: 0,
+        //     valueOf:function(){
+        //         return ++this.value;
+        //     }
+        // };
+        // 方法二
+        // let a = {
+        //     value: 0,
+        //     toString:function(){
+        //         return ++this.value;
+        //     }
+        // };
+        // 方法三：
+        // Object.defineProperty(window,'a',{
+        //     get:function(){
+        //         if(this.value){
+        //             return ++this.value
+        //         }else{
+        //             return this.value = 1;
+        //         }
+        //     }
+        // });
+        if (a == 1 && a == 2 && a == 3) {
+            console.log(1);
+        }
     </script>
 </body>
 
