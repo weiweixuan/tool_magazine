@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 把一个多维数组降到一维
+        let arr = [1, 2, 3, [4, 5],
+            [6, [7, [8]]]
+        ];
+        // 方法1：
+        let res1 = arr.flat(Infinity);
+        console.log(res1);
+        // 方法2：
+        function flatten(arr) {
+            let res2 = [];
+            function digui(arr) {
+                // 判断该数组项有没有数组
+                for (let i = 0; i < arr.length; i++) {
+                    if (Array.isArray(arr[i])) {
+                        digui(arr[i]);
+                    } else {
+                        res2.push(arr[i]);
+                    }
+                }
+            }
+            digui(arr);
+            return res2;
+        }
+       let res2 = flatten(arr);
+        console.log(res2);
+        // 方法3：
+        let res3 = arr.toString().split(",").map(item=>Number(item));
+        console.log(res3);
+        
+    </script>
+</body>
+
+</html>
