@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 递归实现如下代码：
+            function sum(arr,val){
+                if(arr.length){
+                    val += arr.pop();
+                    sum(arr,val);
+                }
+                return val;
+            }
+            console.log(sum([1,2,3],0));
+            // 为何最后输入值是3？
+            // 解：
+            // 每一个函数都会有返回值，如果没有return，就默认undefined，
+            //sum函数只有一个返回值，虽然内部递归多次返回了val,但是有顺序关系，只会返回第一次return的值,其他return被覆盖了，所以val是3
+            //要修改该递归函数，只需要外层加一个fun包一下即可
+            function sum2(arr, val){
+                function digui(new_arr,new_val){
+                    if(new_arr.length){
+                        val += new_arr.pop(); 
+                        digui(new_arr,val)
+                    }
+                }
+                digui(arr,val);
+                return val;
+            }
+            console.log(sum2([1,2,3],0));
+    </script>
+</body>
+</html>
