@@ -11,12 +11,86 @@
 <body>
     <script>
         // 改造下面的代码，使之输出0 - 9，写出你能想到的所有解法。
-        for (var i = 0; i < 10; i++) {
-            setTimeout(() => {
-                console.log(i);
-            }, 1000)
-        }
+        // for (var i = 0; i < 10; i++) {
+        //     setTimeout(() => {
+        //         console.log(i);
+        //     }, 1000)
+        // }
+        // 方法1：定时器传参
+        // for (var i = 0; i < 10; i++) {
+        //     setTimeout((i) => {
+        //         console.log(i);
+        //     }, 1000,i)
+        // }
+        // 方法2：匿名函数自调传参
+        // for (var i = 0; i < 10; i++) {
+        //     (function(i){
+        //         setTimeout(() => {
+        //         console.log(i);
+        //     }, 1000)
+        //     })(i)
+        // }
+        // 方法3：块级作用域
+        // for (let i = 0; i < 10; i++) {
+        //     setTimeout(() => {
+        //         console.log(i);
+        //     }, 1000)
+        // }
+        // 方法4：es5函数调用传参
+        // function fun(i){
+        //     setTimeout(() => {
+        //         console.log(i);
+        //     }, 1000)
+        // }
+        // for (var i = 0; i < 10; i++) {
+        //     fun(i);
+        // }
+        // 方法5：bind方法传参
+        // for (var i = 0; i < 10; i++) {
+        //     setTimeout(function(i){
+        //         console.log(i);   
+        //     }.bind(null,i), 1000)
+        // }
+        // 方法6：变量存一下
+        // for (var i = 0; i < 10; i++) {
+        //     let now = i;
+        //     setTimeout(() => {
+        //         console.log(now);
+        //     }, 1000)
+        // }
+        // 方法7：setTimeout 函数的第一个参数只接受函数以及字符串，如果是 js 语句的话，js 引擎应该会自动在该语句外面包裹一层函数
+        //  for (var i = 0; i < 10; i++) {
+        //     setTimeout(console.log(i), 1000)
+        // }
+        // 等同于：
+        // for (var i = 0; i < 10; i++) {
+        //     setTimeout((()=>{
+        //         console.log(i);
+        //     })(), 1000)
+        // }
+        // 方法8：立执行函数传参
+        // for (var i = 0; i < 10; i++) {
+        //     setTimeout((()=>{
+        //         console.log(i);
+        //     })(i), 1000)
+        // }
+        // 方法9：call和apply传参
+        // for (var i = 0; i < 10; i++) {
+        //      setTimeout(function(i){
+        //          console.log(i);
+        //      }.call(null,i), 1000)
+        //  }
+        //  for (var i = 0; i < 10; i++) {
+        //      setTimeout(function(i){
+        //          console.log(i);
+        //      }.apply(null,[i]), 1000)
+        //  }
+        // 方法10：eval解析字符串
+        // for (var i = 0; i < 10; i++) {
+        //      setTimeout(eval('console.log(i)'), 1000)   
+        //  }
     </script>
+         
 </body>
 
 </html>
