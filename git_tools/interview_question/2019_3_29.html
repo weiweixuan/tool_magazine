@@ -89,28 +89,20 @@
         // ];
 
         function Tree(data) {
-            if (!Array.isArray(data)) {
-                return "请输入数组……"
-            }
-            for (let i = 0; i < data.length; i++) {
-                for (let j = 0; j < data.length; j++) {
-                    let parentId = data[i].parentId;
-                    let Id = data[j].id;
-                    if (parentId == 0) {
-                        break
+            return data.reduce(function (prev, item) {
+                item.children = [];
+                data.forEach(element => {
+                    if (item.id == element.parentId) {
+                        item.children.push(element);
                     }
-                    if (parentId == Id) {
-                        if (!data[j].children) {
-                            data[j].children = [];
-                        }
-                        data[j].children.push(data[i]);
-                        data.splice(i, 1);
-                        i--;
-                        break;
-                    }
+                });
+                if (item.parentId == 0) {
+                    prev.push(item);
                 }
-            }
+                return prev;
+            }, []);
         }
+        console.log(Tree(data));
         // Tree(data);
         // console.log(data);
 
@@ -141,12 +133,6 @@
         //     return _arr;
         // }
         // console.log(sortData(data, 0))
-        for (var i = 0; i < 10; i++) {
-            setTimeout(function () {
-                console.log(i)
-            }())
-        }
-        
     </script>
 </body>
 
