@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 以下打印结果是什么？
+        function test(arg) {
+            console.log(arg);
+            var arg = 'hello';
+            console.log(arg);
+            function arg() {
+                console.log('hello world')
+            }
+            console.log(arg);
+        }
+        test("hi");
+        // function arg() {
+        //         console.log('hello world')
+        //     }
+        // hello
+        // hello
+        // 解析：形参函数变量三个同名时，优先解析形参，然后是fun，最后是变量
+    </script>
+</body>
+
+</html>

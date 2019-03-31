@@ -9,6 +9,12 @@
 <body>
     <script>
         // 使用 sort() 对数组 [3, 15, 8, 29, 102, 22] 进行排序，输出结果
+        let arr = [3, 15, 8, 29, 102, 22];
+        arr.sort();
+        console.log(arr);       //[102, 15, 22, 29, 3, 8]
+        // sort方法是对数组里的项跟据字符串编码顺序排序的,他会比对每一位的ASCII码来排序，如果接一个回调函数，就可以跟据两个值的大小排序，如：
+        arr.sort((a,b)=>a-b);
+        console.log(arr);       
     </script>
 </body>
 </html>
