@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 一下代码输出什么？
+        let unary = fn => val => fn(val)
+        let parse = unary(parseInt)
+        console.log(['1.1', '2', '0.3'].map(parse))
+        // 解
+        /**
+            先分析一下unary函数：
+            unary = function(fn){
+                return function(val){
+                    return fn(val)
+                }
+            }
+            parse = function(val){
+                return parseInt(val);
+            }
+            所以结果是[1,2,0]
+        */
+    </script>
+</body>
+
+</html>

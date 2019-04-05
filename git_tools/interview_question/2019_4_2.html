@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // ['1', '2', '3'].map(parseInt)答案是什么？
+        // ['1', '2', '3'].map(parseInt)
+        /**
+
+        首先来看一下map方法，接一个callback函数，parseInt也是一个函数，所以不会报错，一共有三个参数
+        （value,key,arr）,数组项，下标，原数组
+        接下来看一下parseInt(string, radix) 第一个表示被处理的值（字符串），第二个表示为解析时的基数
+        parseInt('1', 0) //radix为0时，且string参数不以“0x”和“0”开头时，按照10为基数处理。这个时候返回1
+        parseInt('2', 1) //基数为1（1进制）表示的数中，最大值小于2，所以无法解析，返回NaN
+        parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，所以无法解析，返回NaN
+        
+        
+        **/
+        // 方法1：
+        // function a(args){
+        //     console.log(args);
+        // }
+        // ['1', '2', '3'].map(a);
+        console.log(parseInt("1",0));
+        console.log(parseInt("2",1));
+        console.log(parseInt("3",2));
+    </script>
+</body>
+
+</html>

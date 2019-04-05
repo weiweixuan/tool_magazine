@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 一下代码输出什么？
+        var obj = {
+            '2': 3,
+            '3': 4,
+            'length': 2,
+            'splice': Array.prototype.splice,
+            'push': Array.prototype.push
+        }
+        obj.push(1)
+        obj.push(2)
+        console.log(obj)
+        // 解：
+        // push的工作原理是检查length，然后直接添加key为该length的值的value，
+        // 例如21行，先计算length长度，对象没有length，但是该对象写了length，所以就key为2，值为push的1,所以把原来的"2":3属性给覆盖掉了，第22行一样的道理，先检查length，此时的length为3了，所以添加的"3":2的属性，覆盖了"3":4，
+    </script>
+</body>
+
+</html>
