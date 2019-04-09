@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+       function eto(){
+           getName = function(){
+               console.log(1);
+           }
+           return this;
+       }
+       eto.getName = function(){
+           console.log(2);
+       }
+       eto.prototype.getName = function(){
+           console.log(3);
+       }
+       var getName = function(){
+           console.log(4);
+       }
+       function getName(){
+           console.log(5);
+       }
+    //    输出
+    //eto.getName();      //2
+    //19行定义了函数对象的一个属性getName方法，所以打印的是2
+    //getName();          //4
+    //全局就一个getName变量，引用的是一个函数，所以是4
+    //eto().getName();    //1  
+    //调用eto()后，eto内部的getName没有var，所以是全局的变量，覆盖了25行定义的getName，此时return的是window(函数里的this是谁调用该函数this就指向谁)，所以打印1
+   // getName();          //1
+   //getName已被36行函数调用赋值了，所以打印1
+    // new eto.getName();  //2
+    //分开看，new(无参数)优先级比点低，所以解析成new (eto.getName)(),相当于eto.getName作为构造函数(虽然为未命名函数，首字母没大写，但是可以作为构造函数来创建，得到的是个空对象),调用的过程中输出2
+    // new eto().getName();        //3
+    //new(有参数)和点和函数调用优先级相等，所以按顺序执行===>(new eto()).getName();(注意这里的return是作为函数调用的返回值，new则返回一个对象，此时是空对象实例)，调用了getName方法，此时19行定义的方法在构造函数上，该实例对象为空对象，灭有自己的属性和方法，所以顺着原型对象找到了22行定义的方法，输出3
+    // new new eto().getName();    //3
+    // new(有参数)和点同级别，所以解析为===> new ((new eto()).getName)();
+    //先创建eto对象，找到getName属性(在原型找)，为一个函数，然后new(有参数)和函数调用优先级同样，所以按照从左到右开始执行，所以会打印出来3
+
+    // 关于运算优先级，大家可以参考以下链接：
+    // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+    </script>
+</body>
+
+</html>
