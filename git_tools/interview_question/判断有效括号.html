@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 判断有效括号
+        //     给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+        // 有效字符串需满足：
+        // 左括号必须用相同类型的右括号闭合。
+        // 左括号必须以正确的顺序闭合。
+        // 注意空字符串可被认为是有效字符串。
+        let str = "{()[{}]{}}";
+        var isValid = function (s) { 
+            function digui(a){
+                s = a.replace(/(\[\])|(\{\})|(\(\))/g,function(val){
+                    return "";
+                });
+            }
+            let len = s.length;
+            do{
+                digui(s);
+                if(len == s.length){
+                    break;
+                }
+                len = s.length;
+            }while(true);
+          return s.length==0?true:false;
+        };
+        console.log(isValid(str));
+    </script>
+</body>
+
+</html>

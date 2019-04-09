@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 给一个数组，求其最长公共前缀
+        let arr = ['length','lenjkl','lenjkllll','lefjkdlf']
+        var longestCommonPrefix = function (strs) {
+            if(strs.length==0){                 //判断数组是否为空
+                return ""
+            }
+            let public_str = strs[0];                       //取数组第一位作为公共前缀
+            for(item of strs){
+                while(item.indexOf(public_str)!=0){         //判断该项是否符合前缀
+                    public_str=public_str.slice(0,-1);      //不符合就删掉最后最后一位
+                }
+            }
+            return public_str;
+        };
+        let res = longestCommonPrefix(arr);
+        console.log(res);
+    </script>
+</body>
+
+</html>

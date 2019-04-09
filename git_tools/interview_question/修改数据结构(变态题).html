@@ -103,36 +103,37 @@
             }, []);
         }
         console.log(Tree(data));
-        // Tree(data);
-        // console.log(data);
-
-        // function sortData(data) {
-        //     return data.reduce(function (prev, elem) {
-        //         elem.children = [];
-        //         data.forEach(function (obj) {
-        //             obj.parentId == elem.id && elem.children.push(obj);
-        //         })
-        //         elem.parentId == 0 && prev.push(elem);
-        //         return prev;
-        //     }, [])
-        // }
-        // let res = sortData(data);
-        // console.log(res);
-        // function sortData(data, parentId) {
-        //     var _arr = [],
-        //         temp = {};
-        //     for (var i = 0; i < data.length; i++) {
-        //         if (data[i].parentId == parentId) {
-        //             _arr.push(data[i]);
-        //             temp = sortData(data, data[i].id);
-        //             if (temp.length > 0) {
-        //                 data[i].children = temp;
-        //             }
-        //         }
-        //     }
-        //     return _arr;
-        // }
-        // console.log(sortData(data, 0))
+        Tree(data);
+        console.log(data);
+        // 方法1,引用传递
+        function sortData1(data) {
+            return data.reduce(function (prev, elem) {
+                elem.children = [];
+                data.forEach(function (obj) {
+                    obj.parentId == elem.id && elem.children.push(obj);
+                })
+                elem.parentId == 0 && prev.push(elem);
+                return prev;
+            }, [])
+        }
+        let res = sortData1(data);
+        console.log(res);
+        // 方法2，递归
+        function sortData2(data, parentId) {
+            var _arr = [],
+                temp = {};
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].parentId == parentId) {
+                    _arr.push(data[i]);
+                    temp = sortData(data, data[i].id);
+                    if (temp.length > 0) {
+                        data[i].children = temp;
+                    }
+                }
+            }
+            return _arr;
+        }
+        console.log(sortData2(data, 0))
     </script>
 </body>
 
