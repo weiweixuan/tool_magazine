@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 斐波那契数列
+      // 递归
+      function fbnq(num) {
+        return num == 1 || num == 2 ? 1 : fbnq(num - 2) + fbnq(num - 1);
+      }
+      console.log(fbnq(9));
+      // 非递归
+      function adds(num) {
+        if (num == 1 || num == 2) {
+          return 1;
+        }
+        let before=1,courent=1,after=0;
+        for(let i=3;i<=num;i++){
+          after = before + courent;
+          before = courent;
+          courent = after;
+        }
+        return after;
+      }
+      console.log(adds(9));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 输出的是什么
+      var a = { n: 1 };
+      var b = a;
+      a.x = a = { n: 2 }; //先执行a.x操作，a.x=undefined 然后等号赋值右向左，a={n:2} 然后在执行a.x = a(此时a={n:2}),a.x 不会在重新刷新指针(a.x=undefiend，a,b还是一个地址{n:1,x:undefined})，a.x = {n:2}
+
+      console.log(a.x);
+      console.log(b.x);
+      console.log("<.............................................>");
+
+      // 变式1：
+      var a = { n: 1 };
+      var b = a;
+      a = { n: 2 };
+      a.x = a; //交互嵌套，无限创建引用 和下面代码cd一致：
+      console.log(a.x);
+      console.log(b.x);
+
+      var c = { n: 1 };
+      var d = { n: 2 };
+      c.x = d;
+      d.x = c;
+      console.log(c, d);
+      console.log("<.............................................>");
+      // 变式2：
+      var a = { n: 1 };
+      var b = a;
+      a = a.x = { n: 2 }; //a.x = {n:2} a的引用为：{n:1,x:{n:2}}  , a={n:2} 重新开辟空间
+      console.log(a.x); //undefined
+      console.log(b.x); //{n:2}
+      console.log(a.n); //2
+      console.log(b.n); //1
+    </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 最后一个单词的长度
+        let str = "o ";
+        var lengthOfLastWord = function (s) {
+            if(s.length==0){return 0}
+            return s.trim().split(" ").pop().length;
+        };
+        let res = lengthOfLastWord(str);
+        console.log(res);
+    </script>
+</body>
+
+</html>

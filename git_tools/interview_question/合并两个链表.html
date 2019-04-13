@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    //    合并两个链表,每项变成两个链表的最大的值
+     let list1 = {val:10,next:{
+         val:20,next:{
+             val:30,next:{
+                 val:40,next:null
+             }
+         }
+     }}
+     let list2 = {val:1,next:{
+         val:2,next:{
+             val:3,next:{
+                val:4,next:{val:5,next:null}
+             }
+         }
+     }}
+     function isNull(ele,types){
+         return Object.prototype.toString.call(ele) == types;
+     }
+     var mergeTwoLists = function(l1, l2) {
+         const NULL = "[object Null]";
+        var listres = {val:0};
+        var digui = function(a,b,res){
+            var nexta=null,nextb=null;
+            if(!isNull(a,NULL)){
+                res.val = a.val;
+                nexta= a.next;
+            };
+            if(!isNull(b,NULL)){
+                res.val = res.val>b.val?res.val:b.val;
+                nextb= b.next;
+            };
+            if(!isNull(nexta,NULL) || !isNull(nextb,NULL)){
+                res.next={val:0};
+            digui(nexta,nextb,res.next);
+            }else{
+            res.next=null;
+            }
+        }
+        digui(l1,l2,listres);
+        return listres;
+    };
+    let res = mergeTwoLists(list1,list2);
+    console.log(res);
+    </script>
+</body>
+
+</html>
