@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //    某公司 1 到 12 月份的销售额存在一个对象里面，如下：{1:222, 2:123, 5:888}，请把数据处理为如下结构：[222, 123, null, null, 888, null, null, null, null, null, null, null]。
+      let obj = { 1: 222, 2: 123, 5: 888 };
+
+      // 解：
+      // function showYearData(obj) {
+      //   let arr = [];
+      //   for (let i = 0; i < 12; i++) {
+      //     let switchs = false; //定一个开关
+      //     for (let key in obj) {
+      //       if (i == key) {
+      //         switchs = true;
+      //         arr.push(obj[key]);
+      //       }
+      //     }
+      //     !switchs && arr.push(null);
+      //   }
+      //   return arr;
+      // }
+      // let res = showYearData(obj);
+      // console.log(res);
+
+      // 高级写法
+      // obj.length = 13;
+      // let _obj = Array.from(obj).slice(1);
+      // console.log(_obj);
+      // let newObj = _obj.map(item => {
+      //   if (item === undefined) {
+      //     return null;
+      //   } else {
+      //     return item;
+      //   }
+      // });
+      // console.log(newObj);
+
+      // 高级写法2
+      // const result = Array.from({ length: 12 }).map(
+      //   (_, index) => obj[index + 1] || null
+      // );
+      // console.log(result);
+
+      // 高级写法3
+      var c = new Array(12).fill(true).reduce((prev, cur, key) => {
+        prev[key] = obj[key + 1] || null;
+        return prev;
+      }, []);
+      console.log(c);
+    </script>
+  </body>
+</html>
