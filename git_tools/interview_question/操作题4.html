@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      class LazyManClass {
+        constructor(name) {
+          this.queue = [];
+          this.name = name;
+          this.queue.push(
+            function() {
+              setTimeout(
+                function() {
+                  console.log(`Hi I am ${this.name}`);
+                  this.next();
+                }.bind(this),
+                0
+              );
+            }.bind(this)
+          );
+          setTimeout(
+            function() {
+              this.next();
+            }.bind(this),
+            0
+          );
+          return this;
+        }
+        sleep(s) {
+          this.queue.push(
+            function(s) {
+              setTimeout(
+                function(s) {
+                  console.log(`等了${s}秒`);
+                  this.next();
+                }.bind(this, s),
+                1000 * s
+              );
+            }.bind(this, s)
+          );
+          return this;
+        }
+        eat(something) {
+          this.queue.push(
+            function(eat) {
+              console.log(` I am eating ${eat}`);
+              this.next();
+              return this;
+            }.bind(this, something)
+          );
+          return this;
+        }
+        sleepFirst(s) {
+          let fun = function(s) {
+            setTimeout(
+              function(s) {
+                console.log(`等待了${s}秒...`);
+                this.next();
+              }.bind(this, s),
+              s * 1000
+            );
+          }.bind(this, s);
+          this.queue.splice(1, 0, fun);
+          return this;
+        }
+        next() {
+          let current = this.queue.shift();
+          current && current();
+        }
+      }
+
+      function LazyMan(args) {
+        return new LazyManClass(args);
+      }
+      // LazyMan("Tony");
+      // Hi I am Tony
+
+      // LazyMan("Tony")
+      //   .sleep(3)
+      //   .eat("lunch");
+      // Hi I am Tony
+      // 等待了10秒...
+      // I am eating lunch
+
+      // LazyMan("Tony")
+      //   .eat("lunch")
+      //   .sleep(3)
+      //   .eat("dinner");
+      // Hi I am Tony
+      // I am eating lunch
+      // 等待了10秒...
+      // I am eating diner
+
+      LazyMan("Tony")
+        .eat("lunch")
+        .eat("dinner")
+        .sleepFirst(5)
+        .sleep(3)
+        .eat("junk food");
+      // Hi I am Tony
+      // 等待了5秒...
+      // I am eating lunch
+      // I am eating dinner
+      // 等待了10秒...
+      // I am eating junk food
+    </script>
+  </body>
+</html>
