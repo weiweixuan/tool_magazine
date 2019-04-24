@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 冒泡排序
+      let arr = [3, 4, 5, 2, 1, 6, 8, 0, 9, 7]
+      function maopao(arr) {
+        for (let i = 1; i <= arr.length; i++) {
+          for (let j = 0; j < arr.length - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+              ;[arr[j + 1], arr[j]] = [arr[j], arr[j + 1]]
+            }
+          }
+        }
+      }
+      maopao(arr)
+      console.log(arr)
+    </script>
+  </body>
+</html>
