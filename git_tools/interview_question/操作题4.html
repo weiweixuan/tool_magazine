@@ -9,74 +9,106 @@
 
   <body>
     <script>
+      // 写一个类，能够实现如下调用
+      // LazyMan("Tony");
+      // Hi I am Tony
+
+      // LazyMan("Tony")
+      //   .sleep(3)
+      //   .eat("lunch");
+      // Hi I am Tony
+      // 等待了10秒...
+      // I am eating lunch
+
+      // LazyMan("Tony")
+      //   .eat("lunch")
+      //   .sleep(3)
+      //   .eat("dinner");
+      // Hi I am Tony
+      // I am eating lunch
+      // 等待了10秒...
+      // I am eating diner
+
+      // LazyMan("Tony")
+      //   .eat("lunch")
+      //   .eat("dinner")
+      //   .sleepFirst(5)
+      //   .sleep(3)
+      //   .eat("junk food");
+      // Hi I am Tony
+      // 等待了5秒...
+      // I am eating lunch
+      // I am eating dinner
+      // 等待了10秒...
+      // I am eating junk food
       class LazyManClass {
         constructor(name) {
-          this.queue = [];
-          this.name = name;
+          this.queue = []
+          this.name = name
           this.queue.push(
             function() {
               setTimeout(
                 function() {
-                  console.log(`Hi I am ${this.name}`);
-                  this.next();
+                  console.log(`Hi I am ${this.name}`)
+                  this.next()
                 }.bind(this),
                 0
-              );
+              )
             }.bind(this)
-          );
+          )
           setTimeout(
             function() {
-              this.next();
+              this.next()
             }.bind(this),
             0
-          );
-          return this;
+          )
+          return this
         }
         sleep(s) {
           this.queue.push(
             function(s) {
               setTimeout(
                 function(s) {
-                  console.log(`等了${s}秒`);
-                  this.next();
+                  console.log(`等了${s}秒`)
+                  this.next()
                 }.bind(this, s),
                 1000 * s
-              );
+              )
             }.bind(this, s)
-          );
-          return this;
+          )
+          return this
         }
         eat(something) {
           this.queue.push(
             function(eat) {
-              console.log(` I am eating ${eat}`);
-              this.next();
-              return this;
+              console.log(` I am eating ${eat}`)
+              this.next()
+              return this
             }.bind(this, something)
-          );
-          return this;
+          )
+          return this
         }
         sleepFirst(s) {
           let fun = function(s) {
             setTimeout(
               function(s) {
-                console.log(`等待了${s}秒...`);
-                this.next();
+                console.log(`等待了${s}秒...`)
+                this.next()
               }.bind(this, s),
               s * 1000
-            );
-          }.bind(this, s);
-          this.queue.splice(1, 0, fun);
-          return this;
+            )
+          }.bind(this, s)
+          this.queue.splice(1, 0, fun)
+          return this
         }
         next() {
-          let current = this.queue.shift();
-          current && current();
+          let current = this.queue.shift()
+          current && current()
         }
       }
 
       function LazyMan(args) {
-        return new LazyManClass(args);
+        return new LazyManClass(args)
       }
       // LazyMan("Tony");
       // Hi I am Tony
@@ -97,12 +129,12 @@
       // 等待了10秒...
       // I am eating diner
 
-      LazyMan("Tony")
-        .eat("lunch")
-        .eat("dinner")
+      LazyMan('Tony')
+        .eat('lunch')
+        .eat('dinner')
         .sleepFirst(5)
         .sleep(3)
-        .eat("junk food");
+        .eat('junk food')
       // Hi I am Tony
       // 等待了5秒...
       // I am eating lunch
