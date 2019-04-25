@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 二进制求和
+      let a = "101001";
+      let b = "1";
+      var addBinary = function(a, b) {};
+      // 二进制转换成十进制
+      function changeTwoToTen(val) {
+        let arr = val.split("").reverse();
+        console.log(arr);
+        let res = 0;
+        for (let i = 0; i < arr.length; i++) {
+          res += parseInt(arr[i]) * 2 ** i;
+        }
+        return res;
+      }
+      // 十进制转换成二进制
+      function changeTenToTwo(val) {
+        val = 41;
+        let arr = [];
+        while(val != 2 && val !=1){
+          let res = parseInt(val/2);
+          arr.push(val - res*2);
+          val = res;
+        }
+        val ==1 && arr.push(1);   
+        val ==2 && arr.push(0);
+        return arr;
+      }
+      changeTenToTwo();
+      console.log(changeTwoToTen(a));
+    </script>
+  </body>
+</html>
