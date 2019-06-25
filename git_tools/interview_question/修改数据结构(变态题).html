@@ -1,140 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-    <input type="file" multiple>
+  <body>
     <script>
-        //以下数据结构，id代表部门编号，name是部门名称，parentId是父部门编号，为0代表一级部门，现在实现一个树形结构,parentId为多少就挂载在该id的属性children数组下：如下结构
-        // 原data
-        let data = [{
-                id: 1,
-                name: '部门A',
-                parentId: 0
-            },
-            {
-                id: 2,
-                name: '部门B',
-                parentId: 0
-            },
-            {
-                id: 3,
-                name: '部门C',
-                parentId: 1
-            },
-            {
-                id: 4,
-                name: '部门D',
-                parentId: 1
-            },
-            {
-                id: 5,
-                name: '部门E',
-                parentId: 2
-            },
-            {
-                id: 6,
-                name: '部门F',
-                parentId: 3
-            },
-            {
-                id: 7,
-                name: '部门G',
-                parentId: 2
-            },
-            {
-                id: 8,
-                name: '部门H',
-                parentId: 4
-            }
-        ];
-        // 现data
-        // let data = [{
-        //         id: 1,
-        //         name: '部门A',
-        //         parentId: 0,
-        //         children: [{
-        //                 id: 3,
-        //                 name: '部门C',
-        //                 parentId: 1,
-        //                 children: [{
-        //                     id: 6,
-        //                     name: '部门F',
-        //                     parentId: 3
-        //                 }, {
-        //                     id: 16,
-        //                     name: '部门L',
-        //                     parentId: 3
-        //                 }]
-        //             },
-        //             {
-        //                 id: 4,
-        //                 name: '部门D',
-        //                 parentId: 1,
-        //                 children: [{
-        //                     id: 8,
-        //                     name: '部门H',
-        //                     parentId: 4
-        //                 }]
-        //             }
-        //         ]
-        //     },
-        //     ···
-        // ];
+      //以下数据结构，id代表部门编号，name是部门名称，parentId是父部门编号，为0代表一级部门，现在实现一个树形结构,parentId为多少就挂载在该id的属性children数组下：如下结构
+      // 原data
+      let data = [
+        {
+          id: 1,
+          name: '部门A',
+          parentId: 0
+        },
+        {
+          id: 2,
+          name: '部门B',
+          parentId: 0
+        },
+        {
+          id: 3,
+          name: '部门C',
+          parentId: 1
+        },
+        {
+          id: 4,
+          name: '部门D',
+          parentId: 1
+        },
+        {
+          id: 5,
+          name: '部门E',
+          parentId: 2
+        },
+        {
+          id: 6,
+          name: '部门F',
+          parentId: 3
+        },
+        {
+          id: 7,
+          name: '部门G',
+          parentId: 2
+        },
+        {
+          id: 8,
+          name: '部门H',
+          parentId: 4
+        }
+      ]
+      // 现data
+      // let data = [{
+      //         id: 1,
+      //         name: '部门A',
+      //         parentId: 0,
+      //         children: [{
+      //                 id: 3,
+      //                 name: '部门C',
+      //                 parentId: 1,
+      //                 children: [{
+      //                     id: 6,
+      //                     name: '部门F',
+      //                     parentId: 3
+      //                 }, {
+      //                     id: 16,
+      //                     name: '部门L',
+      //                     parentId: 3
+      //                 }]
+      //             },
+      //             {
+      //                 id: 4,
+      //                 name: '部门D',
+      //                 parentId: 1,
+      //                 children: [{
+      //                     id: 8,
+      //                     name: '部门H',
+      //                     parentId: 4
+      //                 }]
+      //             }
+      //         ]
+      //     },
+      //     ···
+      // ];
 
-        function Tree(data) {
-            return data.reduce(function (prev, item) {
-                item.children = [];
-                data.forEach(element => {
-                    if (item.id == element.parentId) {
-                        item.children.push(element);
-                    }
-                });
-                if (item.parentId == 0) {
-                    prev.push(item);
-                }
-                return prev;
-            }, []);
-        }
-        console.log(Tree(data));
-        Tree(data);
-        console.log(data);
-        // 方法1,引用传递
-        function sortData1(data) {
-            return data.reduce(function (prev, elem) {
-                elem.children = [];
-                data.forEach(function (obj) {
-                    obj.parentId == elem.id && elem.children.push(obj);
-                })
-                elem.parentId == 0 && prev.push(elem);
-                return prev;
-            }, [])
-        }
-        let res = sortData1(data);
-        console.log(res);
-        // 方法2，递归
-        function sortData2(data, parentId) {
-            var _arr = [],
-                temp = {};
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].parentId == parentId) {
-                    _arr.push(data[i]);
-                    temp = sortData(data, data[i].id);
-                    if (temp.length > 0) {
-                        data[i].children = temp;
-                    }
-                }
+      // 方法1,引用传递
+      // function sortData1(data) {
+      //   return data.reduce(function(prev, elem) {
+      //     elem.children = []
+      //     data.forEach(function(obj) {
+      //       obj.parentId == elem.id && elem.children.push(obj)
+      //     })
+      //     elem.parentId == 0 && prev.push(elem)
+      //     return prev
+      //   }, [])
+      // }
+      // let res = sortData1(data)
+      // console.log(res)
+      // 方法2，递归
+      function sortData2(data, parentId) {
+        var _arr = [],
+          temp = {}
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].parentId == parentId) {
+            _arr.push(data[i])
+            temp = sortData2(data, data[i].id)
+            if (temp.length > 0) {
+              data[i].children = temp
             }
-            return _arr;
+          }
         }
-        console.log(sortData2(data, 0))
+        return _arr
+      }
+      console.log(sortData2(data, 0))
     </script>
-</body>
-
+  </body>
 </html>
