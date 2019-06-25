@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+      请实现一个 add 函数，满足以下功能
+      add(1); 	// 1
+      add(1)(2);  	// 3
+      add(1)(2)(3)；  // 6
+      add(1)(2, 3);   // 6
+      add(1, 2)(3);   // 6
+      add(1, 2, 3);   // 6
+      */
+      // 闭包实现
+      function reduceNum() {
+        let num = 0
+        function add() {
+          for (let i = 0; i < arguments.length; i++) {
+            num += arguments[i]
+          }
+          return arguments.callee
+        }
+        // 添加获取方法
+        add.getNum = function() {
+          console.log(num)
+        }
+        return add
+      }
+      let add = reduceNum()
+      let res = add(1)(2)(3)
+      res.getNum()
+
+      // 传参实现
+      // function reduceNum2(...args) {
+      //   let fn = function(...fn_args) {
+      //     return reduceNum2.apply(null, args.concat(fn_args))
+      //   }
+      //   fn.toString = function() {
+      //     return args.reduce((a, b) => a + b)
+      //   }
+      //   return fn
+      // }
+      // let res2 = reduceNum2(1)(2, 3)()
+      // console.log(res2.toString())
+    </script>
+  </body>
+</html>
