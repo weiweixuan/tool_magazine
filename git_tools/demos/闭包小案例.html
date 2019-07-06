@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>(赞+0)</button>
+    <button>(踩+0)</button>
+    <script>
+        let btns = document.querySelectorAll("button");
+        ~function () {
+            let func = function () {
+                let val = 0;
+                return function () {
+                    val++;
+                    let text = this.innerHTML.replace(/\d+/g, val);
+                    console.log(text);
+                    this.innerHTML = text;
+                }
+            }
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].onclick = func();
+            }
+        }();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Person() {
+        this.name = 'weiweixuan'
+        this.show = () => {
+          console.log(bbb)
+        }
+      }
+      // Person.prototype.name = 'penny'
+      Person.prototype.wife = 'penny'
+      Person.prototype.sayHi = function() {
+        console.log(this.name)
+      }
+      // Person.prototype = {
+      //   constructor: Person,
+      //   name: 'ergou',
+      //   sayHi: function() {
+      //     console.log(this.name)
+      //   }
+      // }
+      let p1 = new Person()
+      Object.defineProperty(p1, 'study', {
+        value: 'javascript',
+        enumerable: false,
+        configurable: false,
+        writable: false
+      })
+      console.dir(p1)
+      // console.log(p1.__proto__ == Person.prototype)
+      // console.log(Object.entries(p1))
+      // console.log(p1.hasOwnProperty('sayHi')) //判断p1是否有自己的name属性（非继承）
+      // console.log('sayHi' in p1) //判断p1是否有name属性（可以继承）
+
+      // 写个判断属性是否是继承的方法
+      function isExistPrototype(obj, attr) {
+        return !obj.hasOwnProperty(attr) && attr in obj
+      }
+      // console.log(isExistPrototype(p1, 'sayHi'))
+
+      // 获取原型上的方法
+
+      // 判断B是否是A类的实例
+      // console.log(Person.prototype.isPrototypeOf(p1))
+      // console.log(p1 instanceof Person) //判断p1是否是Person实例化的对象
+
+      // 获取实例对象的原型方法
+      // console.log(Object.getPrototypeOf(p1))
+
+      // console.log(Object.getOwnPropertyNames(p1))  //拿到该对象可枚举的所有属性
+
+      //  写个功能，拿到原对象的方法和继承的可枚举的方法
+      function getProps(type = 1, obj) {
+        let own = {}
+        let jicheng = {}
+        for (key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            own[key] = obj[key]
+          } else {
+            jicheng[key] = obj[key]
+          }
+        }
+        return type === 1 ? own : jicheng
+      }
+      let res = getProps(2, p1)
+      console.log(res)
+    </script>
+  </body>
+</html>

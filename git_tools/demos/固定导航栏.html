@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,body{
+            margin:0;
+            padding:0;
+        }
+        .box {
+            height:3000px;
+            background:#ccc;
+            position: relative;
+        }
+        .pos{
+            width:80%;
+            height:100px;
+            position: absolute;
+            top:200px;
+            left:10%;
+            background:skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="pos"></div>
+    </div>
+    <script>
+        let pos = document.querySelector('.pos');
+        window.onscroll=function(){
+            let s_top =document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+            if(s_top>=200){
+                pos.style.cssText = `position:fixed;top:0px;`;
+            }else{
+                pos.style.cssText = `position:absolute;top:200px;`;
+            }
+        }
+    </script>
+</body>
+
+</html>

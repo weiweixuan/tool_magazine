@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function get_dateNum(){
+            if(!confirm("请按照标准日期格式填写(例如-/' '等分隔符)")){
+                alert("选择失败，请刷新重试！");
+            };
+            let date_str = prompt("请输入时间");
+            console.log(date_str);
+            if(date_str=="" || date_str==null){
+                alert("请不要输入空字符串！");
+                return;
+            }
+
+            let date_arr = date_str.split(/[-\(" ")/]/);
+            // 年月日
+            let yy=parseInt(date_arr[0]);
+            let mm=parseInt(date_arr[1]);
+            let dd=parseInt(date_arr[2]);
+            let is_run = 0;
+            // 判断是否为闰年
+            if(yy%400==0 || (yy%4==0 && yy%400!=0)){
+                is_run = 1;
+            }
+            console.log(yy,mm,dd);
+            // 总天数
+            let num = is_run;
+            // 加上月份
+            switch(mm){
+                case 12:  num+=30; 
+                case 11:  num+=31; 
+                case 10:  num+=30; 
+                case 9:  num+=31; 
+                case 8:  num+=31; 
+                case 7:  num+=30; 
+                case 6:  num+=31; 
+                case 5:  num+=30; 
+                case 4:  num+=31; 
+                case 3:  num+=28; 
+                case 2:  num+=31; 
+                case 1:  num+=0; 
+            }
+            // 加上天
+            num+=dd;
+            alert(`距离${yy}年已过去了${num}天`);
+
+        }
+        get_dateNum();
+    </script>
+</body>
+</html>

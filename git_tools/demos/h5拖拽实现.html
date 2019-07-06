@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background: blue;
+            cursor: move;
+            position: absolute;
+            left: 100px;
+            top: 200px;
+        }
+        div:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            background: green;
+            cursor: move;
+            position: absolute;
+            left: 300px;
+            top: 200px;
+        }
+        div:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            background: red;
+            cursor: move;
+            position: absolute;
+            left: 500px;
+            top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div draggable="true"></div>
+    <div draggable="true"></div>
+    <div draggable="true"></div>
+</body>
+<script>
+    let div = document.querySelector("div");
+    div.ondragstart = function(e){
+        let L =e.clientX - this.offsetLeft;
+        let T =e.clientY - this.offsetTop;
+        console.log(e.clientY,this.offsetTop);
+        
+        div.ondragend=function(e){
+            // console.log(e.clientX,e.clientY);
+            div.style.left = e.clientX - L +"px";
+            div.style.top = e.clientY - T +'px';
+        }
+    }
+    
+
+</script>
+
+</html>

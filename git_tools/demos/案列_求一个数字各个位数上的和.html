@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function add(arr,a){
+            return arr.length==a+1?arr[a]:parseInt(arr[a])+parseInt(add(arr,a+1));
+        };
+        function get_sum(num){
+            if(isNaN(num)){
+                alert("请输入数字！");
+                return;
+            }
+            let arr = num.toString().split("");
+            let a=0;
+            return add(arr,a);
+        }
+        let res = get_sum(455);
+        console.log(res);
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let str = 15469;
+        function reverse_str(str){
+           str= new String(str);
+            let Isfu = false;
+            let arr = str.split("");
+            if(arr[0]=='-'){
+                Isfu = true;
+                arr.shift();
+            }
+            let res = Isfu?-Number(arr.reverse().join("")):Number(arr.reverse().join(""));
+            if(res<-(2**31) || res>(2**31)-1){
+                return 0;
+            }
+            return res; 
+        }
+       let res = reverse_str(str);
+       console.log(res);
+    </script>
+</body>
+</html>

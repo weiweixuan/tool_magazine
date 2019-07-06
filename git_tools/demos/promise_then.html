@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function ajax(param){
+            return new Promise((resolve,reject)=>{
+                resolve(param);
+            });
+        }
+        let res = ajax("can1");
+        res.then(res=>{
+            console.log(res);
+            return 'can2';                  //promise  return出来的值也是promise对象，直接.then拿结果即可
+        }).then(res=>{
+            console.log(res);
+        });
+
+    </script>
+</body>
+</html>

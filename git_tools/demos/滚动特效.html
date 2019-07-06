@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .item:nth-child(2n) {
+        height: 100vh;
+        background: #f5f5f5;
+      }
+      .item:nth-child(2n + 1) {
+        height: 100vh;
+        background: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+    <script>
+      let activeObj = {
+        active: 0,
+        height: 0
+      }
+      function move() {
+        let to = document.documentElement.scrollTop
+        let AllHeight = document.body.clientHeight
+        if (to > activeObj.height) {
+          activeObj.active++
+        } else {
+          activeObj.active--
+        }
+        let H = innerHeight
+        let top
+        if (activeObj.active * H <= 0) {
+          top = 0
+        } else if (activeObj.active * H >= AllHeight) {
+          top = AllHeight
+        } else {
+          top = activeObj.active * H
+        }
+        scrollTo({ top, behavior: 'smooth' })
+      }
+      function bibaojieliu(fun, time = 1000) {
+        let temp = true
+        return function(...args) {
+          if (temp) {
+            temp = false
+            fun.apply(this, args)
+            let timer = setTimeout(() => {
+              temp = true
+              activeObj.height = document.documentElement.scrollTop
+            }, time)
+          }
+        }
+      }
+      onscroll = bibaojieliu(move, 1000)
+    </script>
+  </body>
+</html>

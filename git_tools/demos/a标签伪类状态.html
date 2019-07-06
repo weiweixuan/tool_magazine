@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        a:link{
+            color:red;
+        }
+        a:visited{
+            color:skyblue;
+        }
+        a:hover{
+            color:green;
+        }
+        a:active{
+            color:blue;
+        }
+        /*
+            link和visited是常态伪类，hover和active是瞬时伪类，
+            根据浏览器的解析顺序，应该瞬时覆盖常态，所以hover和active在下面
+            link和visited是互斥伪类，所以不论先后，
+            hover和active是有先后的，active是在hover之后，
+            只有先hover才能active所以，active要写在最后面
+            lvha顺序
+        */
+        input:focus{
+            color:red;
+        }
+        
+    </style>
+</head>
+<body>
+    <a href="#">我是a标签</a>
+    <input type="text" >
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let TOAST = 6;
+        let people = [];
+        for(let i=0;i<TOAST;i++){
+            people.push(`小明${i+1}`);
+        }
+        // let now =0;
+        // console.log(people);
+        // while(people.length!==1){
+        //     for(let p=0;p<3;p++){
+        //         now++;
+        //         if(now>=people.length){
+        //         now-=people.length;
+        //     }
+        //     }
+        //         people.splice(now,1);
+        //         now--;
+        //         if(now<0){
+        //             now=people.length-1;
+        //         }
+        //         console.log(people);
+        // }
+        // console.log(people);
+        while(people.length!=1){
+            for(let i=0;i<3;i++){
+                let first = people.shift();
+                people.push(first);
+                console.log(people);
+            }
+            people.shift();
+            console.log("循环结束");
+            console.log(people);
+        }
+        // console.log(people);
+    </script>
+</body>
+</html>

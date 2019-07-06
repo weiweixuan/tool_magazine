@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj1 = {};
+        Object.defineProperty(obj1,'name',{
+            value:'wwx',
+            writable:false,
+            enumerable:false,
+            configurable:false
+        });
+        console.log(obj1);
+        for(let key in obj1){
+            console.log(obj1[key]);
+        }
+        // configurable设置为false后，不可逆，
+        // Object.defineProperty(obj1,'name',{
+        //     writable:true,
+        //     enumerable:true,
+        //     configurable:true
+        // });
+        // obj1.name=111;
+        // console.log(obj1);
+        // for(let key in obj1){
+        //     console.log(obj1[key]);
+        // }
+
+        // getter 和 setter 方法
+        let obj2 = {_name:'rodgers'};
+            Object.defineProperty(obj2,"name",{
+                get(){
+                    return obj2._name;
+                },
+                set(val){
+                    if(val.length>5){
+                        return false;
+                    }
+                    return obj2._name = val;
+                },
+                enumerable:false,
+                configurable:true
+            });
+            for(let key in obj2){
+	console.log(obj2[key]);
+}
+
+    </script>
+</body>
+</html>

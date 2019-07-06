@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = []
+      for (let i = 0; i < 21; i++) {
+        arr.push({ key: i + 1, value: false })
+      }
+
+      // function changeArr(arr) {
+      //   let lengths = Math.ceil(arr.length / 2)
+      //   for (let i = 0; i < lengths; i++) {
+      //     if (i % 2 != 1) {
+      //       arr[2 * i] && (arr[2 * i].value = true)
+      //       arr[2 * i + 1] && (arr[2 * i + 1].value = true)
+      //     }
+      //   }
+      // }
+      // changeArr(arr)
+
+      function goodFun(arr) {
+        for (let i = 0; i < arr.length; i++) {
+          if (parseInt(i / 2) % 2 != 1) {
+            arr[i].value = true
+          }
+        }
+      }
+      goodFun(arr)
+      console.log(arr)
+    </script>
+  </body>
+</html>

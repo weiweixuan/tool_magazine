@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //callFun实现
+      Function.prototype.callFun = function(obj, ...args) {
+        if (!obj) {
+          obj = typeof window === 'undefined' ? global : window
+        }
+        obj.func = this
+        let res = obj.func(...args)
+        delete obj.func
+        return res
+      }
+      //applyFun实现
+      Function.prototype.applyFun = function(obj, arrArgs) {
+        if (!obj) {
+          obj = typeof window === 'undefined' ? global : window
+        }
+        obj.func = this
+        let res = obj.func(...arrArgs)
+        delete obj.func
+        return res
+      }
+      //bindFun实现
+      Function.prototype.bindFun = function(obj, ...Args) {
+        let _this = this
+        if (!obj) {
+          obj = typeof window === 'undefined' ? global : window
+        }
+        return function() {
+          _this.applyFun(obj, [...Args, ...arguments])
+        }
+      }
+      var name = '我是外层name'
+      var objs = { name: '我是obj的name' }
+      function abc(a, b, c) {
+        console.log(this.name, a, b, c)
+      }
+      // abc.callFun(objs, 'a', 'b', 'c')
+      // abc.applyFun(objs, ['a', 'b', 'c'])
+      // let newFun = abc.bindFun(objs, 'a', 'b')
+      // newFun('c')
+    </script>
+  </body>
+</html>

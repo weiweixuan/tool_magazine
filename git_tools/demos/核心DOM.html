@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .a {
+            width: 50%;
+            box-shadow: 10px 10px 10px 10px #ccc;
+        }
+
+        .b {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="http://img4.imgtn.bdimg.com/it/u=1615550350,2395158000&fm=26&gp=0.jpg" class='a b c d e' alt="我是风景壁纸" id='iimmgg'>
+    <script>
+        let img = document.querySelector("#iimmgg");
+        console.log(img.getAttribute('src')); //获取
+        // img.setAttribute("class", 'a'); //添加或修改属性
+        img.removeAttribute("alt"); //删除属性
+
+        // 判断是否有该class属性
+        function hasClass(ele,cla){
+            return ele.className.indexOf(cla)!==-1;
+        }
+
+        // 添加class
+        function addClass(ele,cla) {
+            if(!hasClass(ele,cla)){
+                ele.className=ele.className.trim()+" "+cla;
+            }
+          }
+
+        // 删除class
+        function removeClass(ele,cla){
+            if(hasClass(ele,cla)){
+                ele.className = ele.className.replace(" "+cla,"");
+            }
+        }
+
+        // toggleClass
+        function toggleClass(ele,cla){
+            if(hasClass(ele,cla)){
+                removeClass(ele,cla);
+            }else{
+                addClass(ele,cla);
+            }
+        }
+       console.log(hasClass(img,'a'));
+       addClass(img,'g');
+       removeClass(img,"g");
+       img.onclick=function(){
+        toggleClass(img,'b');
+       }
+    </script>
+</body>
+
+</html>

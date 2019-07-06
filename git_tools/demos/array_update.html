@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        !! function () {
+            let arr = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2'];
+            let arr2 = ['A', 'B', 'C', 'D'];
+            // 合并成[A1, A2, A, B1, B2, B, C1, C2, C, D1, D2, D]
+            let res=arr.concat(arr2.map((item) =>item += '3')).sort().map(item =>item.replace(/[3]/g, ''));
+            console.log(res);
+        }();
+    </script>
+</body>
+</html>

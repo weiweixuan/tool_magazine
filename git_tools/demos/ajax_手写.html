@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 获取xhr对象
+        function getXhr() {
+            if (window.XMLHttpRequest) {
+                return new window.XMLHttpRequest();
+            } else {
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+
+        function ajax(obj) {
+            let xhr = getXhr();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == '4' && xhr.status == '200') {
+                    return xhr.responseText;
+                }
+            }
+            xhr.open(obj.type, obj.url, true);
+            if (obj.type.toUpperCase == 'POST') {
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
+                let param_str = '';
+                for(let item in obj.data){
+                    param_str +=`${item}=${obj.data[item]}&`;
+                }
+                param_str = param_str.slice(0,-1);
+                xhr.send(param_str);
+                return false;
+            }
+            xhr.send();
+        }
+        let param = {
+            type: "POST",
+            url: "http://localhost/data.json",
+            data: {
+                name: 'dingding',
+                upwd: '123456'
+            }
+        };
+        let res = ajax(param);
+        console.log(res);
+        // 跨域
+    </script>
+</body>
+
+</html>

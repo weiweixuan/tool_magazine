@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 800px;
+            height: 400px;
+            border: 1px solid blue;
+            position: relative;
+            overflow: hidden;
+            margin: 50px auto;
+        }
+
+        #box ul {
+            list-style: none;
+            height: 400px;
+            position: absolute;
+            display: flex;
+            font-size: 0px;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        img {
+            width: 800px;
+            height: 400px;
+        }
+
+        .btn {
+            width: 800px;
+            height: 100px;
+            position: absolute;
+            top: 150px;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0;
+        }
+
+        .btn span {
+            width: 50px;
+            height: 100px;
+            display: block;
+            text-align: center;
+            line-height: 100px;
+            font-size: 40px;
+            background: rgba(0, 0, 0, .3);
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .current {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 800px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .current span {
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, .5);
+            margin: 0 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .current span.active {
+            background: red;
+        }
+    </style>
+</head>
+<script src="./js插件集合/el_move.js"></script>
+
+<body>
+    <div id="box">
+        <ul id='water'>
+            <li><a href="#"><img src="./image/1.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./image/2.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./image/3.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./image/4.jpg" alt=""></a></li>
+            <li><a href="#"><img src="./image/5.jpg" alt=""></a></li>
+        </ul>
+        <div class="btn">
+            <span>
+                <</span> <span>>
+            </span>
+        </div>
+
+        <div class="current">
+
+        </div>
+    </div>
+
+    <script>
+        /*
+        *手写原生轮播图规则：
+        *创建移动指标计数器active=0;
+        *先跟据现有的图片个数来动态创建小点，并为小点绑定移入事件移入小圆点时active值改为第几个小圆点，同时调用动画函数，把left值传递过去，并切换颜色
+        *动态添加第一个图片到最后一个
+        *写轮播方法：进来计数器active加一，获取current小点个数num,如果active等于num(到了手动创建的排在最后面的第一张图片)
+        *           就把小点改为第一个，如果active等于-1(说明走第一张切换到最后一张)，直接把小点该为最后一个，其他的小点跟着active值改变即可；
+        *            在这里要做个判断，如果是第一张移动到最后一张，需要在调用动画函数前把位置切换到创建的最后一张(下标为num)，然后把active值改为num-1;
+        *            就相当于走实际的最后一张切换到倒数第二张，在执行动画；
+        *动画执行完成的回调：动画执行完成后判断当前active值是否等于current的length，等于说明已经到达了创建的最后一张，就把left值改为0，同时把active改为0；
+        *点击右按钮：active++,调用动画函数，
+        *点击左按钮：active-=2,调用动画函数，
+        */
+
+        let box = document.querySelector("#box");
+        let water = document.querySelector("#water");
+        let lis = document.querySelectorAll("#water li");
+        let btn = document.querySelector(".btn");
+        let current = document.querySelector(".current");
+        let W = lis[0].offsetWidth; //图片宽度
+        let active = 0; // 创建移动指标计数器
+
+        // 添加第一张图片到最后一张
+        water.appendChild(lis[0].cloneNode(true));
+
+        // 添加current按钮
+        for (let i = 0; i < lis.length; i++) {
+            let span = document.createElement("span");
+            if (i == 0) {
+                span.className = 'active';
+            }
+            // 移入小圆点页面切换
+            span.onmouseenter = function () {
+                kg = true;
+                active = i;
+                animetes(water, {
+                    left: -active * W
+                }, callback);
+
+                let cur_spans = document.querySelectorAll(".current span");
+                for (let i = 0; i < cur_spans.length; i++) {
+                    // current跟着动
+                    if (i == active) {
+                        cur_spans[i].className = 'active';
+                    } else {
+                        cur_spans[i].className = "";
+                    }
+                }
+            }
+            current.appendChild(span);
+        }
+
+        // 定义轮播函数
+        function scroll() {
+            active++;
+            let cur_spans = document.querySelectorAll(".current span");
+        // 判断右边边界超出处理方式
+        if (active == cur_spans.length) {
+            for (let i = 0; i < cur_spans.length; i++) {
+                // 选中第一个
+                if (i == 0) {
+                    cur_spans[i].className = 'active';
+                } else {
+                    cur_spans[i].className = "";
+                }
+            }
+        } else if (active == -1) {
+            // 判断左边边界超出处理方式
+            for (let i = 0; i < cur_spans.length; i++) {
+                // 选中第一个
+                if (i == cur_spans.length-1) {
+                    cur_spans[i].className = 'active';
+                } else {
+                    cur_spans[i].className = "";
+                }
+            }
+        } else {
+            for (let i = 0; i < cur_spans.length; i++) {
+                // current跟着动
+
+                if (i == active) {
+                    cur_spans[i].className = 'active';
+                } else {
+                    cur_spans[i].className = "";
+                }
+            }
+        }
+        if(active==-1){
+                active = cur_spans.length-1;
+                water.style.left = -(active+1)* W +"px";
+            }
+            animetes(water, {
+                left: -active * W
+            }, callback);
+    };
+        // 定义回调函数
+        function callback() {
+            console.log(111);
+            console.log(active, lis.length);
+            if (active == lis.length) {
+                console.log("相等啦，跳第一个," + active);
+                active = 0;
+                water.style.left = 0;
+            }
+        }
+        // 动起来
+        let timer = setInterval(scroll, 3000);
+
+        // 移入暂停,显示左右按钮
+        box.onmouseenter = function () {
+            clearInterval(timer);
+            timer = null;
+            btn.style.opacity = '1';
+        }
+        // 移除继续，隐藏左右按钮
+        box.onmouseleave = function () {
+            timer = setInterval(scroll, 3000);
+            btn.style.opacity = '0';
+        }
+        // 点击右键切换下一页
+        btn.children[1].onclick = function () {
+            if (kg == true) {
+                scroll();
+            }
+        }
+        // 点击左键切换上一页
+        btn.children[0].onclick = function () {
+            if (kg == true) {
+                active -= 2;
+                scroll();
+            }
+        }
+    </script>
+</body>
+
+</html>

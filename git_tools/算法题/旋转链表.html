@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。
+      示例 1:
+
+      输入: 1->2->3->4->5->NULL, k = 2
+      输出: 4->5->1->2->3->NULL
+      解释:
+      向右旋转 1 步: 5->1->2->3->4->NULL
+      向右旋转 2 步: 4->5->1->2->3->NULL
+      示例 2:
+
+      输入: 0->1->2->NULL, k = 4
+      输出: 2->0->1->NULL
+      解释:
+      向右旋转 1 步: 2->0->1->NULL
+      向右旋转 2 步: 1->2->0->NULL
+      向右旋转 3 步: 0->1->2->NULL
+      向右旋转 4 步: 2->0->1->NULL*/
+      function ListNode(val) {
+        this.val = val
+        this.next = null
+      }
+      let List = {
+        val: 1,
+        next: null
+      }
+      var rotateRight = function(head, k) {
+        if (!k || !head) {
+          return head
+        }
+        let count = 0
+        let current = head
+        while (current.next) {
+          count++
+          current = current.next
+        }
+        count++
+        if (count == k || k % count == 0) {
+          return head
+        }
+        let dsde = current
+        count = count - (k % count)
+        console.log(count)
+        current = head
+        let nextList = { val: '哨兵', next: null }
+        let currentNext = nextList
+        while (count) {
+          currentNext.next = new ListNode(current.val)
+          current = current.next
+          currentNext = currentNext.next
+          count--
+        }
+        dsde.next = nextList.next
+        return current
+      }
+      let res = rotateRight(List, 99)
+      console.log(res)
+    </script>
+  </body>
+</html>

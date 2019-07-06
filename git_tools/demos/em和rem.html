@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,html{
+            font-size: 16px;
+        }
+        div.d1{
+            font-size: 20px;
+        } 
+        div.d2{
+            font-size: 2em;
+        }
+        div.d3{
+            font-size: 2em;
+            /*相对于父级元素来定义*/
+        }
+        div.d4{
+            font-size: 2rem;
+            /*相对于body,html定义的fontsize来定义*/
+        }
+    </style>
+</head>
+<body>
+    <div class="d1">111
+        <div class="d2">222
+            <div class="d3">333
+                <div class="d4">444</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

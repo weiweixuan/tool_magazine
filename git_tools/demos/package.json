@@ -1,0 +1,19 @@
+{
+  "name": "bac",
+  "version": "1.0.0",
+  "description": "",
+  "main": "promise_ajax.js",
+  "dependencies": {
+    "_array-find-index@1.0.2@array-find-index": "^1.0.2",
+    "_mint-ui@2.2.13@mint-ui": "^2.2.13",
+    "_raf.js@0.0.4@raf.js": "^0.0.4",
+    "_vue-lazyload@1.2.6@vue-lazyload": "^1.2.6",
+    "mint-ui": "^2.2.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

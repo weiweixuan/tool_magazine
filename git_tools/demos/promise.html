@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let p1 = Promise.resolve("aaa");
+    let p2 = Promise.resolve("bbb");
+    let p3 = Promise.resolve("ccc");
+    let p4 = Promise.reject("ddd");
+    Promise.all([p1,p2,p4]).then(res=>console.log(res)).catch(err =>console.log(err));
+
+</script>
+</body>
+</html>

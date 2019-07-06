@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr = ["张三",2,null,[1,2],{"name":"dingding","age":18}];
+//    判断数据类型
+    function TYPEOF(target){
+        var types = Object.prototype.toString.call(target).slice(8,-1);
+        return types;
+    }
+//    深拷贝
+    var deep_copy = function (arr) {
+        var type = TYPEOF(arr);
+//        如果列为对象或数组，先创建一个对象或数组
+        if (type=="Array"){
+            var res = [];
+        }else if (type=="Object"){
+            var res = {};
+        }
+            for (var i in arr){
+                var value = arr[i];
+                if (TYPEOF(value) == "Array" || TYPEOF(value)== "Object"){
+                    res[i]= deep_copy(value);
+                }else{
+                    res[i]=value;
+                }
+            }
+        return res;
+    }
+    var res =deep_copy(arr);
+    console.log(res);
+</script>
+</body>
+</html>

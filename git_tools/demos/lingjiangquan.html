@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .circle{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: greenyellow;
+            top: 150px;
+            left:100px;
+        }
+        .circle .pie_left{
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            clip: rect(0,25px,auto,0);
+        }
+        .circle .pie_left .left{
+            clip: rect(0,25px,auto,0);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: skyblue;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transform: rotate(180deg);
+        }
+
+        .circle .pie_right{
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            clip: rect(0,auto,auto,25px);
+        }
+        .circle .pie_right .right{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: skyblue;
+            position: absolute;
+            left: 0;
+            top: 0;
+            clip: rect(0,auto,auto,25px);
+            transform: rotate(180deg);
+        }
+        .circle .masks{
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top:5px;
+            left:5px;
+            background:greenyellow;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+    <div class="circle">
+        <div class="pie_left"><div class="left"></div></div>
+        <div class="pie_right"><div class="right"></div></div>
+        <div class="masks">
+            100%
+        </div>
+    </div>
+    <script>
+        window.onload=function () {
+            var num = parseFloat($(".masks").html())*3.6;
+            if (num <= 180){
+                num = 180-num;
+                $('.right').css('transform', "rotate(" + -num + "deg)");
+            }else if (num > 180){
+                num = 360-num;
+                $('.right').css('transform', "rotate(0deg)");
+                $('.left').css('transform', "rotate(" + -num + "deg)");
+            }
+        }
+    </script>
+</body>
+</html>

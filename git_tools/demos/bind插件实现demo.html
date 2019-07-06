@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.bind2 = function (content) {
+            let _self = this;
+            console.log(_self);
+            return function () {
+                return _self.apply(content);
+            }
+        }
+        // 测试用例
+        var value = 2;
+        var foo = {
+            value: 1
+        };
+
+        function bar() {
+            return this.value;
+        }
+
+        var bindFoo = bar.bind2(foo);
+
+        bindFoo(); // 1
+
+
+        // demo
+        add(1); // 1
+        add(1)(2); // 3
+        add(1)(2)(3); // 6
+        add(1)(2)(3)(4); // 10
+        function add(num){
+            return function(num2){
+                return num + num2;
+            }
+        }
+        
+    </script>
+</body>
+
+</html>

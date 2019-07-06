@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" value="点我防抖" id="fd" />
+    <input type="button" value="点我节流" id="jl" />
+    <script>
+      let fd = document.getElementById('fd')
+      let jl = document.getElementById('jl')
+      function fangdou() {
+        let timer = null
+        return function() {
+          clearTimeout(timer)
+          timer = setTimeout(() => {
+            console.log(`1秒后防抖`)
+          }, 1000)
+        }
+      }
+      function jieliu() {
+        let Switch = true
+        return function() {
+          if (Switch) {
+            timer = setTimeout(() => {
+              Switch = true
+              console.log('1s后节流')
+            }, 1000)
+            Switch = false
+          }
+        }
+      }
+      jl.onclick = jieliu()
+      fd.onclick = fangdou()
+    </script>
+  </body>
+</html>

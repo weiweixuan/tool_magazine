@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+</head>
+<body>
+    <script>
+        function $ajax(){
+            $.ajax({
+                url:'https://api.github.com/users/dingding',
+                type:"GET",
+                success:function(res){
+                   console.log(res);
+                   if(res.id=="440344"){
+                    return "获取成功！";
+                   }else{
+                    return "获取失败";
+                   }
+                },
+                error:function(err){
+                    conosle.log(err);
+                }
+            });
+        }
+        // function * gen(){
+        //     let res =yield $ajax();
+        //     console.log(res);
+        //     if(res=="获取成功！"){
+        //         yield "yes";
+        //     }
+            
+        // }
+        // let g1 = gen();
+        // console.log(g1.next());
+        // 创建一个定时器
+        function dsq(param,is){
+                return new Promise(function(resolve,reject){
+            setTimeout(() => {
+                   if(is){
+                       resolve(param);
+                   }else{
+                       reject(param);
+                   }
+                }, 2000);
+                });
+        }
+        // function * fun3(){
+        //     let a= yield dsq("aaa",true);
+        //     console.log(a);
+        //     let b= yield dsq("bbb",true);
+        //     console.log(b);
+        //     let c= yield dsq("ccc",true);
+        //     console.log(c);
+        //     return "你好";
+        // }
+        // let pro = fun3();
+        // pro.next().value.then(res=>{console.log(res);
+        //     pro.next().value.then(res=>{console.log(res)
+                
+        //     });
+        // });
+
+        async function gen2(){
+           let a = await dsq("111",true);
+           console.log(a);
+           let b = await dsq("222",true);
+           console.log(b);
+           let c = await dsq("333",false);
+           console.log(c);
+           let d = await dsq("444",true);
+           console.log(d);
+            return "哈哈哈";
+        }
+        let res = gen2();
+        // res.then(res=>{console.log("成功"+res)}).catch(err=>{console.log("失败"+err)});
+    </script>
+</body>
+</html>

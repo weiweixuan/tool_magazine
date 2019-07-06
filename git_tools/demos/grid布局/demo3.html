@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            margin:30px auto;
+            width:800px;
+            height:500px;
+            border:1px solid red;
+            background:#ddd;
+            display: grid;
+            grid-template: 200px 100px / repeat(2,100px) 200px 150px;
+            
+        }
+        .item{
+            height:100%;
+            background:blue;
+            grid-column: 2 /4;
+            grid-row: 1 /3;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="item"></div>
+        
+    </div>
+</body>
+</html>

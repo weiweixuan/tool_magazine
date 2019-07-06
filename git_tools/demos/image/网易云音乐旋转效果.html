@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      div {
+        text-align: center;
+        transform-style: preserve-3d;
+      }
+      #img {
+        width: 200px;
+        text-align: center;
+        line-height: 200px;
+        font-size: 40px;
+        background: skyblue;
+        height: 200px;
+        margin: 100px auto;
+        border-radius: 50%;
+        transition: all linear 0.2s;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <article id="img" style="transform: rotate3d(1,1,1,0deg)">
+        <span style="color:red">P</span>
+        <span style="color:black">e</span>
+        <span style="color:gray">n</span>
+        <span style="color:green">n</span>
+        <span style="color:yellow">y</span>
+      </article>
+      <script>
+        let img = document.getElementById('img')
+        img.onmouseenter = function() {
+          timer = setInterval(() => {
+            let current = parseInt(this.style.transform.split(',')[3])
+            this.style.transform = `rotate3d(1,1,1,${(current += 30) *
+              1.03}deg)`
+          }, 200)
+        }
+        img.onmouseleave = function() {
+          clearTimeout(timer)
+        }
+      </script>
+    </div>
+  </body>
+</html>

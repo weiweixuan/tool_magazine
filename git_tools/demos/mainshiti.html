@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/jquery.js"></script>
+    <style>
+        ul,li{
+            list-style: none;
+            padding:0;
+            margin:0;
+        }
+        #box{
+            width: 100%;
+            height:100%;
+            background:#eee;
+        }
+        .item{
+            height:100px;
+            width: 100%;
+            background:skyblue;
+            display: flex;
+            justify-content: space-around;
+            margin-top:20px;
+        }
+        .item li{
+            width:100px;
+            height: 100px;
+            background:blue;
+        }.item li:hover{
+            background:yellow;
+        }
+        .checked{
+            background:red !important;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id='row' placeholder="请输入行数">
+    <input type="text" id='col' placeholder="请输入列数">
+    <button id='submit'>提交</button>
+    <div id="box">
+        <!-- <ul id='item'>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul> -->
+    </div>
+    <script>
+        $("#submit").on("click",function(){
+            let row = $("#row").val();
+            let col = $("#col").val();
+            let html='';
+            for(var i=0;i<row;i++){
+                html+=`
+                <ul class='item'></ul>
+                `;
+            }
+            $("#box").html(html);
+            html='';
+            for(var j=0;j<col;j++){
+                html+=`
+                    <li></li>
+                `;
+            }
+            $(".item").html(html);
+        });
+        $("body").on("click","li",function(){
+            var $this=$(this);
+            if(!$this.hasClass("checked")){
+                $this.addClass("checked");
+            }else{
+                $this.removeClass("checked");
+            }
+        });
+    </script>
+</body>
+</html>

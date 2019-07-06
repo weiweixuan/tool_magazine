@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+//    let arr=[1,2,3,4,5,6,44,3,2,1,3,5,6,7,8,8,5,5,4,4,3,3,4,4,555,1];
+//    let res=new Set(arr);
+//    res.add("微微");
+//    res.delete(1);
+//    res.clear();
+//    console.log(res);
+//    arr = [...res];
+//    console.log(arr);
+    let res=new Map();
+    let json={
+        name:'tom',
+        age:15
+    }
+    res.set(json,100);
+    res.set("apple",json);
+    console.log(res);
+    res.forEach((key,item)=>{
+        console.log(key, item);
+    })
+    console.log(res.get(json));
+    console.log(res.get("apple"));
+</script>
+</body>
+</html>

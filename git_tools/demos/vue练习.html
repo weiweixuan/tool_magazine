@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p v-for="(item, index) in post" :key="index"><a href='#'>{{item.number}}</a><button @click='change'>{{item.text}}</button></p>
+        <div ref='dv'>我是div</div>
+        <child ref='child_node'>
+
+        </child>
+    </div>
+    <script>
+        let child = {
+            data: function () {
+                return {
+                    names: "我是子组件的作用域"
+                }
+            },
+            template: `
+                        <div>
+                             <button ref='btn' @click='go_btn'>change</button>
+                        </div>
+            `,
+            methods: {
+                go_btn(){
+                    console.log(this.$refs.btn);
+                }
+            }
+        }
+        let app = new Vue({
+            el: '#app',
+            data: {
+                post: {
+                    title1: {
+                        number: 1,
+                        text: '我是内容1'
+                    },
+                    title2: {
+                        number: 2,
+                        text: '我是内容2'
+                    },
+                    title3: {
+                        number: 3,
+                        text: '我是内容3'
+                    },
+                    title4: {
+                        number: 4,
+                        text: '我是内容4'
+                    }
+                },
+                names: "我是父组件的作用域",
+                abc:'我是abc'
+            },
+            mounted() {
+
+            },
+            methods: {
+                change(){
+                    console.log(this.$refs.dv);
+                }
+            },
+            components: {
+                child
+            }
+        });
+        
+    </script>
+</body>
+
+</html>

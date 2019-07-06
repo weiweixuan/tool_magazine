@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arr = [2,1,4,6,3,8,9,55,32,12];
+
+        function maopao(arr){
+            //外层循环length-1次
+            for(let i=1;i<arr.length;i++){
+                //内层循环length-i次
+                for(let j=0;j<arr.length-i;j++){
+                    if(arr[j]>arr[j+1]){
+                        // 交换数据
+                        arr[j]=arr[j] ^ arr[j+1];
+                        arr[j+1]=arr[j] ^ arr[j+1];
+                        arr[j]=arr[j] ^ arr[j+1];
+                    }
+                }
+            }
+            return arr;
+        }
+        let res = maopao(arr);
+        console.log(res);
+    </script>
+</body>
+</html>

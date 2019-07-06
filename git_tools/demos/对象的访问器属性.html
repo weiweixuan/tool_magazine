@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>    
+        let obj = {name:'ww',_age:24,show:'232'};
+        // Object.defineProperty(obj,"age",{
+        //     value:'25',
+        //     configurable:false
+        // });
+        // console.log(obj.age);
+        // console.log(obj);
+        // delete obj.age;
+        // console.log(obj);
+        // 属性：
+        // Object.defineProperties(obj,{
+        //     name:{
+        //         value:'wwww',
+        //         enumerable:false,
+        //         writable:false,
+        //         configurable:false
+        //     },
+            age:{
+        //         value:'1000',
+        //         enumerable:false,
+        //         writable:false,
+        //         configurable:false
+        //     }
+        // });
+        // console.log(obj);
+        // for(item in obj){
+        //     console.log(item);
+        // }
+        // 访问器属性：
+        Object.defineProperty(obj,'age',{
+            get:function(){
+                return '你猜'
+            },
+            set:function(val){
+                if(val>50){
+                    this._age = val;
+                    console.log(val);
+                }else{
+                    throw new Error("超出范围");
+                }
+            },
+            enumerable:false,
+            configurable:false
+        });
+        console.log(obj.age);
+        obj.age = 55;
+        console.log(obj);
+    </script>
+</body>
+</html>

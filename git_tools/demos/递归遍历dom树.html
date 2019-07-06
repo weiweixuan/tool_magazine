@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <p>dfjklfjdl</p>
+        <p>jfdslkfjds</p>
+    </div>
+    <a href="#">nihao啊</a>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+
+    <table>
+        <thead>
+            <tr>
+                <td>title1</td>
+                <td>title2</td>
+                <td>title3</td>
+                <td>title4</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>11</td>
+                <td>21</td>
+                <td>31</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>21</td>
+                <td>31</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>21</td>
+                <td>31</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    
+    <select name="" id="">
+            <option value="">110</option>
+            <option value="">210</option>
+            <option value="">310</option>
+            <option value="">410</option>
+            <option value="">510</option>
+        </select>
+</body>
+<script>
+    function forDom(ele){
+        let childs = ele.children;
+        for(let item of childs){
+            console.log(item.nodeName);
+            item.children&&forDom(item);
+        }
+    }
+    forDom(document.documentElement);
+</script>
+</html>

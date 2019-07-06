@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 已知如下数组：
+        var arr = [
+            [1, 2, 2],
+            [3, 4, 5, 5],
+            [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10
+        ];
+        // 编写一个程序将数组扁平化去并除其中重复部分数据，最终得到一个升序且不重复的数组
+        function MyFlat(arr){
+            let arrs = [];
+            function qbph(arr_){
+                for(let item of arr_){
+                    if(Array.isArray(item)){
+                        qbph(item);
+                    }else{
+                        arrs.push(item);
+                    }
+                }
+            }
+            qbph(arr);
+            return arrs;
+        }
+        let res2 = [...new Set(MyFlat(arr))].sort((a,b)=>a-b);
+        console.log(res2);
+        console.log([...new Set(arr.flat(Infinity))].sort((a,b)=>a-b));
+
+        let res3 = [...new Set(arr.toString().split(","))].sort((a,b)=>{ return a-b}).map(Number);
+        console.log(res3);
+        // // 去扁平化
+        // function paiping(arr) {
+        //     if (Array.isArray(arr)) {
+        //         let arr_ = [];
+        //         digui(arr, arr_);
+        //         return arr_;
+        //     }
+        // }
+        // // 递归
+        // function digui(arr_item, arr_) {
+        //     for (let i = 0; i < arr_item.length; i++) {
+        //         if (Array.isArray(arr_item[i])) {
+        //             digui(arr_item[i], arr_);
+        //         } else {
+        //             arr_.push(arr_item[i]);
+        //         }
+        //     }
+        // }
+        // let res = [...new Set(paiping(arr).sort((a, b) => a - b))];
+        // console.log(res);
+        // // 方法二
+        // let res2 = [...new Set(arr.toString().split(",").map((items) => {
+        //     return parseInt(items);
+        // }).sort((a, b) => a - b))];
+        // console.log(res2);
+    </script>
+</body>
+
+</html>

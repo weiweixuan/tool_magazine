@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .calc {
+            width: 400px;
+            height: 600px;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 50px auto;
+            border: 2px solid #aaa;
+        }
+
+        .calc .show {
+            max-width: 10000px;
+            height: 100px;
+            font-size: 50px;
+            text-align: right;
+            background: #ccc;
+            line-height: 100px;
+            padding: 0 20px;
+
+        }
+
+        .calc .control {
+            height: 400px;
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        .calc .control .keys {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 100px;
+            font-size: 26px;
+            cursor: pointer;
+            transition: all linear 0.3s;
+
+        }
+
+        .calc .control .keys:last-child {
+            background: orange;
+            color: #fff;
+        }
+
+        .animete {
+            background: red;
+        }
+
+        .animation {
+            animation: bounceIn 1s;
+        }
+
+        .res {
+            animation: jello 0.5s;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="./css/animate.css">
+</head>
+
+<body>
+    <div class="calc">
+        <div class="show">0</div>
+        <div class="control">
+            <div class="keys ac">AC</div>
+            <div class="keys del">删除</div>
+            <div class="keys val">**</div>
+            <div class="keys val">/</div>
+            <div class="keys val nums">7</div>
+            <div class="keys val nums">8</div>
+            <div class="keys val nums">9</div>
+            <div class="keys val">*</div>
+            <div class="keys val nums">4</div>
+            <div class="keys val nums">5</div>
+            <div class="keys val nums">6</div>
+            <div class="keys val">-</div>
+            <div class="keys val nums">1</div>
+            <div class="keys val nums">2</div>
+            <div class="keys val nums">3</div>
+            <div class="keys val">+</div>
+            <div class="keys back">返回</div>
+            <div class="keys val nums">0</div>
+            <div class="keys val">.</div>
+            <div class="keys res">=</div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            let a =0;
+            let b = true;
+            // 按键绑定事件
+            $(".control").on("click", ".keys", function () {
+                $(this).addClass("animete");
+                let remCla = function (cla) {
+                    this.removeClass(cla);
+                }.bind($(this));
+                setTimeout(function () {
+                    remCla("animete");
+                }, 200);
+            });
+
+            // 显示屏
+            $(".show").on("click", function () {
+                $(this).addClass("animation");
+                let remCla = function (cla) {
+                    this.removeClass(cla);
+                }.bind($(this));
+                setTimeout(function () {
+                    remCla("animation");
+                }, 1000);
+            });
+
+            // 重置
+            $(".ac").on('click', function () {
+                $(".show").html("0");
+            });
+
+            // 删除
+            $(".del").on('click', function () {
+                let show = $(".show").html().slice(0, -1);
+                if (show != '') {
+                    $(".show").html(show);
+                } else {
+                    $(".show").html("0");
+                }
+            });
+
+            // 空按键
+            $(".back").on('click', function () {
+                $(".show").html(a);
+            });
+
+            $(".nums").on("click",function(){
+                if(b){
+                    $(".show").html("0");
+                    b=false;
+                }
+            });
+            // 数字，运算符事件
+            $(".val").on("click", function () {
+                
+                let this_val = $(this).html();
+                let show_ = $(".show").html();
+                console.log(show_);
+                if (!isNaN(this_val)) {
+                    if (show_ == "0") {
+                        $(".show").html("");
+                    }
+                }
+                if (show_ == '计算有误！') {
+                    $(".show").html("");
+                }
+                $(".show").html($(".show").html() + this_val);
+                b=false;
+            });
+
+            // 等于号事件
+            $(".res").on("click", function () {
+                let val = $(".show").html();
+                if (val === '0/0') {
+                    $(".show").html("计算有误！");
+                    return false;
+                }
+                $(this).addClass("res");
+                let remCla = function (cla) {
+                    this.removeClass(cla);
+                }.bind($(this));
+                setTimeout(function () {
+                    remCla("res");
+                }, 1000);
+                try {
+                    let result = eval(val);
+                    $(".show").html(result);
+                    a=result;
+                    b=true;
+                } catch (error) {
+                    $(".show").html("计算有误！");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function isCurry(fun, count) {
+        count = count || fun.length
+        return function(...args) {
+          return args.length >= count
+            ? fun.apply(this, args)
+            : isCurry(fun.bind(this, ...args), count - args.length)
+        }
+      }
+      let resFun = isCurry(function(a, b, c) {
+        console.log([a, b, c])
+      })
+      resFun(1)(2)(3)
+      resFun(1, 2)(3)
+      resFun(1, 2, 3)
+      resFun(1)(2, 3)
+    </script>
+  </body>
+</html>

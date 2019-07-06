@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+
+             如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+
+             您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+             示例：
+
+             输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+             输出：7 -> 0 -> 8
+             原因：342 + 465 = 807*/
+      function ListNode(val) {
+        this.val = val
+        this.next = null
+      }
+      let ListNode1 = {
+        val: 1,
+        next: null
+      }
+      let ListNode2 = {
+        val: 9,
+        next: { val: 9, next: null }
+      }
+      function reverseList(list) {
+        let rev = new ListNode('哨兵'),
+          current = list
+        while (current) {
+          let next = rev.next
+          let res = new ListNode(current.val)
+          res.next = next
+          rev.next = res
+          current = current.next
+        }
+        return rev.next
+      }
+      var addTwoNumbers = function(l1, l2) {
+        let cur1 = l1,
+          cur2 = l2,
+          count = 0,
+          sum = 0,
+          newList = new ListNode('哨兵'),
+          newcur = newList
+        while (cur1 || cur2) {
+          let Switch = 0
+          if (cur1) {
+            sum += cur1.val
+            cur1 = cur1.next
+          }
+          if (cur2) {
+            sum += cur2.val
+            cur2 = cur2.next
+          }
+          if (sum >= 10) {
+            sum -= 10
+            Switch = true
+          }
+          sum = sum + count
+          if (sum >= 10) {
+            sum -= 10
+            count++
+            Switch = true
+          }
+          newcur.next = new ListNode(`${sum}`)
+          newcur = newcur.next
+          if (Switch) {
+            count = 1
+          } else {
+            count = 0
+          }
+          Switch = 0
+          sum = 0
+        }
+        if (count) {
+          newcur.next = new ListNode(`${count}`)
+        }
+        return newList.next
+      }
+      let res = addTwoNumbers(ListNode1, ListNode2)
+      console.log(res)
+    </script>
+  </body>
+</html>

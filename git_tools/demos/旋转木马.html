@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>啊啊啊</title>
+    <!-- <style>
+      .box {
+        width: 1000px;
+        height: 450px;
+        margin: 50px auto;
+        position: relative;
+        perspective: 500px;
+        transform-style: preserve-3d;
+      }
+
+      img {
+        position: absolute;
+        width: 1000px;
+        height: 400px;
+        left: 0px;
+        top: 0px;
+        border-radius: 10px;
+        transform-origin: 50% 50%;
+        transform: translate3d(0, 0, 0);
+        transition: all linear 1s;
+      }
+    </style> -->
+    <script src="./js插件集合/el_move.js"></script>
+  </head>
+
+  <body>
+    <div class="box">
+      <img src="./image/1.jpg" alt="" />
+      <img src="./image/2.jpg" alt="" />
+      <img src="./image/3.jpg" alt="" />
+      <img src="./image/4.jpg" alt="" />
+      <img src="./image/5.jpg" alt="" />
+    </div>
+    <!-- <script>
+      let json = [
+        {
+          width: '200px',
+          height: '100px',
+          top: '60px',
+          left: '250px',
+          zIndex: 1,
+          opacity: 0.2,
+          transform: 'rotateY(0deg)  skew(0deg,-7deg) '
+        },
+        {
+          width: '300px',
+          height: '150px',
+          top: '150px',
+          left: '0px',
+          zIndex: 10,
+          opacity: 0.6,
+          transform: 'rotateY(-63deg) skew(0deg,12deg)'
+        },
+        {
+          width: '600px',
+          height: '280px',
+          top: '150px',
+          left: '200px',
+          zIndex: 100,
+          opacity: 1,
+          transform: 'rotateY(0deg) skew(0deg,0deg)'
+        },
+        {
+          width: '300px',
+          height: '150px',
+          left: '700px',
+          top: '150px',
+          zIndex: 10,
+          opacity: 0.6,
+          transform: 'rotateY(63deg) skew(0deg,-12deg)'
+        },
+        {
+          width: '200px',
+          height: '100px',
+          top: '60px',
+          left: '550px',
+          zIndex: 1,
+          opacity: 0.2,
+          transform: 'rotateY(0deg) skew(0deg,7deg)'
+        }
+      ]
+      let imgs = document.querySelectorAll('img')
+      setInterval(() => {
+        json.push(json.shift())
+        for (let i = 0; i < imgs.length; i++) {
+          for (let item in json[i]) {
+            imgs[i].style[item] = json[i][item]
+          }
+        }
+      }, 2000)
+    </script> -->
+  </body>
+</html>

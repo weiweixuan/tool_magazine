@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width:200px;
+            height: 200px;
+            background:chartreuse;
+            transition: all linear 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <div id="box2"></div>
+    <button id='btn'>点我改变颜色</button>
+</body>
+<script>
+    // 创建一个传入两个对象和一个json对象改变style的类的面向对象方法
+    function Change_obj(btnObj,dvObj,json){
+        this.btnObj = btnObj;
+        this.dvObj = dvObj;
+        this.json = json;
+    }
+    Change_obj.prototype.init=function(){
+        this.btnObj.onclick=()=>{
+            for(let key in this.json){
+                this.dvObj.style[key]=this.json[key];
+            }
+        }
+    }
+
+    let btnObj = document.getElementById("btn");
+    let dvObj = document.getElementById("box");
+    let json = {
+        width:"400px",
+        height:'400px',
+        background:"red"
+    };
+    let a = new Change_obj(btnObj,dvObj,json);
+    a.init();
+    console.dir(a);
+    console.dir(Change_obj);
+    // 实例对象的__proto__属性的constructor又指向该类的构造函数
+    console.log(a.__proto__.constructor==Change_obj.prototype.constructor);
+</script>
+</html>

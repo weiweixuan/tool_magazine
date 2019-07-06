@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model='val'><button @click='commit'>提交</button>
+        <ul>
+            <li is='todo_item' v-for='(item,index) in arr' :things='item' @del='arr.splice(index,1)'></li>
+        </ul>
+    </div>
+    <script>
+        let todo_item = {
+            template: `
+                <li>{{things}}<button @click='$emit("del")'>删除</button></li>
+            `,
+            props: ["things"]
+        };
+        let app = new Vue({
+            el: '#app',
+            data: {
+                arr:[100,200,300],
+                val:''
+            },
+            methods: {
+                commit(){
+                    if(this.val){
+                        this.arr.push(this.val);
+                        this.val='';
+                    }
+                }
+            },
+            components: {
+                todo_item
+            }
+        });
+
+        // let obj = {
+        //     name: 'fjdslk',
+        //     age: 22,
+        //     color: "blue",
+        //     sayHi: function () {
+        //         console.log(this.name);
+        //     }
+        // }
+        // let obj2 = Object.create(obj, {
+        //     name: {
+        //         value: "wwx",
+        //         writable: false,
+        //         enumerable: true
+        //     },
+        //     age: {
+        //         value: 100,
+        //         enumerable: false
+        //     }
+        // });
+        // obj2.sayHi();
+        // console.dir(obj2);
+
+        // console.log(Object.keys(obj2));
+        // console.log(Object.values(obj2));
+        // console.log(Object.entries(obj2));
+    </script>
+</body>
+
+</html>

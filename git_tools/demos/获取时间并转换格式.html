@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        function checkTime(num){
+            return num>10?num:'0'+num;
+        };
+        function get_timestr(time){
+            let timer = new Date(time);
+            let yy = checkTime(timer.getFullYear());
+            let MM = checkTime(timer.getMonth()+1);
+            let dd = checkTime(timer.getDate());
+            let hh = checkTime(timer.getHours());
+            let mm = checkTime(timer.getMinutes());
+            let ss = checkTime(timer.getSeconds());
+            let str = `${yy}年${MM}月${dd}日--->${hh}时${mm}分${ss}秒`;
+            document.querySelector(".box").innerHTML=str;
+        }
+        setInterval(() => {
+            let now = new Date();
+            get_timestr(now);
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let dataArr = [];//用于存放最近12月的时间
+let data = new Date();//用于获取当前时间
+let year = data.getFullYear();//用于获取年
+data.setMonth(data.getMonth()+1, 1)//获取到当前月份,设置月份
+for (let i = 0; i < 12; i++) {
+  data.setMonth(data.getMonth() - 1);//每次循环一次 月份值减1
+  let m = data.getMonth() + 1;
+  m = m < 10 ? "0" + m : m;
+  dataArr.unshift(data.getFullYear() + "-" + (m)+"-"+'01'+" "+"00:00:00")
+}
+let data1=[];
+for(let i=0;i<dataArr.length;i++){
+  data1.push(dataArr[i].slice(5,7)>=10?dataArr[i].slice(5,7):dataArr[i].slice(6,7))
+};
+let fishdata=[
+  {
+    fishWeight:[],
+    fishLength:[]
+  },
+  {
+    fishWeight:[],
+    fishLength:[]
+  }
+];
+for(let i=0;i<2;i++){
+  let fishName=['成鱼','鱼苗'];
+  for(let j=0;j<dataArr.length;j++){
+    let groupList={};
+    console.log(j);
+    groupList.fishName= fishName[i];
+    groupList.recordTime = dataArr[j];
+    groupList=JSON.stringify(groupList);
+    this.$http.post(this.url+"/api/1.0/manage/ecology/",groupList,
+      {emulateJSON:true}).then(
+      function (res) {
+        // 处理成功的结果
+        console.log(res);
+        console.log(dataArr[j]);
+        console.log(res.body.data.fishWeight);
+        console.log(res.body.data.fishLength);
+        fishdata[i].fishWeight[j]=res.body.data.fishWeight;
+        fishdata[i].fishLength[j]=res.body.data.fishLength;
+      },function (res) {
+        //处理失败
+      }
+    );
+  }
+}
+    </script>
+</body>
+</html>

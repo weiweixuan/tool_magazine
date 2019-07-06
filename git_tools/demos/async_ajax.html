@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function get_details(url){
+            return new Promise((resolve,reject)=>{
+            fetch(url)
+            .then(res=>{return res.json()})
+            .then(res=>{resolve(res)})
+            .catch(err=>{console.log(err)});
+
+            });
+        };
+        async function fun(){
+            let data;
+            let url = "https://api.github.com/users/wwx";
+            data = await get_details(url);
+            console.log(data,1111);
+            setTimeout(() => {
+               if(data.login=="wwx"){
+                   console.log("是的wwx");
+               }else{
+                   console.log("用户名错误");
+               }
+            }, 2000);
+        }
+        // get_details("https://api.github.com/users/wwx").then(res=>console.log(res));
+        fun();
+    </script>
+</body>
+</html>

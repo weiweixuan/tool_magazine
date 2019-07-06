@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width:500px;
+            height:300px;
+            margin:50px auto;
+            display: flex;
+            flex-direction: column;
+            border:1px solid blue;
+        }
+        .header{
+            width:100%;
+            height:100px;
+            display: flex;
+        }
+        .content{
+            flex: 1;
+            overflow: hidden;
+        }
+        .header span{
+            flex:1;            
+            text-align: center;
+            line-height: 100px;
+        }
+        .header span.changes{
+            background: #ccc;
+        }
+        .content .change{
+            text-align: center;
+            height:100%;
+            display: none;
+        }
+        .header span:nth-child(1){
+            color: red;
+        }
+        .content .change:nth-child(1){
+            background: red;
+        }
+        .header span:nth-child(2){
+            color: blue;
+        }
+        .content .change:nth-child(2){
+            background: blue;
+        }
+        .header span:nth-child(3){
+            color: skyblue;
+        }
+        .content .change:nth-child(3){
+            background: skyblue;
+        }
+        .header span:nth-child(4){
+            color: greenyellow;
+        }
+        .content .change:nth-child(4){
+            background: greenyellow;
+        }
+        .change.show{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="header">
+            <span class='changes'>aaa</span>
+            <span>bbb</span>
+            <span>ccc</span>
+            <span>ddd</span>
+        </div>
+        <div class="content">
+            <div class="change show">aaa</div>
+            <div class="change">bbb</div>
+            <div class="change">ccc</div>
+            <div class="change">ddd</div>
+        </div>
+    </div>
+    <script>
+        let spans = document.querySelectorAll("span");
+        let divs = document.querySelectorAll("div.change");
+        for(let i=0;i<spans.length;i++){
+            spans[i].onclick=function(){
+                for(let j=0;j<spans.length;j++){
+                    spans[j].className='';
+                    divs[j].className='change';
+                }
+                spans[i].className='changes';
+                divs[i].className='change show';
+            }
+        }
+    </script>
+</body>
+</html>

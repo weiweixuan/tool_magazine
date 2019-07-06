@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    var fn = function(num) {
+    return new Promise(function(resolve, reject) {
+        if (typeof num == 'number') {
+            resolve(num);
+        } else {
+            reject('TypeError');
+        }
+    })
+}
+
+let res = fn(2).then(function(num) {
+    console.log('first: ' + num);
+    return num + 1;
+})
+console.log(res);
+// .then(function(num) {
+//     console.log('second: ' + num);
+//     return num + 1;
+// })
+// .then(function(num) {
+//     console.log('third: ' + num);
+//     return num + 1;
+// });
+
+    </script>
+</body>
+</html>

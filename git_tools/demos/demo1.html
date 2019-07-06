@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const p1 = new Promise((resolve,reject)=>{
+            setTimeout(() => {
+                resolve('success');
+            }, 3000);
+        });
+        const p2 = new Promise((resolve,reject)=>{
+            setTimeout(() => {
+                resolve(p1);
+            }, 1000);
+        });
+        console.log(new Date());
+        p2.then(result=>{console.log(result);
+        console.log(new Date());
+        }
+        ).catch(err=>{
+            console.log("error");
+        });
+    </script>
+</body>
+</html>

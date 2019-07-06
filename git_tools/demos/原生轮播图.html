@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原生轮播图</title>
+    <style>
+        .box {
+            width: 500px;
+            height: 300px;
+            border: 1px solid skyblue;
+            margin: 100px auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .box .scroll {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            display: flex;
+        }
+        .scroll_act{
+            transition: all linear .5s;
+        }
+        .box .scroll img {
+            width: 500px;
+            height: 300px;
+            transition: all linear .5s;
+        }
+
+        ul.button {
+            width: 500px;
+            height: 50px;
+            position: absolute;
+            top: 125px;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        ul.button li {
+            height: 50px;
+            width: 25px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 30px;
+            background: rgba(255, 255, 255, .3);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        ul.button li:hover {
+            background: rgba(255, 255, 255, .8);
+            color: #000;
+        }
+
+        ul.button li:first-child {
+            border-radius: 0 5px 5px 0;
+        }
+
+        ul.button li:last-child {
+            border-radius: 5px 0 0 5px;
+        }
+
+        ul.current {
+            position: absolute;
+            left: 150px;
+            bottom: 20px;
+            margin: 0;
+            width: 200px;
+            height: 20px;
+            display: flex;
+            list-style: none;
+            padding: 0;
+            justify-content: space-around;
+        }
+
+        ul.current li {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, .3);
+            border-radius: 50%;
+        }
+
+        .current_active {
+            background: rgba(255, 0, 0, .8) !important;
+            transition: all linear .5s;
+        }
+        .img_active{
+            transform: scale(0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="scroll scroll_act">
+            <!-- <img src="http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/lvpics/w=1000/sign=a669f57d3a12b31bc76cc929b628377a/503d269759ee3d6d801feef140166d224f4ade2b.jpg" alt="">
+                <img src="http://5b0988e595225.cdn.sohucs.com/images/20181218/b93d89bf97ef4315b6a4d90c9ce72c3d.jpeg" alt="">
+                <img src="http://b.hiphotos.baidu.com/lvpics/w=1000/sign=e271bc0860d9f2d3201120ef99dc8b13/d8f9d72a6059252d4daf9eed369b033b5ab5b99b.jpg" alt="">
+                <img src="http://g.hiphotos.baidu.com/lvpics/h=500/sign=15c51cdb9213b07ea2bd50083cd69113/bd315c6034a85edf638665d948540923dc5475c6.jpg" alt="">
+                <img src="http://pic13.nipic.com/20110331/3032951_224550202000_2.jpg" alt="">
+                <img src="http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/lvpics/w=1000/sign=a669f57d3a12b31bc76cc929b628377a/503d269759ee3d6d801feef140166d224f4ade2b.jpg" alt=""> -->
+        </div>
+        <!-- 左右按钮 -->
+        <ul class='button'>
+            <li>
+                <</li> <li>>
+            </li>
+        </ul>
+        <ul class='current'>
+            <!-- <li class='current_active'></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li> -->
+        </ul>
+    </div>
+</body>
+<script>
+    // window.onload = function () {
+    // 获取元素
+    let box = document.querySelector(".box");
+    let scroll = document.querySelector(".scroll");
+    let btn_lis = document.querySelectorAll("ul.button li");
+    let current = document.querySelector("ul.current");
+    let touch_x = 0;
+        box.ontouchstart=function(e){
+            console.log("开始触摸了！");
+            touch_x = e.changedTouches[0].clientX;
+        }
+        box.ontouchend=function(e){
+            console.log("触摸结束了");
+           if(e.changedTouches[0].clientX - touch_x>0){
+            left_scroll();
+           }else{
+            right_scroll();
+           }
+        }
+    // 获取img的length
+    let size = 5;
+    // 后台动态添加img元素
+    scroll.innerHTML =
+        `
+                <img  src="http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/lvpics/w=1000/sign=a669f57d3a12b31bc76cc929b628377a/503d269759ee3d6d801feef140166d224f4ade2b.jpg" alt="">
+                <img class='img_active' src="http://5b0988e595225.cdn.sohucs.com/images/20181218/b93d89bf97ef4315b6a4d90c9ce72c3d.jpeg" alt="">
+                <img class='img_active' src="http://b.hiphotos.baidu.com/lvpics/w=1000/sign=e271bc0860d9f2d3201120ef99dc8b13/d8f9d72a6059252d4daf9eed369b033b5ab5b99b.jpg" alt="">
+                <img class='img_active' src="http://g.hiphotos.baidu.com/lvpics/h=500/sign=15c51cdb9213b07ea2bd50083cd69113/bd315c6034a85edf638665d948540923dc5475c6.jpg" alt="">
+                <img class='img_active' src="http://pic13.nipic.com/20110331/3032951_224550202000_2.jpg" alt="">
+                <img class='img_active' src="http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/lvpics/w=1000/sign=a669f57d3a12b31bc76cc929b628377a/503d269759ee3d6d801feef140166d224f4ade2b.jpg" alt="">
+        `;
+
+    // 动态添加下面的小圆点个数
+    function add_current() {
+        let html = '';
+        for (let i = 0; i < size; i++) {
+            if (i == 0) {
+                html += `<li class='current_active'></li>`;
+            } else {
+                html += `<li></li>`;
+            }
+        }
+        current.innerHTML = html;
+    }
+    add_current();
+
+    // 获取所有的current下的li
+    let current_lis = document.querySelectorAll("ul.current li");
+    let scroll_img = document.querySelectorAll(".scroll img");
+    // 轮播功能函数
+    // 已经滚动的图片个数
+    let active = 0;
+
+    function scroll_Act() {
+        left = active * 500;
+        scroll.style.left = `-${left}px`;
+        for (let i = 0; i < size; i++) {
+            current_lis[i].className = '';
+            scroll_img[i].className='img_active';
+        }
+        current_lis[active].className = 'current_active';
+        scroll_img[active].className = '';
+    }
+
+    // 点击翻页修改active值
+    function FanPage(pageSize = '没传值') {
+        if (pageSize == '没传值') {
+            active++;
+            if (active == size) {
+                // scroll.style.left = `0px`;
+                active = 0;
+            }
+        } else {
+            active = pageSize;
+        }
+    }
+    let timer = setInterval(function () {
+        FanPage();
+        scroll_Act();
+    }, 3000);
+
+    // 移入暂停，移出轮播
+    box.onmouseenter = function () {
+        clearInterval(timer);
+        timer = null;
+    };
+    box.onmouseleave = function () {
+        timer = setInterval(function () {
+            FanPage();
+            scroll_Act();
+        }, 3000);
+    }
+    // 移动到current时，切换轮播
+    for (let i = 0; i < current_lis.length; i++) {
+        current_lis[i].onmouseenter = function () {
+            FanPage(i);
+            scroll_Act();
+        }
+    }
+    // 左滑 
+    function left_scroll() {
+        if(active>0){
+            active--;
+        }else{
+            active=size-1;
+        }
+        FanPage(active);
+        scroll_Act();
+    }
+    function right_scroll() {
+        FanPage();
+        scroll_Act();
+    }
+    // 点击左切换
+    btn_lis[0].onclick =left_scroll;
+    // 点击右切换
+    btn_lis[1].onclick = right_scroll;
+    // }
+</script>
+
+</html>

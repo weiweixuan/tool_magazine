@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <button>点我试试</button>
+    <div></div>
+    <script>
+        function animates(ele, num1,num2,fn) {
+            clearInterval(ele.timer);
+            let left_now = ele.offsetLeft;
+            let top_now = ele.offsetTop;
+
+            let abs_left =num1 - left_now;
+            let abs_top =num2 - top_now;
+
+            let stap_left = abs_left/100;
+            let stap_top = abs_top/100;
+
+            ele.timer = setInterval(() => {
+                let left = left_now += stap_left;
+                let abs1 = Math.abs(left) - Math.abs(num1);
+
+                let top = top_now += stap_top;
+                let abs2 = Math.abs(top) - Math.abs(num2);
+
+                if (Math.abs(abs1) > Math.abs(stap_left) || Math.abs(abs2) > Math.abs(stap_top)) {
+                    ele.style.left = left + 'px';
+                    ele.style.top = top + 'px';
+                } else {
+                    ele.style.left = num1 + 'px';
+                    ele.style.top = num2 + 'px';
+                    clearInterval(ele.timer);
+                    fn();
+                }
+            }, 5);
+        }
+        let div = document.querySelector("div");
+        let button = document.querySelector("button");
+        button.onclick=function(){
+            animates(div,300,300,function(){setTimeout(function(){
+                animates(div,1000,100);
+            },0);});
+            
+        }
+    </script>
+</body>
+
+</html>

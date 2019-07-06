@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // var num = 1;
+        // var myObject = {
+        //     num: 2,
+        //     add: function () {
+        //         this.num = 3;
+        //         (function () {
+        //             console.log(this.num);
+        //             this.num = 4;
+        //         })();
+        //         console.log(this.num);
+        //     },
+        //     sub: function () {
+        //         console.log(this.num)
+        //     }
+        // }
+        // myObject.add(); 
+        // console.log(myObject.num);
+        // console.log(num);
+        // var sub = myObject.sub;
+        // sub();
+
+
+        // function fun(){
+        //     console.log(this.a);
+        // }
+        // var a = 0;
+        // let obj = {
+        //     a: 1,
+        //     handle_jian: () => {
+        //         fun();
+        //         console.log(this.a);
+        //     },
+        //     handle_normal:function(){
+        //         fun();
+        //         console.log(this.a);
+        //     }
+        // };
+        // let obj2 = {
+        //     a:2,
+        //     can:obj
+        // };
+        // obj2.can.handle_jian();
+        // obj.handle_normal();
+
+
+
+
+
+        // let len = 10;
+
+        // function fn() {
+        //     console.log(this);
+        //     console.info(this.len)
+        // }
+        // fn();
+        // let Person = {
+        //     len: 5,
+        //     say: function () {
+        //         fn();
+        //         arguments.len=111;
+        //         arguments[0]();
+        //     }
+        // }
+        // Person.say(fn);
+        // //10  undefined
+        // //5  undefined
+        // // 10 undefined
+
+
+        // 匿名函数的this
+        // var a = 1;
+        // let obj1 = {
+        //     a:2,
+        //     fun:function(){
+
+        //         (()=>{
+        //             console.log(this);
+        //             setTimeout(() => {
+        //             console.log(this);
+        //         }, 1000);
+        //         })();
+        //     }
+        // }
+        // obj1.fun();
+
+
+        // var name = 'window'
+
+        // var person1 = {
+        //     name: 'person1',
+        //     show1: function () {
+        //         console.log(this.name)
+        //     },
+        //     show2: () => console.log(this.name),
+        //     show3: function () {
+        //         return function () {
+        //             console.log(this.name)
+        //         }
+        //     },
+        //     show4: function () {
+        //         return () => console.log(this.name)
+        //     }
+        // }
+        // var person2 = {
+        //     name: 'person2'
+        // }
+        // person1.show1()
+        // person1.show1.call(person2)
+        // person1.show2()
+        // person1.show2.call(person2)
+        // person1.show3()()
+        // person1.show3().call(person2)
+        // person1.show3.call(person2)()
+        // person1.show4()()
+        // person1.show4().call(person2)
+        // person1.show4.call(person2)()
+        /*
+            person1
+            person2
+            window
+            window
+            window
+            person2
+            window
+            person1
+            person1
+            person2
+        */
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr=["a","b","c","d","e","f","g","h","i","j","h","i","j","h","i","j","h"];
+    var arr_res=[];
+    var num=Math.ceil(arr.length/3);
+    for ( var i =0;i<num;i++){
+            arr_res[i]=[];
+        for (var j =0;j<3;j++){
+            var index=i*3+j;
+            if (i == num-1){
+                if (!arr[index]){
+                    break;
+                }
+            }
+            arr_res[i].push(arr[index]);
+
+        }
+    }
+    console.log(arr_res);
+</script>
+</body>
+</html>

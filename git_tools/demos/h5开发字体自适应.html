@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,body{
+            padding:0;
+            margin:0;
+        }
+        @media screen and (min-width:800px){
+            html,body{
+                font-size: 80px;
+            }
+        }
+        @media screen and (min-width:320px) and (max-width:800px){
+            html,body{
+                font-size: 10vw;
+            }
+        }
+        @media screen and (max-width:320px){
+            html,body{
+                font-size: 32px;
+            }
+        }
+        .box{
+            font-size: .5rem;
+            color:red;
+            border:1px solid blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        我是测试字体
+    </div>
+</body>
+</html>

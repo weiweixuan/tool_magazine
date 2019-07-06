@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*add(1); // 1
+        add(1)(2);  // 3
+        add(1)(2)(3)； // 6
+        add(1)(2)(3)(4)； // 10 */
+      function add() {
+        let value = 0
+        function sum(...args) {
+          value = args.reduce((prev, item, index) => prev + item, value)
+          return sum
+        }
+        sum.toString = function() {
+          return value
+        }
+
+        return sum
+      }
+      let addFun = add()
+      console.log(addFun(1, 2)(3, 4)(5))
+    </script>
+  </body>
+</html>

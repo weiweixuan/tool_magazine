@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 530px;
+            height: 530px;
+            margin: 100px auto;
+            display: flex;
+            flex-flow: row wrap;
+            background: skyblue;
+            justify-content: space-between;
+            align-content: space-between;
+        }
+
+        .item {
+            width: 150px;
+            height: 150px;
+            background: #ccc;
+            text-align: center;
+            line-height: 150px;
+            font-size: 40px;
+            border-radius: 10px;
+            transition: all linear .2s;
+        }
+
+        .start {
+            background: orange;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .light {
+            color: #fff;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="item cont">1</div>
+        <div class="item cont">2</div>
+        <div class="item cont">3</div>
+        <div class="item cont">4</div>
+        <div class="item start">开始</div>
+        <div class="item cont">6</div>
+        <div class="item cont">7</div>
+        <div class="item cont">8</div>
+        <div class="item cont">9</div>
+    </div>
+    <script>
+        let conts = document.querySelectorAll(".cont");
+
+        function change_arr(arr) {
+            let arr_old = [...arr];
+            let arr_now = [];
+            arr_now.push(arr_old[0]);
+            arr_now.push(arr_old[1]);
+            arr_now.push(arr_old[2]);
+            arr_now.push(arr_old[4]);
+            arr_now.push(arr_old[7]);
+            arr_now.push(arr_old[6]);
+            arr_now.push(arr_old[5]);
+            arr_now.push(arr_old[3]);
+            return arr_now;
+        }
+        let timer = 0;
+        let t = null;
+        let c = 0;
+        let arrs = change_arr(conts);
+
+        function slow(){
+            for(let i=0;i<arrs.length;i++){
+                arrs[i].className = 'item cont';
+            }
+            c++;
+            if(c==arrs.length){c = 0;}
+            arrs[c].className = 'item cont light';
+            timer+=parseInt(Math.random()*10);
+            clearInterval(t);
+            if(timer<=200){
+              t =  setInterval(slow,timer);
+            }else{
+                timer = 0;
+                t = null;
+            }
+        }
+        let start = document.querySelector(".start");
+        start.onclick = function(){
+            slow();
+        }
+    </script>
+</body>
+
+</html>

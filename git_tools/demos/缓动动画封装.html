@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            top: 100px;
+            left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <button class='change'>change</button>
+    <div></div>
+    <script>
+        let W = innerWidth;
+        let H = innerHeight;
+        let div = document.querySelector("div");
+
+        function getEleAttr(ele, attr) {
+            return parseInt(getComputedStyle(ele, null)[attr]) || ele.style[attr];
+        }
+
+        function animetes(ele, json, fn) {
+            clearInterval(ele.timer);
+            ele.timer = setInterval(() => {
+                let ons = true;
+                for (let attr in json) {
+                    if (attr == 'opacity') {
+                        let current = getEleAttr(ele, attr) * 100;
+                        let target = json[attr] * 100;
+                        if (current == target) {
+                            ele.style[attr] = target + 'px';
+                        }else{
+                        let step = (target - current) / 10;
+                        step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                        current = current + step;
+                        ele.style[attr] = current / 100;
+                        }
+                    }else{
+                        // 宽高
+                        let current = getEleAttr(ele, attr);
+                        let target = json[attr];
+                        let step = (target - current) / 10;
+                        step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                        current += step;
+                        ele.style[attr] = current + 'px';
+                        if (current == target) {
+                            ele.style[attr] = target + 'px';
+                            ons = false;
+                        }
+                    }
+
+                }
+                if (!ons) {
+                    clearInterval(ele.timer);
+                    ele.timer = null;
+                    if (fn) {
+                        fn();
+                    }
+                }
+            }, 20);
+        }
+        document.querySelector(".change").onclick = function () {
+            let json = {
+                opacity: parseInt(Math.random() * 100) / 100,
+                top: parseInt(Math.random() * H),
+                left: parseInt(Math.random() * W)
+            }
+            console.log(json);
+            animetes(div, json, function () {
+                console.log("动画结束！")
+            });
+        }
+        console.log(getEleAttr(div, "opacity"));
+    </script>
+</body>
+
+</html>

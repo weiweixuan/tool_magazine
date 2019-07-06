@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,html{
+            padding:0;
+            margin:0;
+        }
+        .box{
+            height: 100vh;
+            background:#ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <script type='module'>
+        let div = document.querySelector(".box");
+        import Touch from './touch.js';
+        let demo = new Touch({
+            'obj': div,
+            'direction': 'horizontal', //horizontal 水平 vertical 垂直
+            'slideUp': function() {
+                alert('u')
+            },
+            'slideDown': function() {
+                alert('d')
+            },
+            'slideLeft': function() {
+                alert('l')
+            },
+            'slideRight': function() {
+                alert('r')
+            }
+        });
+        console.log(demo);
+    </script>
+</body>
+
+</html>

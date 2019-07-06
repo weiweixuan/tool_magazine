@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function ajax(obj={}){
+            let param ={};
+            param.options = Object.assign({
+                url:'baidu.com',
+            data:{userName:'dingding',userPwd:'123456'},
+            type:'get',
+            cb:function(){
+                alert(111);
+            }
+        },obj);
+        console.log(param.options);
+        param.options.cb();
+        }
+
+        ajax({
+                url:'woaiwojian.com',
+            data:{userName:'weiwei',userPwd:'penny'}
+        });
+        </script>
+</body>
+</html>

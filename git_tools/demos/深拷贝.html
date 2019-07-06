@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [
+            1, null, undefined,
+            function a() {
+                console.log(1)
+            }, {
+                dijia: {
+                    name: "迪迦",
+                    age: '3.5w',
+                    show: ['吃饭','睡觉','打怪兽']
+                }
+            }
+        ];
+        // 实现深拷贝：
+        function deepCopy(data){
+            if(typeof data == 'object'){
+                if(Array.isArray(data)){
+                    var res = [];
+                }else if(Object.prototype.toString.call(data)=='[object Object]'){
+                    var res = {};
+                }else{
+                    return data;
+                }
+                for(key in data){
+                    if(typeof data[key] == 'object'){
+                        res[key] = deepCopy(data[key]);
+                    }else{
+                        res[key] = data[key];
+                    }
+                }
+                return res;
+            }else{
+                return data;
+            }
+        }
+        let dC = deepCopy(arr);
+        console.log(dC);
+        console.log(dC === arr);
+    </script>
+</body>
+
+</html>

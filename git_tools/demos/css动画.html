@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,body{
+            padding:0;
+            margin:0;
+            perspective: 500px;
+            background:#ccc;
+        }
+        #box{
+            margin:100px auto;
+            transform-style: preserve-3d;
+            width:400px;
+            height:300px;
+            transition: all linear 2s;
+            position: relative;
+            box-shadow: 10px 10px 20px 5px blue;
+        }
+        #box img{
+            width:100%;
+            height:100%;
+        }
+        #box img:first-child{
+            position: absolute;
+            backface-visibility: hidden;
+        }
+        #box:hover{
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3026048043,3668697839&fm=26&gp=0.jpg" alt="">
+        <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2340502929,996717525&fm=26&gp=0.jpg" alt="">
+    </div>
+</body>
+</html>

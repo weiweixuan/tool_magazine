@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let num1 = 12;
+        let num2 = '12';
+        let num3 = '123a';
+        let num4 = 'a123';
+        let num5 = NaN;
+        let num6 = 'NaN';
+        // console.log(Number.isNaN(num1));
+        // console.log(Number.isNaN(num2));
+        // console.log(Number.isNaN(num3));
+        // console.log(Number.isNaN(num4));
+        // console.log(Number.isNaN(num5));
+        // console.log(Number.isNaN(num6));
+
+        // console.log(typeof num2==='number');
+
+        // console.log(isNaN(num1));
+        // console.log(isNaN(num2));
+        // console.log(isNaN(num3));
+        // console.log(isNaN(num4));
+
+
+        function isPalindrome(str) {
+            str = str.replace(/\W/g, '').toLowerCase();
+            console.log(str);
+            return (str == str.split('').reverse().join(''));
+        }
+        // console.log(isPalindrome("level")); // logs 'true'
+        // console.log(isPalindrome("levels")); // logs 'false'
+        // console.log(isPalindrome("A car, a man, a maraca")); // logs 'true'
+
+        function sum() {
+            let arg = [...arguments];
+            let count = arg.length;
+            if (count == '1') {
+                return function (num) {
+                    return arg[0] + num;
+                }
+            } else {
+                return arg.reduce((sum, item) => sum += item, 0);
+            }
+        }
+        // console.log(sum(2, 3)); // Outputs 5
+        // console.log(sum(2)(3)); // Outputs 5
+
+
+        // ['a', 'b', 'c', 'd', 'e'].forEach(function (value, i) {
+
+        //     var btn = document.createElement('button');
+        //     btn.appendChild(document.createTextNode('Button ' + i));
+
+        //     btn.addEventListener('click', function () {
+        //         console.log(i);
+        //     });
+        //     document.body.appendChild(btn);
+
+        // });
+
+
+        // for (let i = 0; i < 5; i++) {
+        //     var btn = document.createElement('button');
+        //     btn.appendChild(document.createTextNode('Button ' + i));
+        //     btn.addEventListener('click', function () {
+        //         console.log(i);
+        //     });
+        //     document.body.appendChild(btn);
+
+        // }
+        // var globalVar = "xyz";
+        // (function outerFunc(outerArg) {
+        //     var outerVar = 'a';
+        //     (function innerFunc(innerArg) {
+        //         var innerVar = 'b';
+        //         console.log(
+        //             "outerArg = " + outerArg + "\n" +
+        //             "innerArg = " + innerArg + "\n" +
+        //             "outerVar = " + outerVar + "\n" +
+        //             "innerVar = " + innerVar + "\n" +
+        //             "globalVar = " + globalVar);
+        //     })(456);
+        // })(123);
+
+
+        // let arr = [1,2,4,5,6];
+        // arr.reduce((sum,item)=>{console.log(sum,item);return sum+item;},0);
+        // function count() {
+        //     var arr = [];
+        //     for (var i = 1; i <= 3; i++) {
+        //         (function (i) {
+        //             arr.push(function () {
+        //                 console.log( i * i);
+        //             });
+        //         })(i);
+        //     }
+        //     return arr;
+        // }
+        // var results = count();
+        // console.log(results);
+        // var f1 = results[0]();
+        // var f2 = results[1]();
+        // var f3 = results[2]();
+
+        // function a (){
+        //     let s =0;
+        //     return {
+        //         b:function(){
+        //             s++;
+        //             console.log(s);
+        //         }
+        //     }
+        // }
+        // let aa = a();
+        // aa.b();
+        // aa.b();
+        // aa.b();
+        // for (var i = 0; i < 5; i++) {
+        //     !!function (i) {
+        //         setTimeout(function () {
+        //             console.log(i);
+        //         }, i * 2000);
+        //     }(i);
+        // }
+        // var a = {},
+        //     b = {
+        //         key: 'b'
+        //     },
+        //     c = [1,2,3];
+
+        // a[b] = 123;
+        // console.dir(a);
+        // a[c] = 456;
+        // console.dir(a);
+        console.log((function f(n) {
+            return ((n > 1) ? n * f(n - 1) : n)
+        })(10));
+    </script>
+</body>
+
+</html>

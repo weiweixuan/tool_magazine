@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/animate.css">
+    <style>
+        #swiper {
+            width: 500px;
+            height: 300px;
+            margin: 100px auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #box {
+            width: 3000px;
+            height: 300px;
+            font-size: 0px;
+            position: absolute;
+        }
+
+        img {
+            width: 500px;
+            height: 300px;
+
+        }
+
+        #click {
+            position: absolute;
+            width: 500px;
+            height: 50px;
+            top: 125px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        span {
+            width: 30px;
+            display: block;
+            line-height: 50px;
+            background: rgba(255, 255, 255, .5);
+            height: 50px;
+            text-align: center;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        #ul {
+            height: 15px;
+            width: 100px;
+            position: absolute;
+            bottom: 20px;
+            left: 200px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+            display: block;
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, .5);
+            border-radius: 50%;
+        }
+
+        .active {
+            background: rgba(255, 0, 0, 0.8);
+        }
+
+        .donghua_left {
+            animation: zoomOutLeft 1s;
+        }
+
+        .donghua_right {
+            animation: zoomOutRight 1s;
+        }
+    </style>
+    <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+</head>
+
+<body>
+    <div id="swiper">
+        <div id="box">
+            <img src="http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/lvpics/w=1000/sign=a669f57d3a12b31bc76cc929b628377a/503d269759ee3d6d801feef140166d224f4ade2b.jpg"
+                alt="">
+            <img src="http://5b0988e595225.cdn.sohucs.com/images/20181218/b93d89bf97ef4315b6a4d90c9ce72c3d.jpeg" alt="">
+            <img src="http://b.hiphotos.baidu.com/lvpics/w=1000/sign=e271bc0860d9f2d3201120ef99dc8b13/d8f9d72a6059252d4daf9eed369b033b5ab5b99b.jpg"
+                alt="">
+            <img src="http://g.hiphotos.baidu.com/lvpics/h=500/sign=15c51cdb9213b07ea2bd50083cd69113/bd315c6034a85edf638665d948540923dc5475c6.jpg"
+                alt="">
+            <img src="http://pic13.nipic.com/20110331/3032951_224550202000_2.jpg" alt="">
+            <img src="http://gss0.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/lvpics/w=1000/sign=a669f57d3a12b31bc76cc929b628377a/503d269759ee3d6d801feef140166d224f4ade2b.jpg"
+                alt="">
+        </div>
+        <!-- 左右按钮 -->
+        <div id='click'>
+            <span id="c1">
+                <</span> <span id="c2">>
+            </span>
+        </div>
+        <!-- list -->
+        <ul id='ul'>
+            <li class='active'></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script>
+        window.onload = function () {
+            let $swiper = $("#swiper");
+            let $box = $("#box");
+            let totals = $("img").length;
+            let $span = $("span");
+            let $li = $("li");
+            // 创建偏移量
+            let active = 0;
+            // 创建轮播方法
+            let timer;
+
+            function Scroll() {
+                if (active == totals - 1) {
+                    $li.removeClass("active");
+                    $($li[0]).addClass("active");
+                } else {
+                    $li.removeClass("active");
+                    $($li[active]).addClass("active");
+                }
+                // 移除所有的动画效果，给当前显示的img的前后一个图片添加class
+                $("img").removeClass("donghua_left");
+                $("img").removeClass("donghua_right");
+                $($("img")[active - 1]).addClass("donghua_left");
+                $($("img")[active + 1]).addClass("donghua_right");
+                let left = active * 500;
+                // 下面点跟着动
+                $box.stop().animate({
+                    left: -left
+                }, function () {
+                    if (active == totals - 1) {
+                        $box.css({
+                            left: '0px'
+                        })
+                        active = 0;
+                    } else if (active == 0) {
+                        $box.css({
+                            left: '-2500px'
+                        })
+                    }
+                });
+            }
+            // 添加移入暂停轮播
+            $swiper.on("mouseenter", function () {
+                clearInterval(timer);
+            }).on("mouseleave", function () {
+                timer = setInterval(() => {
+                    active++;
+                    Scroll();
+                }, 2000);
+            });
+            // 给li添加移入事件
+            $li.on("mouseenter", function () {
+                let li = $(this);
+                active = $li.index(li);
+                $li.removeClass("active");
+                $($li[active]).addClass("active");
+                Scroll();
+            });
+            // 给span添加点击事件
+            $span.on("click", function (e) {
+                let $span = $(this);
+                
+                if ($span.text().trim() == "<") {
+                    if (active == 0) {
+                        $box.css({
+                            left: '-2500px'
+                        })
+                    }
+                    console.log("<");
+                    active--;
+                    if (active < 0) {
+                        active = 4;
+                    }
+                    Scroll();
+                } else if ($span.text().trim() == ">") {
+                    console.log(">");
+                    active++;
+                    Scroll();
+                }
+            });
+            timer = setInterval(() => {
+                active++;
+                Scroll();
+            }, 2000);
+        };
+    </script>
+</body>
+
+</html>

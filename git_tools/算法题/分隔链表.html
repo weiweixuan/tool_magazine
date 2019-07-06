@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
+
+      你应当保留两个分区中每个节点的初始相对位置。
+
+      示例:
+
+      输入: head = 1->4->3->2->5->2, x = 3
+      输出: 1->2->2->4->3->5*/
+      function ListNode(val) {
+        this.val = val
+        this.next = null
+      }
+      let list = {
+        val: 1,
+        next: {
+          val: 2,
+          next: {
+            val: 3,
+            next: {
+              val: 2,
+              next: {
+                val: 4,
+                next: null
+              }
+            }
+          }
+        }
+      }
+      var partition = function(head, x) {
+        let before = new ListNode('哨兵'),
+          after = new ListNode('哨兵'),
+          bef = before,
+          aft = after,
+          current = head
+        while (current) {
+          if (current.val < x) {
+            bef.next = new ListNode(current.val)
+            bef = bef.next
+          } else {
+            aft.next = new ListNode(current.val)
+            aft = aft.next
+          }
+          current = current.next
+        }
+        current = before
+        while (current && current.next) {
+          current = current.next
+        }
+        current.next = after.next
+        return before.next
+      }
+      let res = partition(list, 10)
+      console.log(res)
+    </script>
+  </body>
+</html>

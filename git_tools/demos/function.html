@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let a= function(num=mes()){
+            console.log("传参了吗？");
+        }
+        function mes(){
+            throw new Error(
+                alert("请传递参数进来")
+            )   
+        }
+        a("我是参数");
+    </script>
+</body>
+</html>

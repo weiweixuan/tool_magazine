@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <a href="https://www.baidu.com" id ='aaa'>点我跳转到百度首页</a>
+    
+    <script>
+        let a = document.querySelector("a");
+        console.log(a.href);
+        a.id='bbb';
+        a.title='abc';
+        let body = document.querySelector('body');
+        !function(){
+            // 创建10个checkbox
+            for(let i=0;i<10;i++){
+            let ele = document.createElement("input");
+            ele.type='checkbox';
+            ele.setAttribute('data-id',"我是ID");
+            body.appendChild(ele);
+            }
+        }();
+        
+    </script>
+</body>
+</html>

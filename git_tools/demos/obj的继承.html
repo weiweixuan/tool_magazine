@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function Person(name, age) {
+        //     this.arr = [1, 2, 3];
+        //     this.name = name;
+        //     this.age = age;
+        // }
+        // Person.prototype.sayhi = function () {
+        //     console.log("我是Person类的sayhi方法");
+        // }
+
+        // function Student(name, age, score) {
+        //     Person.call(this, name, age);
+        //     this.score = score;
+        // }
+        // // 修改学生类的原型对象
+        // Student.prototype = Person.prototype;
+
+        // let pers1 = new Person("小明", 24);
+        // console.dir(pers1);
+
+        // let stu1 = new Student("小黑", 22, 100);
+        // stu1.arr.push(4);
+        // console.log(stu1);
+        // stu1.sayhi();
+
+        // console.log(pers1);
+
+        // 寄生组合式继承，最理想的继承方法
+        // function inheritPrototype(sub, super) {
+        //     var prototype = Object.create(super.prototype); // 创建对象，父原型的副本
+        //     prototype.constructor = sub; // 增强对象
+        //     sub.prototype = prototype; // 指定对象，赋给子的原型
+        // }
+
+        // function staff() {
+        //     this.company = "ABC";
+        //     this.test = [1, 2, 3];
+        // }
+        // staff.prototype.companyName = function () {
+        //     return this.company;
+        // }
+
+        // function employee(name, profession) {
+        //     staff.call(this, name);
+        //     this.employeeName = name;
+        //     this.profession = profession;
+        // }
+
+        // // 将父类原型指向子类
+        // inheritPrototype(employee, staff)
+        // let instanceOne = new employee("Andy", "A");
+        // let instanceTwo = new employee("Rose", "B");
+        // instanceOne.test.push(4);
+        // // 测试 
+        // console.log(instanceTwo.test); // [1,2,3]
+        // console.log(instanceOne.companyName()); // ABC
+        // // 通过 hasOwnProperty() 方法来确定自身属性与其原型属性
+        // console.log(instanceOne.hasOwnProperty('test')) // true
+        // // 通过 isPrototypeOf() 方法来确定原型和实例的关系
+        // console.log(staff.prototype.isPrototypeOf(instanceOne)); // true
+
+        // class继承
+        class Father{
+            constructor(name,age){
+                this.name=name;
+                this.age = age;
+            }
+            sayHi(){
+                console.log("我的名字叫："+this.name,"我是父对象的sayHi方法");
+            }
+
+        }
+        let f = new Father("爸爸",48);
+        
+        // 创建子类构造函数并继承Father
+        class Child extends Father{
+            constructor(name,age,money){
+                super(name,age);
+                this.money = money;
+            }
+            sayHi(){
+                super.sayHi();
+                console.log("我的名字叫："+this.name,"我是子对象的sayHi方法");
+            }
+            showMoney(){
+                console.log("我是儿子，我有钱："+this.money);
+            }
+        }
+        let c = new Child("儿子",24,1000000);
+        console.dir(c);
+        c.showMoney();
+        c.sayHi();
+    </script>
+</body>
+
+</html>

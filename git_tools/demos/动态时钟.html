@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      @keyframes donghua {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      #box {
+        width: 400px;
+        height: 400px;
+        margin: 0 auto;
+        background: url('https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2877648912,989240675&fm=26&gp=0.jpg')
+          no-repeat center center;
+        background-size: 400px 400px;
+        position: relative;
+      }
+      #H {
+        width: 10px;
+        height: 110px;
+        background: red;
+        position: absolute;
+        left: 195px;
+        top: 100px;
+        z-index: 1000;
+        border-radius: 10px;
+        transform-origin: center 100px;
+        animation: donghua 43200s linear infinite;
+      }
+      #M {
+        width: 8px;
+        height: 130px;
+        background: blue;
+        left: 196px;
+        position: absolute;
+        top: 80px;
+        z-index: 100;
+        border-radius: 10px;
+        transform-origin: center 120px;
+        animation: donghua 3600s linear infinite;
+      }
+      #S {
+        width: 6px;
+        height: 150px;
+        background: green;
+        left: 197px;
+        position: absolute;
+        border-radius: 10px;
+        top: 60px;
+        transform-origin: center 140px;
+        animation: donghua 60s linear infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <div id="H"></div>
+      <div id="M"></div>
+      <div id="S"></div>
+    </div>
+    <!-- <script>
+      let box = document.getElementById('box')
+      let H = document.getElementById('H')
+      let M = document.getElementById('M')
+      let S = document.getElementById('S')
+      setInterval(function() {
+        let now = new Date()
+        let HH = now.getHours() > 12 ? now.getHours() - 12 : now.getHours()
+        let MM = now.getMinutes()
+        let SS = now.getSeconds()
+        H.style.transform = `rotate(${(HH / 12) * 360}deg)`
+        M.style.transform = `rotate(${(MM / 60) * 360}deg)`
+        S.style.transform = `rotate(${(SS / 60) * 360}deg)`
+      }, 1000)
+    </script> -->
+  </body>
+</html>

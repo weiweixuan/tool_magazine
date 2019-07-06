@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let str = '今晚，嗨起来啦！！今晚，嗨起来啦！！今晚，嗨起来啦！！'
+      // 第一种方法，indexOf,只能找到第一个位置
+      // console.log(str.indexOf('嗨'))
+      // console.log(str.lastIndexOf('嗨'))
+      // // 找所有位置
+      // i = 0
+      // while (str.indexOf('嗨', i) != -1) {
+      //   let index = str.indexOf('嗨', i)
+      //   i = index + 1
+      //   console.log(index)
+      // }
+      // console.log("<---------------------------->");
+      // // 第二种方法，search,匹配正则表达式
+      // console.log(str.search(/[嗨]/))
+      // console.log("<---------------------------->");
+      // // 第三种方法，match
+      // console.log(str.match(/[嗨]/)) //返回位置和匹配的字符串
+      // console.log("<---------------------------->");
+      // // 第四种方法，exec
+      let reg = /[嗨]/g
+      // console.log(reg.exec(str))
+      let arr = []
+      while (true) {
+        let res = reg.exec(str)
+        if (res != null) {
+          arr.push(res.index)
+        } else {
+          break
+        }
+      }
+      console.log(arr)
+      // // 检测字符串中有没有某个正则
+      // let reg2 = /嗨起来/g;
+      // console.log(reg2.test(str));
+    </script>
+  </body>
+</html>
