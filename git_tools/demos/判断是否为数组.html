@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arr1 = [];
+        // 1
+        console.log(arr1 instanceof Array);
+        // 2
+        console.log(Array.isArray(arr1));
+        // 3
+        console.log(Object.prototype.toString.call(arr1)=='[object Array]');
+        
+        // 面试题
+        let arr = [1,0,23,2,0,56,26];
+        // 要求：非零巷升序排列，0在最后
+        let arr_no = arr.filter(function(item){
+            return item!=0;
+        });
+        let cha =arr.length - arr_no.length;
+        let res = arr_no.sort(function(a,b){return a-b});
+        for(let i =0;i<cha;i++){
+            res.push(0);
+        }
+        console.log(res);
+    </script>
+</body>
+</html>

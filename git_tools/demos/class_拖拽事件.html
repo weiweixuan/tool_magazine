@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            margin:0px;
+            padding:0px;
+        }
+        div{
+            width:100px;
+            height:100px;
+            position: absolute;
+            background:skyblue;
+            line-height: 100px;
+            text-align: center;
+        }
+        .left{
+            left:0px;
+        }
+        .right{
+            right:0px;
+        }
+    </style>
+</head>
+<body>
+        <div id="d1" class='box left'>我是盒子1</div>
+        <div id="d2" class='box right'>我是盒子2</div>
+    <script>
+        class drug{
+            constructor(hero){
+                this.hero = document.getElementById(hero);
+                this.ox = 0;
+                this.oy = 0;
+                this.init();
+            }
+            init(){
+            this.hero.onmousedown=function(ev){
+
+                this.ox = ev.clientX - this.hero.offsetLeft;
+                this.oy = ev.clientY - this.hero.offsetTop;
+                this.hero.onmousemove=this.move.bind(this);
+                this.hero.onmouseup=this.up.bind(this);
+                return false;
+            }.bind(this);
+            }
+            move(ev){
+                this.hero.style.left = ev.clientX - this.ox +"px";
+                this.hero.style.top = ev.clientY - this.oy +"px";
+            }
+            up(){
+                this.hero.onmousemove=null;
+                this.hero.onmouseup=null;
+            }
+        }
+        new drug('d1');
+        class new_drug extends drug{
+            constructor(hero){
+                super(hero);
+            }
+            move(ev){
+                super.move(ev);
+                console.log(`高度为：${window.innerHeight},宽度为：${window.innerWidth}`);
+                if(this.hero.offsetLeft<0){
+                    this.hero.style.left ="0px";
+                }
+                if(this.hero.offsetLeft>window.innerWidth-100){
+                    this.hero.style.left =window.innerWidth-100+"px";
+                }
+               
+                if(this.hero.offsetTop<0){
+                    this.hero.style.top ="0px";
+                }
+                if(this.hero.offsetTop>window.innerHeight-100){
+                    this.hero.style.top = window.innerHeight-100+"px";
+                }
+                
+            }
+        }
+        new new_drug("d2");
+    </script>
+</body>
+</html>

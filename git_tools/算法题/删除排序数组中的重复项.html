@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr =[0,0,1,1,1,2,2,3,3,4]
+        var removeDuplicates = function (nums) {
+            for(let key =0;key<nums.length;key++){
+                if(nums.indexOf(nums[key],key+1)!=-1){
+                    nums.splice(key,1);
+                    key--;
+                }
+            }
+            return nums.length;
+        };
+        let res = removeDuplicates(arr);
+        console.log(res,arr);
+    </script>
+</body>
+
+</html>

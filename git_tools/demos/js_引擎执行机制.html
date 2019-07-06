@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 今日面试题：js引擎的执行顺序 -->
+    <script>
+        var a = 100;
+        console.log(fun)
+
+        console.log(person)
+    </script>
+
+    <script>
+        console.log(person)
+
+        console.log(fun)
+
+        var person = "Eric";
+
+        console.log(person)
+
+        function fun() {
+            console.log(person)
+            var person = "Tom";
+            console.log(person)
+        }
+
+        fun()
+
+        console.log(person)
+        console.log(a);
+        // fun is not defined;
+
+        // undefined
+        // function fun() {
+        //     console.log(person)
+        //     var person = "Tom";
+        //     console.log(person)
+        // }
+        // Eric
+        // undefined
+        // Tom
+        // Eric
+        // 100
+    </script>
+</body>
+
+</html>

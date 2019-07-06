@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 500px;
+        margin: 100px auto;
+      }
+      input {
+        width: 400px;
+      }
+      div.show_select {
+        width: 402px;
+        border: solid 1px green;
+      }
+      div.show_select p {
+        cursor: pointer;
+      }
+      div.show_select p:hover {
+        background: #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box"><input type="text" /><button>搜索</button></div>
+  </body>
+  <script>
+    let arr = [
+      "二货啊",
+      "二呆子啊",
+      "小笨猪啊",
+      "panny是个二傻子",
+      "panny是个大笨猪",
+      "二傻子",
+      "我爱你"
+    ];
+    let ipt = document.querySelector("input");
+    let box = document.querySelector(".box");
+    ipt.onkeyup = function() {
+      let text = ipt.value;
+      let show_arr = [];
+      for (let i = 0; i < arr.length; i++) {
+        if (text != "" && arr[i].indexOf(text) == "0") {
+          show_arr.push(arr[i]);
+        }
+      }
+      console.log(show_arr);
+      let box_ = document.querySelector(".show_select");
+      console.log(box_);
+      if (box_) {
+        if (text.length == 0 || show_arr.length == 0) {
+          box.removeChild(box_);
+          return;
+        }
+        box.removeChild(box_);
+      }
+      if (show_arr.length) {
+        let obdiv = document.createElement("div");
+        obdiv.className = "show_select";
+        let html = "";
+        for (let i = 0; i < show_arr.length; i++) {
+          html += `<p>${show_arr[i]}</p>`;
+        }
+        obdiv.innerHTML = html;
+        box.appendChild(obdiv);
+      }
+    };
+  </script>
+</html>

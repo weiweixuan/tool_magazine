@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 数组
+        let arr = [1, 2, {
+            name: 'weiwei',
+            age: 24
+        }, undefined, null, function a() {
+            console.log(111);
+        }];
+        // let arr2 = arr;   引用类型
+        // let arr2 = [...arr];    //非引用类型
+        // arr2[1] = 100;
+        // arr2[2].name='anan';
+        // console.log(arr,arr2);
+
+        function deep_copy(args) {
+
+            let box = Array.isArray(args) ? [] : {};
+            for (let key in args) {
+                console.log(args[key]);
+                    if (typeof args[key] == 'object') {
+                        box[key] = deep_copy(args[key]);
+                    } else {
+                        box[key] = args[key];
+                    }
+            }
+            return box;
+        }
+        console.log(`------------------------`);
+        let arr2 = deep_copy(arr);
+        arr2[2].name = 'anan';
+        console.log(arr, arr2);
+
+        // deep_copy(['weiwei',24]);
+        // console.log(`------------------------`);
+        // deep_copy({name:'aaa',age:'24'});
+        // console.log(`------------------------`);
+        // deep_copy('hello');
+    </script>
+</body>
+
+</html>

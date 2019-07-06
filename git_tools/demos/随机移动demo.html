@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .shake {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0px;
+            top: 100px;
+            background: skyblue;
+            border-radius: 50%;
+            transition: all ease-out 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <button>开始</button>
+    <button>结束</button>
+    <div class="shake">
+
+    </div>
+    <script>
+        let btns = document.querySelectorAll("button");
+        let shake = document.querySelector(".shake");
+        let W = innerWidth;
+        let H = innerHeight;
+        let timer = null;
+        btns[0].onclick = function () {
+            shake.style.left = Math.random() * (W - 100) + 'px';
+            shake.style.top = Math.random() * (H - 100) + 'px';
+            timer = setInterval(() => {
+                shake.style.left = Math.random() * (W - 100) + 'px';
+                shake.style.top = Math.random() * (H - 100) + 'px';
+            }, 1000);
+        }
+        btns[1].onclick = function () {
+            clearInterval(timer);
+            timer = null;
+        }
+    </script>
+</body>
+
+</html>

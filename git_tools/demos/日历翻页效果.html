@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        .box{
+            width:500px;
+            height:200px;
+            border: 1px solid #000;
+            margin:100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .box .list{
+            height:auto;
+            position: absolute;
+            left:0;
+            top:0;
+            cursor: pointer;
+            transition: all ease-in-out 1s;
+        }
+        .items{
+            width:500px;
+            height:200px;
+            background:url(http://img0.imgtn.bdimg.com/it/u=1735688044,4235283864&fm=26&gp=0.jpg);
+            text-align: center;
+            line-height: 200px;
+            transition: all ease-in-out 1s;
+            transform-origin: 100% 100%;
+            transform: rotate3d(1,0,0,-90deg);
+        }
+        .show{
+            transform-origin: 0% 0%;
+            transform: rotate3d(1,0,0,0deg);
+        }
+        .trans{
+            transform: rotate3d(1,0,0,90deg);
+        }
+    </style>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <div class="box">
+        <div class="list">
+            <div class="items show">2018-01</div>
+            <div class="items">2018-02</div>
+            <div class="items">2018-03</div>
+            <div class="items">2018-04</div>
+            <div class="items">2018-05</div>
+            <div class="items">2018-06</div>
+            <div class="items">2018-07</div>
+            <div class="items">2018-08</div>
+            <div class="items">2018-09</div>
+            <div class="items">2018-10</div>
+        </div>
+    </div>
+    <button id='jia'>+</button>
+    <button id='jian'>-</button>
+
+    <script>
+        let list = document.querySelector(".list");
+        let items = document.querySelectorAll(".items");
+        let jia = document.querySelector("#jia");
+        let jian = document.querySelector("#jian");
+        let move = 0;
+        jia.onclick=function(){
+            move++;
+            $(items[move]).addClass('show').siblings().removeClass("show");
+            $(list).css("top",`-${move*200}px`);
+            $(items[move-1]).addClass('trans');
+        }
+    </script>
+</body>
+</html>

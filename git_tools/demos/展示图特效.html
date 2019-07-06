@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 1226px;
+            height: 460px;
+            border: 1px solid blue;
+            margin: 100px auto;
+            font-size: 0px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        img {
+            width: 1226px;
+            height: 460px;
+            position: absolute;
+            top: 0;
+            transition: all ease-out .5s;
+        }
+
+        img:nth-child(1) {
+            left: 0px;
+        }
+
+        img:nth-child(2) {
+            left: 245px;
+        }
+
+        img:nth-child(3) {
+            left: 490px;
+        }
+
+        img:nth-child(4) {
+            left: 735px;
+        }
+
+        img:nth-child(5) {
+            left: 980px;
+        }
+        header{
+            width:200px;
+            height:460px;
+            border:10px solid black;
+            float: left;
+        }
+        header img{
+            position:static;
+            width: 1226px;
+            height: 460px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='box'>
+        <img src="../image/1.jpg" alt="">
+        <img src="../image/2.jpg" alt="">
+        <img src="../image/3.jpg" alt="">
+        <img src="../image/4.jpg" alt="">
+        <img src="../image/5.jpg" alt="">
+    </div>
+    <header><img src="../image/1.jpg" alt=""></header>
+</body>
+<script>
+    let box = document.querySelector(".box");
+    let imgs = box.querySelectorAll("img");
+    let W = document.querySelector(".box").offsetWidth;
+    for(let i=0;i<imgs.length;i++){
+        imgs[i].onmouseenter=function(){
+            for(let j=0;j<imgs.length;j++){
+                if(j<=i){
+                    imgs[j].style.left=`${j*100}px`;
+                }else{
+                    imgs[j].style.left=`${(W - (imgs.length - j)*100)}px`;
+                }
+            }
+        }
+        imgs[i].onmouseleave=function(){
+            for(let j=0;j<imgs.length;j++){
+                    imgs[j].style.left=`${j*W/5}px`;
+            }
+        }
+    }
+</script>
+
+</html>

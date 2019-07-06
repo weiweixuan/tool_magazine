@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function first(word) {
+        //     return word[0];
+        // }
+        // var words = ["for", "your", "information"];
+        // var acronym = words.map(first).join("");
+        // console.log(acronym);
+        // let num_arr = [1,2,3,4,5];
+        // console.log(num_arr.join(""));  
+        // function afterc(afterc){
+        //     if(afterc.indexOf("eve")!=-1){  
+        //         return true;
+        //     }else{
+        //         return false;
+        //     }
+        // }
+        // var words = ["recieve", "deceive", "percieve", "deceit", "concieve"];
+        // var misspelled = words.filter(afterc);
+        //     console.log(words,misspelled);
+        // var grades = [[1, 1, 1],[2, 2, 2],[3, 3, 3]];
+        // let reduces=0;
+        // for(let rows=0;rows<grades.length;rows++){
+        //     for(let cols=0;cols<grades[rows].length;cols++){
+        //         reduces+=grades[rows][cols];
+        //     }
+        // }
+        // grades[1].reduce(function(reduces,cols){
+        //     // rows.reduce(function(reduces,cols){
+        //        return reduces+=cols;
+        //     // });
+        // });
+        // console.log(reduces);
+        let arr = [12,23,34,45];
+        arr.reduce((sum,item,key,arr)=>{
+            console.log(sum,item,key,arr);
+            return item;
+        });
+    </script>
+</body>
+
+</html>

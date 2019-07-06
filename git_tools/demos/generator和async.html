@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <script>
+        // let arr = [];
+        // for (let i = 0; i < 10; i++) {
+        //     get_users(`https://api.github.com/users/a${i}`);
+        // }
+
+        // function get_users(url) {
+        //     arr.push(axios.get(url));
+        // }
+
+        // function * ret_details(arrs){
+        //     for(let i=0;i<arrs.length;i++){
+        //        yield arrs[i];
+        //     }
+        //     return "over";
+        // }
+        // console.log(arr);
+        // let res = ret_details(arr);
+        // for(let i=0;i<arr.length;i++){
+        //     res.next().value.then(win=>console.log(win.data));
+        // }
+        // console.log(111111111111111);
+
+        // Promise.all(arr).then(win => {
+        //     console.log(win);
+        //     console.log("结束了");
+        // });
+        // let res_arr=[];
+        // async function get_data(){
+        //     for(let i=0;i<arr.length;i++){
+        //        let person = await arr[i];
+        //        res_arr.push(person.data);
+        //        console.log(res_arr);
+        //     }
+        //     return "over";
+        // }
+
+        //    let aaa = get_data();
+        //    aaa.then(res=>console.log(res));
+
+        // function get_users2(url) {
+        //     return axios.get(url);
+        // }
+        // let a =0;
+        // async function get_data(url) {
+        //     if (a<10) {
+        //         let person = await get_users2(url);
+        //         console.log(person.data);
+        //         let urls = `https://api.github.com/users/${person.data.id.toString().slice(0,2)}`;
+        //         get_data(urls);
+        //         a++;
+        //     }
+        // }
+        // get_data("https://api.github.com/users/a");
+    </script>
+</body>
+
+</html>

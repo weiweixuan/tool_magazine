@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<body>
+    <script>
+        // promise实现
+        url_list=[];
+        for(let i=0;i<20;i++){
+            url_list.push(`https://api.github.com/users/a${i}`);
+        }
+        console.log(url_list);
+        // 异步ajax函数
+        function ajax(url){
+            return new Promise((resolve,reject)=>{
+                fetch(url).then(res =>res.json()).then(res=>{
+                    // console.log(res);
+                    resolve(res);
+                });
+            });
+        }
+        // let res = ajax("https://api.github.com/users/a");
+        // console.log(res);
+        let res_list=[];
+        for(let i=0;i<url_list.length;i++){
+            let details = ajax(url_list[i]);
+            res_list.push(details);
+        }
+        console.log(res_list);
+        Promise.all(res_list).then(res=>{
+            console.log(res,"拿到所有数据");
+        });
+
+        // 异步函数async
+        let res_array=[];
+        async function asy(){
+            for(let i=0;i<url_list.length;i++){
+              let res = await ajax(url_list[i]);
+              res_array.push(res);
+                console.log(res);
+            }
+            console.log(res_array);
+            return "拿到所有数据";
+        }
+        asy().then(res=>{console.log(res)}).catch(err=>{
+            console.log(err);
+        });
+        
+    </script>
+</body>
+</html>  

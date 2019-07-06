@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Person {
+            constructor(name) {
+                this.name = name
+            }
+            showname() {
+                console.log(`我是父类的showname方法：${this.name}`);
+            }
+        }
+        class Student extends Person { //继承person类
+            constructor(name, skill) {
+                super(name); //super()方法继承父类属性
+                this.skill = skill;
+            }
+            showname() {
+                super.showname(); //super()方法继承了父类方法
+                console.log(`我是子类的showname方法：${this.name}`);
+            }
+            showskill() {
+                console.log(`我的技能是${this.skill}`);
+            }
+        }
+        let p2 = new Student("微微", "逃学");
+        p2.showname();
+        p2.showskill();
+        // 我是父类的showname方法：微微
+        // class继承.html:28 我是子类的showname方法：微微
+        // class继承.html:31 我的技能是逃学
+    </script>
+</body>
+
+</html>

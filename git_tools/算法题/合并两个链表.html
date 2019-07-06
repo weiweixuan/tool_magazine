@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      let list1 = { val: 1, next: null }
+      let list2 = { val: 10, next: { val: 100, next: null } }
+      function ListNode(val) {
+        this.val = val
+        this.next = null
+      }
+      var mergeTwoLists = function(l1, l2) {
+        let list = new ListNode('header')
+        let currentList = list
+        while (l1 && l2) {
+          if (l1.val <= l2.val) {
+            currentList.next = new ListNode(l1.val)
+            l1 = l1.next
+          } else {
+            currentList.next = new ListNode(l2.val)
+            l2 = l2.next
+          }
+          currentList = currentList.next
+        }
+        currentList.next = l1 || l2
+        return list.next
+      }
+      let res = mergeTwoLists(list1, list2)
+      console.log(res)
+    </script>
+  </body>
+</html>

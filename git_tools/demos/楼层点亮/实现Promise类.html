@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const PADDING = 'PADDING'
+      const FULFILLED = 'FULFILLED'
+      const REJECTED = 'REJECTED'
+      const isFunction = val => typeof val === 'function'
+      class MyPromise {
+        constructor(handle) {
+          // 判断传入是否为fun
+          if (!isFunction(handle)) {
+            throw new Error('MyPromise类参数必须是Function！')
+          }
+          this._value = undefined
+          this._status = PADDING
+          // 执行handle
+          try {
+            handle(this._resolve.bind(this), this._reject.bind(this))
+          } catch (e) {
+            this._reject(e)
+          }
+        }
+        _resolve(val) {
+          if (!this._status === 'PADDING') {
+            return
+          }
+          this._status = FULFILLED
+          this._value = val
+          console.log('我是成功的', val)
+        }
+        _reject(err) {
+          if (!this._status === 'PADDING') {
+            return
+          }
+          this._status = REJECTED
+          this._value = err
+          console.log('我是失败的', err)
+        }
+        myThen() {}
+        myCatch() {}
+      }
+      let pro = new MyPromise((resolve, reject) => {
+        console.log('执行了吗', resolve, reject)
+        resolve('111')
+        reject('222')
+      })
+      console.log(pro)
+    </script>
+  </body>
+</html>

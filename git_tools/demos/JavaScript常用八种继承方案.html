@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 继承的8种方式
+        // 父类
+        // function Father1(){
+        //     this.money = 100000000;
+        // }
+        // Father1.prototype.showMoney = function(){
+        //     console.log(`我有${this.money}元钱`);
+        // }
+        // // 子类
+        // function Child1(){
+        // }
+        // // 第一种，原型链继承
+        // Child1.prototype = new Father1();
+        // let child = new Child1("孩子");
+        // child.showMoney();
+        // console.dir(child);
+
+
+        // 第二种，构造函数继承
+        // 父类
+        //  function Father2(){
+        //     this.money = 100000000;
+        // }
+        // Father2.prototype.showMoney = function(){
+        //     console.log(`我有${this.money}元钱`);
+        // }
+        // // 子类
+        // function Child2(){
+        //     Father2.call(this);
+        // }
+        // Child2.prototype = Father2.prototype;
+        // let child2 = new Child2();
+        // console.dir(child2);
+        // child2.showMoney();
+
+        // 第三种，组合继承（综合1,2两种）
+        // 父类
+        // function Father3(name){
+        //     this.name = name;
+        //     this.money = 100000000;
+        // }
+        // Father3.prototype.showMoney = function(){
+        //     console.log(`我有${this.money}元钱`);
+        // }
+        // // 子类
+        // function Child3(name){
+        //     Father3.call(this,name);
+        // }
+        // Child3.prototype = new Father3();
+        // Child3.prototype.constructor = Child3;      //修改构造器
+        // let child3 = new Child3("我是孩子");
+        // console.dir(child3);
+        // child3.showMoney();
+
+        // 第四种，原型式继承
+        // function Father4(name){
+        //     this.name = name;
+        //     this.money = 100000000;
+        // }
+        // Father4.prototype.showMoney = function(){
+        //     console.log(`我有${this.money}元钱`);
+        // }
+        // // 子类
+        // function Child4(name){
+        //     Father4.call(this,name);
+        // }
+        // Child4.prototype =Father4.prototype;
+        // Child4.prototype.constructor = Child4;      //修改构造器
+        // let a = new Child4("panny");
+
+        // 第五种，混合继承多个对象
+        // function A(a) {
+        //     this.a = a;
+        // }
+        // A.prototype.aa = function () {
+        //     console.log(this.a);
+        // }
+        // let aaa = new A("我是A");
+        // console.log(aaa);
+
+        // function B(b) {
+        //     this.b = b;
+        // }
+        // B.prototype.bb = function () {
+        //     console.log(this.b);
+        // }
+        // let bbb = new B("我是B");
+        // console.log(bbb);
+
+        // function Other(a, b) {
+        //     A.call(this, a);
+        //     B.call(this, b);
+        // }
+        // Object.assign(A.prototype, B.prototype);
+        // Other.prototype = Object.create(A.prototype);
+        // Other.prototype.constructor = Other;
+        // let ccc = new Other('aaa', 'bbb');
+        // ccc.aa();
+        // ccc.bb();
+
+        // 第六种，es6的继承
+            class Person{
+                constructor(a,b){
+                    this.a = a ;
+                    this.b = b;
+                }
+                showa(){
+                    console.log(this.a);
+                }
+                showb(){
+                    console.log(this.b);
+                }
+            }
+
+            let penny = new Person('penny','wwx');
+            
+            class Student extends Person{
+                constructor(a,b,c){
+                    super(a,b);
+                    this.c = c;
+                }
+                showa(){
+                    super.showa();
+                    console.log("我是修改后的showa方法");
+                }
+                showc(){
+                    console.log(this.c);
+                }
+            }
+            let ww = new Student("a","b",'c');
+            console.log(ww);
+    </script>
+</body>
+
+</html>

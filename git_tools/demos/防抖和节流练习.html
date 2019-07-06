@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button class='fd'>防抖</button>
+    <button class='jl'>节流</button>
+    <script>
+        let fd = document.querySelector(".fd");
+        let jl = document.querySelector(".jl");
+        fd.addEventListener('click',fun_fd());
+        jl.addEventListener('click',fun_jl());
+        function fun_fd() {
+            let timer = null;
+            return function(){
+                clearTimeout(timer);
+               timer = setTimeout(()=>{
+                    console.log("点我防抖");
+                },1000);
+            }
+         }
+        function fun_jl(){
+            let Switch = false;
+            return function () {
+                if(Switch){
+                    return false;
+                }
+                Switch = true;
+                setTimeout(() => {
+                    console.log("点我节流");
+                    Switch = false;
+                }, 1000);
+              }
+        }
+    </script>
+</body>
+</html>

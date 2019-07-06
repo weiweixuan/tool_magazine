@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var createNode=function(ele){
+                this.name=ele;
+                this.next=null;
+            }
+        function List_lian(){
+            this.length=0;
+            this.head=null;
+        }
+        // 获取链头
+        List_lian.prototype.getHead=function(){
+                return this.head;
+            }
+            // 末尾添加新元素
+        List_lian.prototype.append=function(ele){
+                let Node = new createNode(ele);
+                if(!this.head){
+                    this.head=Node;
+                   this.length++;
+                   return;
+                }
+                let current = this.head;
+                while(current.next){
+                    current=current.next;
+                }
+                current.next=Node;
+                this.length++;
+            }
+            // 指定位置插入新元素
+        List_lian.prototype.insert=function(index,element){
+                let obj = new createNode(element);
+                let current = this.head;
+                if(index==0){
+                    obj.next=curent;
+                    head=obj;
+                    this.length++;
+                    return ;
+                }else if(index<=this.length-1){
+                    for(let i=0;i<index-1;i++){
+                        current=current.next;
+                    }
+                    obj.next=current.next;
+                    current.next=obj;
+                    this.length++;
+                }
+                return this.getHead();
+            }
+            List_lian.prototype.delete=function(index){
+                let current = this.head;
+                let prev = null;
+                if(index == 0){
+                   this.head = current.next;
+                   this.length--;
+                   return current;
+                }
+                for(let i=0;i<index;i++){
+                    prev= current;
+                    current=current.next;
+                }
+                prev.next=current.next;
+                this.length--;
+                return current;
+            }
+            List_lian.prototype.get_index=function(name){
+                let current = this.head;
+                let index = 0;
+                for(let i=0;i<this.length;i++){
+                    if(current.name == name){
+                        return i;
+                    }
+                    current=current.next;
+                }
+                return -1;
+            }
+            // 跟据名字删除链表元素
+            List_lian.prototype.del_name=function(name){
+                let ind = this.get_index(name);
+                if(ind==-1){
+                    throw new Error("插入下标不存在");
+                }
+                this.delete(ind);
+            }
+        let a = new List_lian();
+        a.append("1");
+        a.append("2");
+        a.append("3");
+    </script>
+</body>
+</html>

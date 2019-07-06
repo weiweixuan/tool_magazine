@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   <script type='module'>
+    import {ajax} from './promise_ajax.js'
+    
+    let param =["get","http://ip.taobao.com/service/getIpInfo.php?ip=63.223.108.42"];
+    let res = ajax(...param).then(res=>{
+        let obj = JSON.parse(res);
+        console.log(obj);
+    }).catch(err=>{console.log(err)});
+
+    // .then(res=>{console.log(res)}).catch(err=>{console.log(err)});
+   </script> 
+</body>
+</html>

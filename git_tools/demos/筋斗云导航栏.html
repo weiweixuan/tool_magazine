@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav {
+            display: flex;
+            width: 800px;
+            margin: 100px auto;
+            height: 50px;
+            position: relative;
+            background:#ccc url("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2568331101,1084141396&fm=200&gp=0.jpg") no-repeat;
+            background-position: 0px 0px;
+            transition: all  ease-out .8s;
+            background-size: 80px 50px;
+        }
+
+        span {
+            display: block;
+            width: 80px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <span>title1</span>
+        <span>title2</span>
+        <span>title3</span>
+        <span>title4</span>
+        <span>title5</span>
+        <span>title6</span>
+        <span>title7</span>
+        <span>title8</span>
+    </div>
+</body>
+<script>
+    let spans= document.querySelectorAll("span");
+    let nav= document.querySelector(".nav");
+    const W = 80;
+    let pos = 0;
+    for(let i=0;i<spans.length;i++){
+        spans[i].onclick=function(){
+            pos = i;
+            let left = W * i;
+            nav.style.backgroundPosition=`${left}px 0px`;
+        }
+        spans[i].onmouseenter=function(){
+            let left = W * i;
+            nav.style.backgroundPosition=`${left}px 0px`;
+        }
+        spans[i].onmouseleave=function(){
+            console.log(pos);
+            let left = W * pos;
+            nav.style.backgroundPosition=`${left}px 0px`;
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2></h2>
+    <script>
+        function get_djs(date){
+            let now = new Date().getTime();
+            let end = new Date(date).getTime();
+            let res = parseInt((end - now)/1000);
+            if(res==0){
+                return {
+                    code:-1,
+                    msg:"倒计时结束！"
+                }
+            }
+            let dd = parseInt(res/(60*60*24));
+            dd = dd<10?`0${dd}`:dd;
+            let hh = parseInt(res%(60*60*24)/(60*60));
+            hh = hh<10?`0${hh}`:hh;
+            let mm = parseInt(res%(60*60)/60);
+            mm = mm<10?`0${mm}`:mm;
+            let ss = res%60;
+            ss = ss<10?`0${ss}`:ss;
+            return `倒计时：${dd}天${hh}时${mm}分${ss}秒`;
+        }
+      let timer = setInterval((date)=>{
+            let ret = get_djs(date);
+            if(ret.code==-1){
+                document.getElementsByTagName("h2")[0].innerHTML=ret.msg;
+                clearInterval(timer);
+                return false;
+            }else{
+            document.getElementsByTagName("h2")[0].innerHTML=get_djs('2019/1/16 9:32:30');
+            }
+        },1000);
+    </script>
+</body>
+</html>

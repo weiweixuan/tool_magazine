@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            perspective: 500px;
+            margin:0;
+            background: rgb(88, 71, 71);
+            padding:0;
+        }
+
+        /*添加3D效果和视距*/
+        #cont {
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            margin: 100px auto;
+            transform: rotateY(0deg);
+            transition: all linear 2s;
+        }
+
+        /*设置3D，让他在2秒内执行完*/
+        #cont:hover {
+            transform: rotateY(180deg);
+        }
+
+        /*设置hover时间*/backface-visibility: hidden;
+        #box {
+            width: 300px;
+            height: 300px;
+            background: url(http://d.hiphotos.baidu.com/image/h%3D300/sign=9d04ba5ca4773912db268361c8188675/9922720e0cf3d7ca10ccc397ff1fbe096b63a91d.jpg)no-repeat;
+            background-size: 100% 100%;
+            margin: 0 auto;
+            position: absolute;
+            backface-visibility: hidden;
+        }
+
+        /*这个是正面*/
+        #box1 {
+            width: 300px;
+            line-height: 300px;
+            transform: rotateY(-180deg);
+        }
+
+        /*这个是反面*/
+        #box1 img {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cont">
+        <div id="box"></div>
+        <div id="box1">
+            <img src="http://d.hiphotos.baidu.com/image/h%3D300/sign=db7698393cadcbef1e3478069cad2e0e/cdbf6c81800a19d8b7ea25f83efa828ba71e4665.jpg">
+        </div>
+    </div>
+</body>
+
+</html>

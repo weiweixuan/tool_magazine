@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
+    <style>
+        .swiper-container{
+            width:500px;
+            margin-top:100px;
+        }
+        .box_item {
+            width: 500px;
+            text-align: center;
+            background: #eee;
+            margin:0 auto;
+            padding:50px;
+            box-sizing: border-box;
+            box-shadow: 0px 0px 20px 2px rgb(131, 204, 226);
+        }
+        .title{
+            color:red;
+            font-size: 30px;
+        }
+        .center{
+            text-align: center;
+        }
+        .right{
+            text-align: right;
+            color:red;
+            font-size: 16px;
+        }
+        .font{
+            color:#000;
+            font-size: 24px;
+            letter-spacing:5px;
+          
+        }
+    </style>
+</head>
+
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- <div class="swiper-slide">slider1</div>
+            <div class="swiper-slide">slider2</div>
+            <div class="swiper-slide">slider3</div> -->
+        </div>
+    </div>
+
+    <script>
+        let arr = [{
+                name: "静夜思1",
+                zuozhe: "[唐] 李白",
+                content: "床前明月光,疑是地上霜。|举头望明月,低头思故乡。"
+            },
+            {
+                name: "望庐山瀑布1",
+                zuozhe: "[唐] 李白",
+                content: "日照香炉生紫烟,遥看瀑布挂前川。|飞流直下三千尺,疑是银河落九天。"
+            },{
+                name: "静夜思2",
+                zuozhe: "[唐] 李白",
+                content: "床前明月光,疑是地上霜。|举头望明月,低头思故乡。"
+            },
+            {
+                name: "望庐山瀑布2",
+                zuozhe: "[唐] 李白",
+                content: "日照香炉生紫烟,遥看瀑布挂前川。|飞流直下三千尺,疑是银河落九天。"
+            }
+        ];
+        for (let i = 0; i < arr.length; i++) {
+            let pur = arr[i];
+            let item = document.createElement("div");
+            item.className = 'swiper-slide box_item';
+            let str = '';
+            str += `<div class='center title'>${pur.name}</div><div class='right'>${pur.zuozhe}</div>`;
+            let arrs = pur.content.split(/[,。|]/g).filter(item => item.length != 0);
+            for (let i = 0; i < arrs.length; i++) {
+                if (i % 2 == 1) {
+                    str += `<p class='font'>${arrs[i]}。</p>`;
+                } else {
+                    str += `<p class='font'>${arrs[i]},&nbsp;</p>`;
+                }
+            }
+            item.innerHTML = str;
+            document.querySelector(".swiper-wrapper").appendChild(item);
+        }
+
+        // 初始化swiper实例
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: true, //可选选项,自动滑动
+            grabCursor : true,
+            loop : true,
+            autoplay:true,
+            effect : "cube",
+        })
+    </script>
+</body>
+
+</html>

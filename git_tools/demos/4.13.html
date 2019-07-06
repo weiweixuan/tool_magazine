@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      let arr = [11, 21, 31, 41, 61];
+      let obj = { name: "xxx", age: 12 };
+      // for (item of arr) {
+      //   console.log(item);
+      // }
+      // for (item of obj) {       //for of 不可以遍历对象
+      //   console.log(item);
+      // }
+
+      for (item in arr) {
+        console.log(item);
+      }
+      for (item in obj) {         //都可以遍历
+        console.log(item);
+      }
+      console.log('<--------------------------------------------------->');
+
+      // for (item in arr.keys()) {
+      //   console.log(item);
+      // }
+      for (item of Object.entries(arr)) {         //都可以遍历
+        console.log(item);
+      }
+    </script>
+  </body>
+</html>

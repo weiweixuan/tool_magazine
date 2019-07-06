@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id='dd'>我是飞机</button>
+    <button class="d1">添加事件1</button>
+    <button class="d2">添加事件2</button>
+    <button class="d3">删除添加事件</button>
+    <script>
+        let dd = document.querySelector("#dd");
+        let btn1 = document.querySelector(".d1");
+        let btn2 = document.querySelector(".d2");
+        let btn3 = document.querySelector(".d3");
+
+        function def(e) {
+            console.log("我是默认事件");
+        }
+        function b1(e) {
+            console.log("事件1");
+        }
+
+        function b2() {
+            console.log("事件2");
+        }
+
+        function b3() {
+            console.log("事件3");
+        }
+
+        dd.addEventListener('click', def);
+        btn1.onclick=function(){
+            dd.addEventListener('click',b1);
+        }
+        btn2.onclick=function(){
+            dd.addEventListener('click',b2);
+        }
+        btn3.onclick=function(){
+            dd.removeEventListener('click',b2);
+            dd.removeEventListener('click',b1);
+        }
+    </script>
+</body>
+
+</html>

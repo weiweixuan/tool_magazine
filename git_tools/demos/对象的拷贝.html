@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 浅拷贝
+        // let obj1 = {
+        //     name:'www',
+        //     age:12,
+        //     car:["1",'2','3'],
+        //     str:null
+        // };
+
+        // function extend (a,b){
+        //     for(let key in a){
+        //         b[key]=a[key]
+        //     }
+        //     return b;
+        // }
+        // let obj2={};
+        // extend(obj1,obj2);
+        // console.log(obj1);
+        // console.log(obj2);
+        // console.log(obj1==obj2);
+        // obj1.name='ppp';
+        // obj1.car.push("4");
+        // console.log(obj1);
+        // console.log(obj2);
+        // console.log(obj1.car==obj2.car);
+            // 深度递归
+        let obj3 = {
+            name: 'aaa',
+            age: 12,
+            car: [1, 2, 3, 4, 5, 6],
+            dog: {
+                name: 'haha',
+                color: 'yellow'
+            }
+        }
+
+        function extend_deep(a) {
+            let res = Array.isArray(a) ? [] : {};
+            for (let key in a) {
+                if (typeof a[key] == "object") {
+                    res[key] = extend_deep(a[key]);
+                } else {
+                    res[key] = a[key];
+                }
+            }
+            return res;
+        }
+        let res_ = extend_deep(obj3);
+        
+        console.log(obj3, res_);
+        console.log(obj3 == res_);
+        console.log(obj3.car == res_.car);
+        console.log(obj3.dog == res_.dog);
+        console.log(obj3.name == res_.name);
+        obj3.car.push("100");
+        console.log(obj3, res_);
+    </script>
+</body>
+
+</html>

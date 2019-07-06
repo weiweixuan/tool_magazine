@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Create_ele(ele_name,width,height,url,value,father){
+            this.ele = document.createElement(`${ele_name}`);
+            this.base=function(){
+                this.ele.style.width=`${width}px`;
+                this.ele.style.height=`${height}px`;
+                this.ele.title=`${value}`;
+                this.ele.src=`${url}`;
+                document.querySelector(`${father}`).appendChild(this.ele);
+            }.bind(this);
+            this.base();
+        }
+        Create_ele("img",200,100,"https://www.baidu.com/img/bd_logo1.png","我是title","body");
+        Create_ele("img",400,200,"https://ss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=90db196fdc00baa1a52c41bb7712b9b1/0b55b319ebc4b7454c4f6395c2fc1e178b82155d.jpg","我是title","body");
+    </script>
+</body>
+</html>

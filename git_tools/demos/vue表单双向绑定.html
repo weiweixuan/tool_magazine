@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model='text'>
+        <br>
+        <input type="radio" value='1' name='genders' v-model='radio'>男
+        <input type="radio" value='0' name='genders' v-model='radio'>女
+        <br>
+        <input type="checkbox" name='gender' value='1' v-model='checkbox'>男
+        <input type="checkbox" name='gender' value='0' v-model='checkbox'>女
+        <input type="checkbox" name='gender' value='2' v-model='checkbox'>不详
+        <br>
+        <select name="" id="" v-model='select'>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+        </select>
+        <textarea name="" id="" cols="30" rows="10" v-model='textarea' readonly style='resize:none'>fewef</textarea>
+        <p>{{text}}</p>
+        <p>{{radio}}</p>
+        <p>{{checkbox}}</p>
+        <p>{{select}}</p>
+        <p>{{textarea}}</p>
+    </div>
+    <script>
+       
+        let app = new Vue({
+            el: '#app',
+            data: {
+               text:'',
+               radio:'',
+               checkbox:[],
+               select:'2',
+               textarea:'fewef'
+            },
+            mounted() {
+                
+            },
+            methods: {
+               
+            },
+            components: {
+            }
+        });
+
+        // let obj = {
+        //     name: 'fjdslk',
+        //     age: 22,
+        //     color: "blue",
+        //     sayHi: function () {
+        //         console.log(this.name);
+        //     }
+        // }
+        // let obj2 = Object.create(obj, {
+        //     name: {
+        //         value: "wwx",
+        //         writable: false,
+        //         enumerable: true
+        //     },
+        //     age: {
+        //         value: 100,
+        //         enumerable: false
+        //     }
+        // });
+        // obj2.sayHi();
+        // console.dir(obj2);
+
+        // console.log(Object.keys(obj2));
+        // console.log(Object.values(obj2));
+        // console.log(Object.entries(obj2));
+    </script>
+</body>
+
+</html>

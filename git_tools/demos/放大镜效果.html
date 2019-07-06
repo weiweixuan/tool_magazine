@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>放大镜效果</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .fdj {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        #box {
+            width: 200px;
+            height: 280px;
+            font-size: 0px;
+            display: inline-block;
+        }
+
+        .small {
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+            background: url("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1444554752,144006798&fm=26&gp=0.jpg") no-repeat 100% 100%;
+            background-size: 100% 100%;
+            position: relative;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .small .mask {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, .7);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+        .big {
+            width: 400px;
+            height: 400px;
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+            visibility: hidden;
+            margin-left: 10px;
+        }
+
+        .big img {
+            width: 800px;
+            height: 800px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .scroll {
+            width: 200px;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll .imgs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            padding: 10px 0;
+            transition: all linear .5s;
+        }
+
+        .scroll img {
+            display: block;
+            width: 60px;
+            height: 60px;
+            transition: all linear .2s;
+            margin:0 2px;
+        }
+
+        .scroll img:hover {
+            transform: scale(1.1);
+        }
+
+        .scroll span {
+            display: block;
+            width: 20px;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            font-size: 20px;
+            background: rgba(255, 255, 255, .7);
+            cursor: pointer;
+        }
+
+        .scroll span.s_left {
+            position: absolute;
+            left: 0;
+        }
+
+        .scroll span.s_right {
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fdj">
+        <div id="box">
+            <div class="small">
+                <div class="mask"></div>
+                <div class="box">
+
+                </div>
+            </div>
+            <div class="scroll">
+                <div class="imgs">
+                    <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1684901253,232687792&fm=26&gp=0.jpg" alt="">
+                    <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1273243205,617845716&fm=15&gp=0.jpg" alt="">
+                    <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1959275670,1835140409&fm=200&gp=0.jpg" alt="">
+                    <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=500751559,389983515&fm=200&gp=0.jpg" alt="">
+                    <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=350024983,2133617976&fm=200&gp=0.jpg" alt="">
+                    <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1473213749,1853351442&fm=200&gp=0.jpg" alt="">
+                </div>
+
+                <span class='s_left'>
+                    <</span> <span class='s_right'>>
+                </span>
+
+            </div>
+        </div>
+        <div class="big">
+
+        </div>
+    </div>
+
+</body>
+<script>
+    let box = document.querySelector(".box");
+    let mask = document.querySelector('.mask');
+    let small = document.querySelector('.small');
+    let big = document.querySelector(".big");
+    let left = document.querySelector(".s_left");
+    let right = document.querySelector(".s_right");
+    let img_box = document.querySelector(".imgs");
+    let imgs = document.querySelectorAll(".scroll img");
+
+
+    left.onclick = function () {
+        let left = parseInt(getComputedStyle(img_box, null).left);
+        left += 100;
+        if (left >= 0) {
+            img_box.style.left = `0px`;
+            return false;
+        }
+        img_box.style.left = `${left}px`;
+    }
+    right.onclick = function () {
+        let left = parseInt(getComputedStyle(img_box, null).left);
+        let max = parseInt(getComputedStyle(img_box, null).width) - 200;
+        left -= 100;
+        if (left <= -max) {
+            img_box.style.left = `${-max}px`;
+            return false;
+        }
+        img_box.style.left = `${left}px`;
+    }
+    box.onmouseenter = function (e) {
+        let src = getComputedStyle(small, null).background.split('"')[1];
+        mask.style.display = 'block';
+        big.style.visibility = "visible";
+        big.innerHTML = `<img src=${src} alt="">`;
+    }
+    box.onmousemove = function (e) {
+        let width = 100;
+        let left = e.offsetX - width / 2;
+        let top = e.offsetY - width / 2;
+        if (left < 0) {
+            left = 0;
+        }
+        if (left > 200 - width) {
+            left = 200 - width;
+        }
+        if (top < 0) {
+            top = 0;
+        }
+        if (top > 200 - width) {
+            top = 200 - width;
+        }
+        mask.style.left = `${left}px`;
+        mask.style.top = `${top}px`;
+
+        let big_img = document.querySelector(".big img");
+        big_img.style.left = -left * 4 + "px";
+        big_img.style.top = -top * 4 + 'px';
+
+    }
+    box.onmouseleave = function () {
+        mask.style.display = 'none';
+        big.style.visibility = "hidden";
+    }
+
+    for (let i = 0; i < imgs.length; i++) {
+        imgs[i].onclick = function () {
+            let url = this.src;
+            small.style.cssText = `background:url(${url}) no-repeat 100% 100%;background-size:100% 100%;`;
+        }
+    }
+</script>
+
+</html>

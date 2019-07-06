@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            position: absolute;
+            width:200px;
+            height:100px;
+            top: 100px;
+            left:0px;
+            background:red;
+        }
+    </style>
+</head>
+<body>
+    <button>动+400</button>
+    <button>动-400</button>
+    <div></div>
+    <script>
+        let btns = document.querySelectorAll("button");
+        let div = document.querySelector("div");
+        let a = 0;
+        function animetes(ele,num){
+            console.log(a);
+            if(a){
+                return false;
+            }
+            ele.timer = setInterval(function(){
+                i=1;
+            let current = ele.offsetLeft;
+            let stap = (num-current)>0?Math.ceil((num-current)/10):Math.floor((num-current)/10);
+                ele.style.left=`${current+stap}px`; 
+                if(current==num){
+                    clearInterval(ele.timer);
+                    ele.timer=null;
+                    a=0;
+                }
+                // console.log(`当前位置${current},目标位置${num},stap${stap}`);
+            },20);
+        }
+        let i=0;
+        btns[0].onclick=function(){
+            i+=400;
+            animetes(div,i);
+        };
+        btns[1].onclick=function(){
+            i-=400;
+            animetes(div,i);
+        }
+    </script>
+</body>
+</html>

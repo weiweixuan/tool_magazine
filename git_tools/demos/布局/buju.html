@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Layout</title>
+    <style media="screen">
+        .container {
+            min-width: 600px;
+            position: relative;
+            display: flex;
+        }
+
+        .left {
+            width: 200px;
+            height: 400px;
+            background: red;
+            position: absolute;
+            left:0;
+        }
+
+        .center {
+            width: 100%;
+            height: 500px;
+            background: yellow;
+            padding:0 200px;
+            box-sizing: border-box;
+        }
+        .right {
+            position: absolute;
+            right:0;
+            width: 200px;
+            height: 400px;
+            background: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="container">
+        <div class="left"></div>
+        <div class="center">
+            <div class="inner">11111</div>
+        </div>
+        <div class="right"></div>
+    </article>
+</body>
+
+</html>

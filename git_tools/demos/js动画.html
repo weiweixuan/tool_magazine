@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .a{
+            max-height:0;
+            background:red;
+            overflow: hidden;
+            transition: all linear 4.5s;
+        }
+        .b{
+            height:200px;
+            background:blue;
+        }
+
+    </style>
+</head>
+<body>
+    <button>点我试试</button>
+    <div class="a ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tempore laboriosam natus quae fuga nesciunt itaque fugit voluptas ratione eos beatae ea repellendus modi autem accusamus molestiae, corrupti saepe numquam.</div>
+    <div class="b ">222</div>
+</body>
+<script>
+    document.getElementsByTagName("button")[0].onclick=function(e){
+        document.getElementsByClassName("a")[0].style.maxHeight=`1000px`;
+    }
+</script>
+</html>

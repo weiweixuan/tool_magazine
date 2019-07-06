@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="jieliu1('闭包节流')">闭包节流</button>
+    <button onclick="jieliu2('时间戳节流')">时间戳节流</button>
+    <script>
+      function doSomething(val) {
+        console.log('执行啦===>' + val)
+      }
+      function bibaojieliu(fun, time = 1500) {
+        let temp = true
+        return function(...args) {
+          if (temp) {
+            temp = false
+            let timer = setTimeout(() => {
+              fun.apply(this, args)
+              temp = true
+            }, time)
+          }
+        }
+      }
+      let jieliu1 = bibaojieliu(doSomething, 1500)
+
+      function timerStmp(fun, time = 1500) {
+        let now = Date.now()
+        return function(...args) {
+          let current = Date.now()
+          if (current - now >= time) {
+            now = Date.now()
+            fun.apply(this, args)
+          }
+        }
+      }
+      let jieliu2 = timerStmp(doSomething, 1500)
+    </script>
+  </body>
+</html>

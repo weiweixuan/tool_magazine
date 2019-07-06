@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       function dengdai2s(){
+           return new Promise((reslove,reject)=>{
+               setTimeout(()=>{reslove("我是异步内容1")},2000);
+           });
+       }
+       function dengdai3s(){
+           return new Promise((reslove,reject)=>{
+               setTimeout(()=>{reslove("我是异步内容2")},3000);
+           });
+       }
+       async function asyncfun(){
+           console.log("开始……");
+           let result1 ;
+           result1 =dengdai2s();
+           let result2 =dengdai3s();
+           console.log( await result1);
+           console.log( await result2);
+       }
+       asyncfun();
+    </script>
+</body>
+</html>

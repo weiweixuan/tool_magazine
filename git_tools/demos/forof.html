@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let arr = ['a', 'b', 'c']
+      let obj = { name: 'wwx', age: '二狗子', money: '23' }
+      for (let key of arr.keys()) {
+        console.log('数组的key是：', key)
+      }
+      for (let key of arr.values()) {
+        console.log('数组的key是：', key)
+      }
+      for (let key of arr.entries()) {
+        console.log('数组的key是：', key)
+      }
+
+      for (key of obj.keyS()) {
+        console.log('对象的key是：', key)
+      }
+      for (key of obj.values()) {
+        console.log('对象的key是：', key)
+      }
+      for (key of obj.entries()) {
+        console.log('对象的key是：', key)
+      }
+    </script>
+  </body>
+</html>

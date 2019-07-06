@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let str = 'dfjlkdgweiwerjwnvkfkfjlwekfjwleiewnfwfiwjliwjflwfjipvodbpewejwkelfj';
+        // 判断str中出现哪些字母和出现的次数
+        function get_strCount(str){
+            let obj = {};
+            for(let i =0;i<str.length;i++){
+                if(obj[str[i]]==undefined){
+                    obj[str[i]] = 1;
+                }else{
+                    obj[str[i]]++;
+                }
+            }
+            return obj;
+        }
+        
+        let res = get_strCount(str);
+        console.log(res);
+
+        // 数组写
+        function get_arrCount(str){
+            let arr = [];
+            for(key of str){
+                let has_ = false;
+                for(let i=0;i<arr.length;i++){
+                    if(arr[i][0]==key){
+                        arr[i][1]++;
+                        has_ = true;
+                    }
+                }
+                if(!has_){
+                    arr.push([key,1]);
+                }
+            }
+            return arr.sort((a,b)=>a[1]-b[1])
+        }
+        console.log(get_arrCount(str));
+    </script>
+</body>
+</html>

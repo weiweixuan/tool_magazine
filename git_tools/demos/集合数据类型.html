@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Set2(){
+            let item = {};
+
+            this.has = function(val){
+                return item.hasOwnProperty(val);
+            }
+
+            this.add = function(val){
+                if(this.has(val)){
+                    return false;
+                }
+                item[val]= val;
+                return item[val];
+            }
+
+            this.remove = function(val){
+                if(this.has(val)){
+                    delete item[val];
+                    return val
+                }
+                return false;
+                
+            }
+
+            this.getItem = function(){
+                return item;
+            }
+
+            this.clear = function(){
+                item={};
+            }
+
+            this.size = function(){
+                let i = 0;
+                for(let ind in item ){
+                    i++;
+                }
+                return i;
+            }
+
+            this.values = function(){
+                return Object.values(item);
+            }
+
+            this.binji=function(obj){
+                // return Object.assign(this.getItem(),obj);
+                let set_ = new Set2();
+                for(let item in this.getItem()){
+                    set_.add(item);
+                }
+                for(let item in obj){
+                    set_.add(item);
+                }
+                return set_.getItem();
+            }
+
+            this.jiaoji = function(obj){
+                let set = this.getItem();
+                let list = new Set2();
+                for(let item in set){
+                    if(obj.has(item)){
+                        list.add(item);
+                    }
+                }
+                return list.getItem();
+            }
+
+            this.buji= function(obj){
+                let list = new Set2();
+                let set = this.getItem();
+                for(let item in set){
+                    if(!obj.has(item)){
+                        list.add(item);
+                    }
+                }
+                return list.getItem();
+
+            }
+        }
+        let a = new Set2();
+        a.add(1);
+        a.add(2);
+        a.add("weiwei");
+        let b = new Set2();
+        b.add(2);
+        b.add(3);
+        b.add(4);
+        b.add("weiwei");
+        console.log(a.binji(b.getItem()));
+        console.log(a.jiaoji(b));
+        console.log(a.getItem(),b.getItem());
+        console.log(a.buji(b));
+
+
+
+
+        // 下面用set数据结构实现以下
+        let set_a = new Set([1,2,3,4,5]);
+        set_a.add(100);
+        let set_b = new Set([3,4,5,6,7]);
+        // 全集
+        let set_all = new Set([...set_a,...set_b]);
+        console.log(set_all);
+        // 交集
+        let set_jiao = new Set([...set_a].filter(item=>set_b.has(item)));
+        console.log(set_jiao);
+        //补集
+        let set_bu = new Set([...set_a].filter(item=>!set_b.has(item)));
+        console.log(set_bu);
+   
+    function aaa(){
+        console.log(aaa);
+    }
+    var aaa = 100;
+    console.log(aaa);
+</script>
+</body>
+</html>

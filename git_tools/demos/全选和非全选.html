@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th><input type="checkbox">全选</th>
+                <th>我是title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>我是title1</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>我是title2</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>我是title3</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>我是title4</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>我是title5</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script>
+    let tbody_input = document.querySelectorAll("table tbody input");
+    let thead_input = document.querySelector("table thead input");
+    // 全选和取消全选
+    thead_input.onclick = function () {
+        if (this.checked) {
+            for (let i = 0; i < tbody_input.length; i++) {
+                tbody_input[i].checked = true;
+            }
+        } else {
+            for (let i = 0; i < tbody_input.length; i++) {
+                tbody_input[i].checked = false;
+            }
+        }
+    }
+    // 单选
+    for (let i = 0; i < tbody_input.length; i++) {
+        tbody_input[i].onclick = function () {
+                let sum = 0;
+            for (let i = 0; i < tbody_input.length; i++) {
+                if(tbody_input[i].checked){
+                    sum++;
+                };
+                if(sum==tbody_input.length){
+                    thead_input.checked=true;
+                }else{
+                    thead_input.checked=false;
+                }
+            }
+        }
+    }
+</script>
+
+</html>

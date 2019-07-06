@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let ListNode = {
+        val: 1,
+        next: {
+          val: 2,
+          next: { val: 3, next: { val: 2, next: null } }
+        }
+      }
+
+      var deleteDuplicates = function(head) {
+        let arr = []
+        while (head.next != null) {
+          arr.push(head.val)
+          head = head.next
+        }
+        arr.push(head.val)
+        // 去重
+        arr = [...new Set(arr)]
+        console.log(arr)
+        let ListNode = {}
+        for (let i = 1; i <= arr.length; i++) {
+          let obj = {}
+          obj.val = arr[arr.length - i]
+          obj.next = null
+          ListNode.next = obj
+        }
+      }
+      deleteDuplicates(ListNode)
+    </script>
+  </body>
+</html>

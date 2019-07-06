@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <script>
+            let URL = 'https://api.github.com/users/a';
+            let list_pro = [];
+            // promise_All处理异步函数顺序
+            for(let i=0;i<10;i++){
+                let url=URL+i;
+                list_pro.push(fetch(url).then(   //push进去的为promise对象！ 
+                    res=>res.json()
+                ).then(res=>{console.log(res);
+                return res.login}));
+            }
+            console.log(list_pro);
+            // 全部执行完之后再执行……
+            Promise.all(list_pro).then(res=>{       //拿到的为18行return 出来的结果
+                console.log(`执行完所有才OK，${res}`);
+            });
+            // 执行完一个后就执行……
+            Promise.race(list_pro).then(res=>{
+                console.log(`执行完第一个就OK，${res}`);
+            });
+            
+            // // 异步函数
+            async function getlist(){
+                let resList=[];
+                for(let i=0;i<10;i++){
+                    let url = URL+i;
+                   let details = await fetch(url).then(res=>res.json());  //返回值为等待过后的值（非promise对象！）
+                   console.log(details);
+                   resList.push(details);
+                }
+                console.log("全部加载完啦，async");
+                return resList;
+            }
+            getlist().then(res=>{console.log(res)});
+        </script>
+</body>
+</html>

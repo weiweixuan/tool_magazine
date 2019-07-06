@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 传入二维数组
+        let m = new Map([["name","www"],["name2","www2"]]);
+
+        console.dir(m);
+        console.log(m.get("name"));
+        console.log(m.get("name2"));
+        // 传入对象
+        let obj1 = {name:'wwx'};
+        let obj2 = {name:'wwx2'};
+        let arr1 = [1,2,3];
+        let res = {};
+        res[arr1]=1;
+        console.log(res);   //调用tostring方法转成字符串作为键名
+        let map = new Map();
+        map.set(arr1,100).set(obj1,111);
+
+        console.dir(map);
+        console.log(map.values());
+        console.log(map.keys());
+        console.log(map.entries());
+        console.log(map.size);
+
+
+        // set
+        let arrs = [1,2,3,4,3,21,1];
+        let set =[... new Set(arrs)];
+        console.log(set);
+    </script>
+</body>
+</html>

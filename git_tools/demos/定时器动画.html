@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            top: 100px;
+            left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id='right'>右移</button><button id='left'>左移</button>
+    <div class="box"></div>
+</body>
+<script>
+    let rgt = document.querySelector("#right");
+    let lft = document.querySelector("#left");
+    let box = document.querySelector(".box");
+    let timer = null;
+    // 移动函数
+    function active(ele, direction, pos) {  
+        if (direction == 'right') {
+            pos = -pos;
+        }
+        let left = parseInt(getComputedStyle(ele, null).getPropertyValue('left')) + pos;
+        console.log(left);
+        timer = setInterval(function () {
+            let left_now = parseInt(getComputedStyle(ele, null).getPropertyValue('left'));
+            if (direction == 'left') {
+                if (left_now <= left) {
+                    ele.style.left = `${left_now+3}px`;
+                } else {
+                    ele.style.left = `${left}px`;
+                    clearInterval(timer);
+                    timer = null;
+                }
+            } else if (direction == 'right') {
+                if (left_now >= left) {
+                    ele.style.left = `${left_now-3}px`;
+                } else {
+                    ele.style.left = `${left}px`;
+                    clearInterval(timer);
+                    timer = null;
+                }
+            }
+        }, 10);
+    }
+    rgt.onclick = function () {
+        if (timer == null) {
+            active(box, 'left', 400);
+        }
+    }
+    lft.onclick = function () {
+        if (timer == null) {
+            if (timer == null) {
+                active(box, 'right', 400);
+            }
+        }
+    }
+</script>
+
+</html>

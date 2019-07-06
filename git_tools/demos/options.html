@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <select name="" id="sel">
+        <option value="1">11</option>
+        <option value="2">22</option>
+        <option value="3">33</option>
+        <option value="4">44</option>
+        <option value="5">55</option>
+    </select>
+    <div id='d1'>'111<br>112'</div>
+    <input type="password" id='inp'>
+    <textarea name="" id="textareas" cols="30" rows="10"></textarea>
+    <script>
+        let sel = document.querySelector("#sel");
+        sel.onchange=function(){
+            // console.log(this.selectedIndex);    //选中下标
+            console.log(this.value);        //选中的value，没有就是innerHTML内容
+            // console.log(this.options);       //选中select下的所有options类数组
+           let leng = this.length;       //获取select的length长度
+            // let opt = document.createElement("option");
+            // opt.value=leng;
+            // opt.innerHTML = leng.toString()+ leng.toString();
+            // sel.add(opt);
+
+            let sption = new Option(leng.toString()+ leng.toString(),leng);     //参数为(text，value) 
+            this.add(sption);
+        }
+        console.log(document.querySelector("#d1").innerHTML);
+        console.log(document.querySelector("#d1").textContent);
+        console.log(document.querySelector("#d1").value);
+        document.querySelector("#inp").onchange=function(){
+            console.log(this.value);
+        }
+        document.querySelector("#textareas").onchange=function(){
+            console.log(this.value);
+        }
+    </script>
+</body>
+</html>

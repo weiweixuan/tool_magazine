@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      #box {
+        width: 50%;
+        margin: 100px auto;
+        display: flex;
+      }
+      .left,
+      .right {
+        width: 100px;
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+        background: #fff;
+      }
+      .left {
+        /* background: #ccc; */
+      }
+      .right {
+        /* background: #f5f5f5; */
+      }
+      .leftItem,
+      .rightItem {
+        width: 160px;
+        height: 160px;
+        border: 20px solid #fff;
+        background: #7497fb;
+        position: absolute;
+        top: 0;
+        border-radius: 50%;
+      }
+      .leftItem {
+        left: 0;
+        border-left: 20px solid #fed80b;
+        border-bottom: 20px solid #fed80b;
+        transform: rotate(45deg);
+      }
+      .rightItem {
+        right: 0;
+        border-right: 20px solid #fed80b;
+        border-top: 20px solid #fed80b;
+        transform: rotate(45deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <div class="left">
+        <div class="leftItem"></div>
+      </div>
+      <div class="right">
+        <div class="rightItem"></div>
+      </div>
+      <div></div>
+    </div>
+    <script>
+      //左边-135deg 为0 45deg为 180
+      //右边-135deg 为0 45deg为 180
+    </script>
+  </body>
+</html>

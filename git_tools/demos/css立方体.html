@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: rgb(125, 102, 119);
+        }
+
+        #box {
+            perspective: 800px;
+            transform-style: preserve-3d;
+        }
+
+        /*添加3D效果和视距*/
+        .cont {
+            width: 200px;
+            height: 200px;
+            margin: 150px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            /*添加3D*/
+            animation: ziz 10s infinite;
+            /*绑定事件，让他在10秒内执行完*/
+        }
+
+        @keyframes ziz {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotateX(180deg);
+            }
+
+            70% {
+                transform: rotateY(180deg);
+            }
+
+            100% {
+                transform: rotateX(0deg);
+            }
+        }
+
+        /*事件*/
+        .cont img {
+            width: 200px;
+            height: 200px;
+        }
+
+        .mian {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+
+        /*下面设置的6个面，让它们以不同的角度选择拼接*/
+        .mian:nth-child(1) {
+            background: blue;
+            transform: rotateX(90deg) translateZ(100px);
+        }
+
+        .mian:nth-child(2) {
+            background: rgb(32, 193, 40);
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        .mian:nth-child(3) {
+            background: red;
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+
+        .mian:nth-child(4) {
+            background: yellow;
+            transform: rotateY(90deg) translateZ(100px);
+        }
+
+        .mian:nth-child(5) {
+            background: #3ce8af;
+            transform: translateZ(100px);
+        }
+
+        .mian:nth-child(6) {
+            background: #e476a3;
+            transform: translateZ(-100px) rotateY( 0deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="cont" class="cont">
+            <div class="mian">
+                <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1746882093,2428973156&fm=26&gp=0.jpg">
+            </div>
+            <div class="mian">
+                <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2769956021,3039562009&fm=26&gp=0.jpg">
+            </div>
+            <div class="mian">
+                <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=518030976,483500143&fm=26&gp=0.jpg">
+            </div>
+            <div class="mian">
+                <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1187815753,1193994638&fm=26&gp=0.jpg">
+            </div>
+            <div class="mian">
+                <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1952898267,1423643174&fm=26&gp=0.jpg">
+            </div>
+            <div class="mian">
+                <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1848606829,978327340&fm=26&gp=0.jpg">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

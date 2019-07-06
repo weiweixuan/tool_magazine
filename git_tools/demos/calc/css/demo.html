@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width:300px;
+            background:#ccc;
+            height:40px;
+        }
+    </style>
+</head>
+<body>
+    <div>你搜集经贷款方</div>
+    <input type="text" id='ipt'>
+    <button id='btn'>添加</button>
+    <script>
+        let ipt = document.querySelector("#ipt");
+        let btn = document.querySelector("#btn");
+        let div = document.querySelector("div");
+
+        btn.onclick=function(){
+           let val = ipt.value;
+           if(val!=''){
+               div.innerHTML+=val;
+               ipt.value='';
+           }
+        }
+    </script>
+</body>
+</html>

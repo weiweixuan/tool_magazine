@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let a = fetch("https://api.github.com/users/a");
+        let b = fetch("https://api.github.com/users/a").then(res=>res.json());
+        let c = fetch("https://api.github.com/users/a").then(res=>res.json()).then(res=>res); 
+        console.log(a,b,c)
+    </script>
+</body>
+</html>

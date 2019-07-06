@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+   <input type="text" id='ipt'>
+   <button id='btn'>查询</button>
+</body>
+    <script>
+        var btn = document.getElementById("btn");
+        btn.onclick=function(){
+        var ipt = document.getElementById("ipt");
+            var res = ipt.value;
+            console.log(res);
+        };
+        var type_of = function(type){
+            // var res1 = typeof(type);
+            // if(res1 == "object"){
+            //     type instanceof ""
+            // }
+            var res = Object.prototype.toString.call(type);
+                var arr = res.split(/(\s)/ig);
+                var res = arr[2].slice(0,-1).toLowerCase();
+                console.log(res);
+        };
+            type_of(new String("foo"));
+            type_of(1.2);
+            type_of(true);
+            type_of(new Date());
+            type_of(new Error());
+            type_of([1,2,3]);
+            type_of(new Function(""));
+            type_of(/abc/g);
+            type_of(new Object());
+    </script>
+</html>

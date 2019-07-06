@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button class="btn">按钮1</button>
+    <button class="btn">按钮2</button>
+    <button class="btn">按钮3</button>
+    <button class="btn">按钮4</button>
+    <button class="btn">按钮5</button>
+    <script>
+        var arr = document.getElementsByClassName("btn");
+        console.log(arr);
+//        for (var i = 0;i<arr.length;i++){
+//            arr[i].onclick=function (i) {
+//                    i++;
+//                   return function () {
+//                        alert(i);
+//                   }
+//            }(i)
+        // }
+        for (let i = 0;i<arr.length;i++){
+            arr[i].onclick=function () {
+                i++;
+                alert(i);
+            }
+        }
+    </script>
+</body>
+</html>

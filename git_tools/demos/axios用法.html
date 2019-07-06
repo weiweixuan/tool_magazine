@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/mint-ui/2.2.13/style.css">
+    <script src="https://cdn.bootcss.com/mint-ui/2.2.13/index.js"></script>
+</head>
+
+<body>
+    <button onclick="handle1()">我是penny</button>
+    <script>
+
+    axios.defaults.baseURL = 'https://api.github.com/users';
+    axios.all([axios.get('/dingding'),axios.get('/doudou')]).then(
+        (res)=>{
+            console.log(...res);
+            console.log("都挺好");
+        }
+    )
+    function handle1(){
+        Toast('这是一个 Toast');
+    }
+    </script>
+</body>
+
+</html>

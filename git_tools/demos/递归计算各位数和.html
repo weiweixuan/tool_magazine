@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       function get_sum(int){
+           if(int<10){
+               return int;
+           }
+           let fen = int%10;
+           let other = parseInt(int/10);
+           return fen+get_sum(other);
+       }
+       let res = get_sum(212121);
+       console.log(res);
+    </script>
+</body>
+</html>

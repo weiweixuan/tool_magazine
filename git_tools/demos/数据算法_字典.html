@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function hashCode(key){
+            let code_list =0;
+            for(let i of key ){
+                code_list+=i.charCodeAt();
+            }
+            console.log(code_list%37);
+            return code_list%37;
+        }
+
+        function Dereactory(){
+            let list = [];
+
+            this.set = function(key,val){
+                let i = hashCode(key);
+                list[i] = val;
+                return i;
+            }
+            this.delete = function(key){
+                let i = hashCode(key);
+                if(list[i]){
+                delete list[i];
+                return true;
+                }
+                return false;
+            }
+
+            this.get = function(){
+                return list;
+            }
+        }
+        let a = new Dereactory();
+            a.set("Donnie","Donnie@qq.com");
+            a.set("Ana","Ana@qq.com");
+            a.get();
+    </script>
+</body>
+</html>
