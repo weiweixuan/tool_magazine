@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .box {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <input id="ipt" type="text" oninput="change()" />
+      <div class="showList"></div>
+    </div>
+
+    <script>
+      let list = [
+        {
+          address: '上海野生动物园'
+        },
+        {
+          address: '上饶野生动物园'
+        },
+        {
+          address: '北京巷子'
+        },
+        {
+          address: '上海中心'
+        },
+        {
+          address: '上海黄埔江'
+        },
+        {
+          address: '迪士尼上海'
+        },
+        {
+          address: '陆家嘴上海中心'
+        }
+      ]
+      function change() {
+        let val = document.getElementById('ipt').value
+        let showList = document.querySelector('.showList')
+        if (val === '') {
+          showList.innerHTML = ''
+          return
+        }
+        showList.innerHTML = ''
+        let frag = document.createDocumentFragment()
+        list.forEach(item => {
+          if (item.address.indexOf(val) > -1) {
+            let dom = document.createElement('div')
+            let res = item.address.replace(
+              val,
+              `<span style="color:red">${val}</span>`
+            )
+            dom.innerHTML = res
+            frag.appendChild(dom)
+          }
+        })
+        showList.appendChild(frag)
+      }
+    </script>
+  </body>
+</html>
