@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+     编写一个函数，以字符串作为输入，反转该字符串中的元音字母。
+
+      示例 1:
+
+      输入: "hello"
+      输出: "holle"
+      示例 2:
+
+      输入: "leetcode"
+      输出: "leotcede"
+       */
+      let str = 'hello'
+      var reverseVowels = function(s) {
+        let keysList = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
+        let arr = []
+        for (let item of s) {
+          keysList.includes(item) && arr.push(item)
+        }
+        return s.replace(/[aeiouAEIOU]/gi, function() {
+          return arr.pop()
+        })
+      }
+      let res = reverseVowels(str)
+      console.log(res)
+    </script>
+  </body>
+</html>
