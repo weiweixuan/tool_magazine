@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [
+          { age: 1 },
+          { age: 11 },
+          { age: 111 },
+          { age: 11111 },
+          { age: 111111 }
+        ],
+        obj = { age: 99 }
+
+      let res = arr.find(function(item) {
+        return item.age > 100
+      })
+      // console.log(res)
+      let res2 = arr.findIndex(item => {
+        return item.age > 100
+      })
+      // console.log(res2)
+      // for (let item of arr.entries()) {
+      //   console.log(item)
+      // }
+      // let res3 = arr.entries()
+      // console.log(res3)
+      // console.log(res3.next())
+      // console.log(res3.next())
+      // console.log(res3.next())
+      // console.log(res3.next())
+      // console.log(res3.next())
+      // console.log(res3.next())
+      let arr2 = [0, 1, 2, , 4, , 6, , 8]
+      let resArr1 = arr2.map(item => {
+        console.log(item)
+        return item || 0
+      })
+      console.log(resArr1)
+      let resArr2 = Array.from(arr2, item => {
+        return item === undefined ? '空' : item
+      })
+      console.log(resArr2)
+    </script>
+  </body>
+</html>

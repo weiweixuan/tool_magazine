@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+      给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+       案例:
+       s = "leetcode"
+       返回 0.
+       s = "loveleetcode",
+       返回 2.
+       注意事项：您可以假定该字符串只包含小写字母。
+          */
+      let s = 'dddccdbba'
+      var firstUniqChar = function(s) {
+        for (let index in s) {
+          if (s.indexOf(s[index]) == s.lastIndexOf(s[index])) {
+            return index
+          }
+        }
+        return -1
+      }
+      //  对象存储
+      // var firstUniqChar = function(s) {
+      //   let res = Array.from(s).reduce((prev, item, index, array) => {
+      //     if (prev.some(items => items.key == item)) {
+      //       prev.filter(items => items.key == item)[0].checked = false
+      //     } else {
+      //       prev.push({
+      //         key: item,
+      //         checked: true,
+      //         index: index
+      //       })
+      //     }
+      //     return prev
+      //   }, [])
+      //   for (let index in res) {
+      //     if (res[index].checked) {
+      //       return res[index].index
+      //     }
+      //   }
+      //   return -1
+      // }
+      let res = firstUniqChar(s)
+      console.log(res)
+    </script>
+  </body>
+</html>
