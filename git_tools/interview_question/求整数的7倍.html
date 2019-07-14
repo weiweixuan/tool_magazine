@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*不用加减乘除运算符，求整数的7倍*/
+      function getchengSeven(num) {
+        let arr = Array(num)
+        return [...arr, ...arr, ...arr, ...arr, ...arr, ...arr, ...arr].length
+      }
+      let res = getchengSeven(4)
+      console.log(res)
+    </script>
+  </body>
+</html>

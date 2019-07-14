@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Object.create</title>
+  </head>
+  <body>
+    <script>
+      let obj = { name: 'yami', age: 20 }
+      let b = Object.create(obj, {
+        show: {
+          value: 'abc',
+          enumerable: true
+        }
+      })
+      // console.log(b)
+      let c = Object.create(null)
+      // console.log(c)
+      function Person(name, age) {
+        this.name = name
+        this.age = age
+      }
+      Person.prototype.showName = function() {
+        console.log(`我的名字是：${this.name}`)
+      }
+      let p1 = new Person('penny', '24')
+      p1.showName()
+      console.log(p1)
+
+      // Object.create()实现继承
+      // let p2 = Object.create(Object.getPrototypeOf(p1))
+      // p2.name = 'weiwei'
+      // p2.age = 23
+      // p2.showName()
+      // console.log(p2)
+
+      function Student(name, age, subject) {
+        Person.call(this, name, age)
+        this.subject = subject
+      }
+      Student.prototype = Object.create(Person.prototype)
+      // Student.prototype.constructor = Student
+      let s1 = new Student('二蛋', 23, '外语')
+      s1.showName()
+      console.log(s1)
+      // 完美继承
+    </script>
+  </body>
+</html>
