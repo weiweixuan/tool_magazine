@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>proxy</title>
+  </head>
+  <body>
+    <script>
+      let obj = { name: 'weiwei' }
+      let proxy = new Proxy(obj, {
+        get(target, propKey) {
+          console.log(target, propKey, 'getting')
+          if (propKey in target) {
+            return target[propKey]
+          }
+          throw new ReferenceError('Property "' + propKey + '" does not exist.')
+        },
+        set(target, propKey, value, receiver) {
+          console.log(target, propKey, value, receiver, 'setting')
+        }
+      })
+      console.log(proxy.name)
+      let obj2 = Object.create(proxy)
+      console.log(obj2.name)
+      // proxy.sayHi = 1
+    </script>
+  </body>
+</html>

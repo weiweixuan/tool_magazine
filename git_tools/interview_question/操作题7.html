@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*url有三种情况
+      https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=&local_province_id=33
+      https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=800&local_province_id=33
+      https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=800,700&local_province_id=33
+      匹配elective后的数字输出（写出你认为的最优解法）:
+      [] || ['800'] || ['800','700']*/
+      let url =
+        'https://www.xx.cn/api?keyword=&level1=&local_batch_id=&elective=22,44&local_province_id=33'
+      // 查询字符串对象
+      // function getElective(url, key) {
+      //   return new URLSearchParams(url).get(key).split(',')
+      // }
+      // // 正则
+      // function getElective(url, key) {
+      //   if (!url) return
+      //   let tempRes = /(?<=elective=)(\d+(.\d)*)/g.exec(url)
+      //   return tempRes ? tempRes[0].split(',') : []
+      // }
+      // 普通写法
+      function getElective(url, key) {
+        let str = url.slice(url.indexOf(key) + ++key.length)
+        let res = str.indexOf('&') > -1 ? str.split('&')[0] : str
+        if (res === '') return []
+        return res.indexOf(',') > -1 ? res.split(',') : [res]
+      }
+      let res = getElective(url, 'elective')
+      console.log(res)
+    </script>
+  </body>
+</html>

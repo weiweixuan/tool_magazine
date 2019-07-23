@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+            var entry = {
+        a: {
+          b: {
+            c: {
+              dd: 'abcdd'
+            }
+          },
+          d: {
+            xx: 'adxx'
+          },
+          e: 'ae'
+        }
+      }
+
+      // 要求转换成如下对象
+        var output = {
+        'a.b.c.dd': 'abcdd',
+        'a.d.xx': 'adxx',
+      'a.e': 'ae'
+      }
+      */
+      var entry = {
+        a: {
+          b: {
+            c: {
+              dd: 'abcdd'
+            }
+          },
+          d: {
+            xx: 'adxx'
+          },
+          e: 'ae'
+        }
+      }
+
+      function exchange(obj) {
+        if (typeof obj != 'object') {
+          throw new Error('请输入 [object Object] 类型')
+        }
+        let O = {}
+        let digui = function(obj, str) {
+          for (let key in obj) {
+            let str_ = str + '.' + key
+            if (typeof obj[key] == 'object') {
+              digui(obj[key], str_)
+            } else {
+              O[str_.slice(1)] = obj[key]
+            }
+          }
+        }
+        let res = digui(obj, '')
+        return O
+      }
+      let res = exchange(entry)
+      console.log(res)
+    </script>
+  </body>
+</html>
