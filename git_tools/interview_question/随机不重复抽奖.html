@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+      考虑到性能问题，如何快速从一个巨大的数组中随机获取部分元素 
+        比如有个数组有100K个元素，从中不重复随机选取10K个元素。
+      */
+      function getRandom(total, num) {
+        let arr = Array.from({ length: total }, (item, index) => index),
+          set = new Set()
+        console.time('计算时间')
+        while (set.size < num) {
+          let random = Math.floor(Math.random() * total)
+          set.add(arr[random])
+        }
+        console.timeEnd('计算时间')
+        return [...set]
+      }
+      let res = getRandom(100000, 10000)
+      console.log(res)
+      let timerend = new Date()
+    </script>
+  </body>
+</html>
