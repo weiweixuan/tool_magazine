@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+            var entry = {
+        'a.b.c.dd': 'abcdd',
+        'a.d.xx': 'adxx',
+      'a.e': 'ae'
+      }
+
+
+      // 要求转换成如下对象
+        var output = {
+        a: {
+          b: {
+            c: {
+              dd: 'abcdd'
+            }
+          },
+          d: {
+            xx: 'adxx'
+          },
+          e: 'ae'
+        }
+      }
+      */
+      var entry = {
+        'a.b.c.dd': 'abcdd',
+        'a.d.xx': 'adxx',
+        'a.e': 'ae'
+      }
+
+      function exchange(obj) {
+        if (typeof obj != 'object') {
+          throw new Error('请输入 [object Object] 类型')
+        }
+        // 对象转map
+        let map = new Map()
+        for (let key in obj) {
+          let arr = key.split('.')
+          map.set(arr, obj[key])
+        }
+        let O = {}
+        let digui = function(map, object) {
+          let obj = {}
+          map.forEach((item, index, arr) => {
+            // 取下标
+            let key = index.shift(),
+              length = index.length
+            // 判断是否存在，不存在就添加
+            if (!object[key]) {
+              object[key] = length > 0 ? obj : item //判断是否为最后一个key,如果是就展示值，不是就继续递归
+            }
+            if (length > 0) {
+              // 创建map结构
+              let currMap = new Map()
+              currMap.set(index, item)
+              digui(currMap, object[key])
+            }
+          })
+        }
+        digui(map, O)
+        return O
+      }
+      let res = exchange(entry)
+      console.log(res)
+    </script>
+  </body>
+</html>

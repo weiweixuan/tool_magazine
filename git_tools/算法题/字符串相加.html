@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。
+      注意：
+      num1 和num2 的长度都小于 5100.
+      num1 和num2 都只包含数字 0-9.
+      num1 和num2 都不包含任何前导零。
+      你不能使用任何內建 BigInteger 库， 也不能直接将输入的字符串转换为整数形式。*/
+      let num1 = '52345',
+        num2 = '67899'
+      function add0Reverse(str, max) {
+        let len = str.length
+        return Array.from({ length: max }).map((item, index) => {
+          if (index < len) {
+            return Number(str[len - index - 1])
+          } else {
+            return 0
+          }
+        })
+      }
+      var addStrings = function(num1, num2) {
+        maxCount = Math.max(num1.length, num2.length)
+        let res1 = add0Reverse(num1, maxCount),
+          res2 = add0Reverse(num2, maxCount),
+          addCount = 0,
+          result = []
+        for (let i = 0; i < maxCount; i++) {
+          let num = res1[i] + res2[i] + addCount
+          if (num > 9) {
+            if (i == maxCount - 1) {
+              result.unshift(num)
+              break
+            }
+            addCount = 1
+            result.unshift(num - 10)
+          } else {
+            addCount = 0
+            result.unshift(num)
+          }
+        }
+        return result.join('')
+      }
+
+      let res = addStrings(num1, num2)
+      console.log(res)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 冒泡排序
+      let arr = [6, 1, 2, 3, 4, 5]
+      Array.prototype.maopao = function() {
+        for (let i = 1; i <= this.length; i++) {
+          // console.log(i, '调用次数 ')
+          let flag = true
+          for (let j = 0; j < this.length - i; j++) {
+            if (this[j] > this[j + 1]) {
+              flag = false
+              ;[this[j + 1], this[j]] = [this[j], this[j + 1]]
+            }
+          }
+          if (flag) break //如果没有交换的数据，就说明后面的数据都是按照顺序排列了，直接break
+        }
+      }
+      arr.maopao()
+      console.log(arr)
+    </script>
+  </body>
+</html>
