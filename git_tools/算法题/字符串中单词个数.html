@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*统计字符串中的单词个数，这里的单词指的是连续的不是空格的字符。
+      请注意，你可以假定字符串里不包括任何不可打印的字符。
+      示例:
+      输入: "Hello, my name is John"
+      输出: 5*/
+      let str = 'Hello, my name is John'
+      var countSegments = function(s) {
+        return s.split(/(\s+)/gi).filter(item => item.trim()).length
+      }
+      let res = countSegments(str)
+      console.log(res)
+    </script>
+  </body>
+</html>
