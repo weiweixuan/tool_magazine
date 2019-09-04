@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      const root = [
+        {
+          id: '1',
+          children: [
+            {
+              id: '1-1',
+              children: [
+                {
+                  id: '1-1-1'
+                },
+                {
+                  id: '1-1-2'
+                }
+              ]
+            },
+            {
+              id: '1-2',
+              children: [
+                {
+                  id: '1-2-1'
+                },
+                {
+                  id: '1-2-2'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: '2',
+          children: [
+            {
+              id: '2-1',
+              children: [
+                {
+                  id: '2-1-1'
+                },
+                {
+                  id: '2-1-2'
+                }
+              ]
+            },
+            {
+              id: '2-2',
+              children: [
+                {
+                  id: '2-2-1'
+                },
+                {
+                  id: '2-2-2'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: '3',
+          children: [
+            {
+              id: '3-1',
+              children: [
+                {
+                  id: '3-1-1'
+                },
+                {
+                  id: '3-1-2'
+                }
+              ]
+            },
+            {
+              id: '3-2',
+              children: [
+                {
+                  id: '3-2-1'
+                },
+                {
+                  id: '3-2-2'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      // 递归实现
+      function deep_first(arr, ary) {
+        for (let i = 0; i < arr.length; i++) {
+          ary.push(arr[i].id)
+          if (arr[i].children) {
+            deep_first(arr[i].children, ary)
+          }
+        }
+      }
+      // 非递归实现
+      function deep_first_(arr) {
+        let node = JSON.parse(JSON.stringify(arr)),
+          ary = []
+        while (node.length) {
+          let first = node.shift()
+          ary.push(first.id)
+          if (first.children && first.children.length) {
+            for (let item of first.children) {
+              node.unshift(item)
+            }
+          }
+        }
+        return ary
+      }
+      // 广度优先
+      // 非递归实现
+      function widely_first_(arr) {
+        let node = JSON.parse(JSON.stringify(arr)),
+          ary = []
+        while (node.length) {
+          let first = node.shift()
+          ary.push(first.id)
+          if (first.children && first.children.length) {
+            for (let item of first.children) {
+              node.push(item)
+            }
+          }
+        }
+        return ary
+      }
+      let res = []
+      deep_first(root, res)
+      let res_ = deep_first_(root)
+      let res_wide = widely_first_(root)
+      console.log(root, res, res_, res_wide)
+    </script>
+  </body>
+</html>

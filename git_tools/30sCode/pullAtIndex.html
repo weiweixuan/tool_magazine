@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const pullAtIndex = (arr, ary) => arr.reduce((prev, item, index) => (ary.includes(index) && prev.push(arr.splice(
+    //   index, 1)), prev), [])
+    const pullAtIndex = (arr, ary) => {
+      let resultArr = arr.reduce((prev, item, index) => {
+        if (ary.includes(index)) {
+          prev[0].push(item)
+        } else {
+          prev[1].push(item)
+        }
+        return prev;
+      }, [
+        [],
+        []
+      ])
+      arr.length = 0;
+      resultArr[0].forEach(element => {
+        arr.push(element)
+      });
+      return resultArr[1]
+    }
+    let myArray = ['a', 'b', 'c', 'd'];
+    let pulled = pullAtIndex(myArray, [1, 3]); // myArray = [ 'a', 'c' ] , pulled = [ 'b', 'd' ]
+    console.log(pulled, myArray)
+  </script>
+</body>
+
+</html>

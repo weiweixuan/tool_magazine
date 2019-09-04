@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 6, 7, 9, 0, -1, 4, 5, 7, 76, 87, 6, 6, 55];
+
+    function xier(arr, group = 2) {
+      let list = Math.ceil(arr.length / group);
+      for (let i = 0; i < list; i++) {
+        for (let j = 1; j < group; j++) {
+          let index = j
+          while (index >= 0 && arr[index * list] > arr[(index - 1) * list]) {
+            change(arr, index * list, (index - 1) * list)
+            index--;
+          }
+        }
+      }
+      if (list == 1) {
+        return arr;
+      }
+      xier(arr, group * 2)
+      return arr;
+    }
+
+    function change(arr, prev, next) {
+      [arr[prev], arr[next]] = [arr[next], arr[prev]]
+    }
+
+    let res = xier(arr)
+    console.log(res)
+  </script>
+</body>
+
+</html>

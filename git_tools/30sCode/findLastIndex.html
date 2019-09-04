@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let findLastIndex = (arr, fn) => {
+      let res = Object.entries(arr.reduce((prev, item, index) => {
+        fn(item) && (prev[index] = item);
+        return prev
+      }, {})).pop()
+      return res.length ? `${res[1] }(index of the value ${res[0]})` : `-1 (default value when not found)`;
+    }
+    let a = findLastIndex([1, 2, 3, 4], n => n % 2 === 1); // 2 (index of the value 3)
+    let b = findLastIndex([1, 2, 3, 4], n => n === 5); // -1 (default value when not found)
+    console.log(a, b)
+  </script>
+</body>
+
+</html>

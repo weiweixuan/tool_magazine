@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function thunk(arg1) {
+      return function (arg2) {
+        return function (fn) {
+          return fn.call(this, arg1, arg2)
+        }
+      }
+    }
+    let fn = thunk(1)
+    fn = fn(2)
+    res = fn((a, b) => a + b)
+    console.log(res, 'xxxxxxxxxx')
+
+    // 函数科里化
+    function carry() {
+      let val = 0;
+      let add = function (...args) {
+        val += args.reduce((prev, item) => prev += item)
+        return add;
+      }
+      add.valueOf = function () {
+        console.log(val)
+      }
+      return add;
+    }
+
+    let add = carry(); +
+    add(1)(2)(3)(4); +
+    add(1, 2, 3)(4); +
+    add(1)(2, 3)(4);
+  </script>
+</body>
+
+</html>

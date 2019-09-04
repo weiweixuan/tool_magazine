@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 实现bind
+    Function.prototype._call = function (aim, ...args) {
+      // 判断aim是否存在
+      typeof aim === 'object' ? aim : window ? window : globalThis;
+      aim.__this = this;
+      let res = aim.__this(...args);
+      delete aim.__this;
+      return res;
+    }
+    let obj = {
+      name: 'penny',
+      age: 23
+    }
+    var name = 'weiwei',
+      age = 22;
+
+    function show(a, b) {
+      console.log(this.name, this.age, a, b, "shows")
+    }
+    show('aaa', 'bbb');
+    show._call(obj, 'ccc', 'ddd')
+
+    console.log('-----------------------------------------------------')
+    Function.prototype._apply = function (aim, args) {
+      // 判断aim是否存在
+      typeof aim === 'object' ? aim : window ? window : globalThis;
+      aim.__fun = this;
+      let res = aim.__fun(args)
+      delete aim.__fun;
+      return res;
+    }
+
+    function showApply([a, b]) {
+      console.log(this.name, this.age, a, b, "shows")
+    }
+    showApply._apply(obj, ['eee', 'fff'])
+    console.log('=================================================================')
+
+    Function.prototype._bind = function (aim, ...args) {
+      let that = this;
+      // 判断aim是否存在
+      typeof aim === 'object' ? aim : window ? window : globalThis;
+      return function (...args2) {
+        return that._apply(aim, [...args, ...args2])
+      }
+    }
+
+    function showBind([a, b]) {
+      console.log(this.name, this.age, a, b, "shows")
+    }
+    let fun = showBind._bind(obj, '二蛋');
+    fun("二狗")
+  </script>
+</body>
+
+</html>

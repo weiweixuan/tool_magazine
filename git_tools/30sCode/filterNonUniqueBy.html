@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let filterNonUniqueBy = (arr, fn) => arr.filter(
+      (item, key) => arr.every((child, index) =>
+        !(key != index && fn(item, child))
+      ))
+    let a = filterNonUniqueBy(
+      [{
+          id: 0,
+          value: 'a'
+        },
+        {
+          id: 1,
+          value: 'b'
+        },
+        {
+          id: 2,
+          value: 'c'
+        },
+        {
+          id: 1,
+          value: 'd'
+        },
+        {
+          id: 0,
+          value: 'e'
+        }
+      ],
+      (a, b) => a.id == b.id
+    ); // [ { id: 2, value: 'c' } ]
+    console.log(a)
+  </script>
+</body>
+
+</html>
