@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const permutations = arr => {
+      if (arr.length <= 2) return arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr;
+      return arr.reduce(
+        (acc, item, i) =>
+        acc.concat(
+          permutations([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => [item, ...val])
+        ),
+        []
+      );
+    };
+    let a = permutations([1, 33,
+      5
+    ]); // [ [ 1, 33, 5 ], [ 1, 5, 33 ], [ 33, 1, 5 ], [ 33, 5, 1 ], [ 5, 1, 33 ], [ 5, 33, 1 ] ]
+    console.log(a)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Person1 {
+      constructor(name1, age) {
+        this.name1 = name1;
+        this.age = age;
+      }
+      static name1 = 111;
+      toString() {
+        console.log(this.name1);
+      }
+      static toString() {
+        console.log(this.name1);
+      }
+    }
+    let person = {
+      name: 'penny',
+      age: 24
+    }
+    class Person2 {
+      static name1 = 2;
+      toString() {
+        console.log(this.name1);
+      }
+      static toString() {
+        console.log(this.name1);
+      }
+      name1 = person.name;
+      age = person.age;
+    }
+    let res1 = new Person1('weiwei', 23)
+    let res2 = new Person2()
+    console.dir(res1)
+    console.dir(res2)
+    Person1.toString()
+    Person2.toString()
+    res1.toString();
+    res2.toString();
+  </script>
+</body>
+
+</html>

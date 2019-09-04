@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let chunk = (arr, num) => arr.reduce((prev, item, index) =>
+      (index % num === 0 ? prev.push([item]) : prev[prev.length - 1].push(item), prev), [])
+
+    // 官方写法
+    //     const chunk = (arr, size) =>
+    // Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
+    //   arr.slice(i * size, i * size + size)
+    // );
+    // Array.from({length:num},maps)
+    let a = chunk([1, 2, 3, 4, 5], 2); // [[1,2],[3,4],[5]]
+    console.log(a)
+  </script>
+</body>
+
+</html>

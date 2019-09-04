@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      let dropRightWhile = (arr, fn) => {
+        let index = arr.length
+        while (index-- && !fn(arr[index]));
+        return arr.slice(0, index + 1)
+      }
+
+      let a = dropRightWhile([1, 2, 3, 4], n => n < 1) // [1, 2]
+      console.log(a)
+    </script>
+  </body>
+</html>
