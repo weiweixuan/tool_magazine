@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //    如何将 [{id: 1}, {id: 2, pId: 1}, ...] 的重复数组（有重复数据）转成树形结构的数组 [{id: 1, child: [{id: 2, pId: 1}]}, ...] （需要去重）
+      let arr = [
+        { id: 1 },
+        { id: 2, pid: 1 },
+        { id: 3, pid: 2 },
+        { id: 4, pid: 1 },
+        { id: 5, pid: 3 },
+        { id: 6, pid: 2 },
+        { id: 6, pid: 2 },
+        { id: 2, pid: 1 }
+      ]
+      function changeSet(arr) {
+        let flatArr = [...new Set(arr.map(item => JSON.stringify(item)))].map(
+          item => JSON.parse(item)
+        )
+        let res = flatArr.reduce((prev, item) => {
+          if (item.pid) {
+            let father = flatArr.find(cur => cur.id == item.pid)
+            father.child ? father.child.push(item) : (father.child = [item])
+            return prev
+          } else {
+            return (item.child = []), prev.push(item), prev
+          }
+        }, [])
+      }
+      let res = changeSet(arr)
+      console.log(res)
+    </script>
+  </body>
+</html>

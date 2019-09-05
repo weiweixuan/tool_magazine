@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      const any = (arr, fn = Boolean) => arr.some(fn)
+      let res1 = any([4, 2, 3], x => x > 4)
+      let res2 = any([1, 1, 1])
+      console.log(res1, res2)
+    </script>
+  </body>
+</html>

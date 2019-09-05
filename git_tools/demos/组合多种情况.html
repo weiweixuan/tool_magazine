@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function showAllChange(arr1, arr2, arr, str = '') {
+        let arr1_ = [...arr1],
+          len = arr1_.length
+        if (len > 1) {
+          str += arr1_.shift()
+          for (let i = 0; i < arr2.length; i++) {
+            let str_clone = str
+            str_clone += arr2[i]
+            showAllChange(arr1_, arr2, arr, str_clone)
+          }
+        } else {
+          str += arr1_[0]
+          arr.push(str)
+        }
+      }
+      let arr = []
+      let res = showAllChange([1, 2, 3], ['a', 'b', 'c'], arr)
+      console.log(arr)
+
+      // 全排
+      function quanpai(arr) {
+        let res = [],
+          len = arr.length
+        if (len) {
+          let digui = function(arr_, arrRes) {
+            arrRes = typeof arrRes === 'object' ? arrRes : []
+            let ary = [...arr_],
+              curr = ary.shift()
+            if (ary.length) {
+              for (let item of curr) {
+                let temp = [...arrRes]
+                temp.push(item)
+                digui(ary, temp)
+              }
+            } else {
+              for (let item of curr) {
+                let temp = [...arrRes]
+                temp.push(item)
+                res.push(temp)
+              }
+            }
+          }
+          digui(arr)
+        }
+        return res
+      }
+      let arr_qp = quanpai([[1, 2, 3], ['a', 'b', 'c'], ['你', '我']])
+      console.log(arr_qp)
+      doCombination = arr => {
+        const count = arr.length - 1 // 数组长度(从0开始)
+        let tmp = []
+        const totalArr = [] // 总数组
+        return doCombinationCallback(arr, 0) // 从第一个开始
+        // js 没有静态数据，为了避免和外部数据混淆，需要使用闭包的形式
+        function doCombinationCallback(arr, curr_index) {
+          for (const val of arr[curr_index]) {
+            tmp[curr_index] = val // 以curr_index为索引，加入数组
+            // 当前循环下标小于数组总长度，则需要继续调用方法
+            if (curr_index < count) {
+              doCombinationCallback(arr, curr_index + 1) // 继续调用
+            } else {
+              totalArr.push(tmp) // (直接给push进去，push进去的不是值，而是值的地址)
+            }
+            // js  对象都是 地址引用(引用关系)，每次都需要重新初始化，否则 totalArr的数据都会是最后一次的 tmp 数据；
+            const oldTmp = tmp
+            tmp = []
+            for (const index of oldTmp) {
+              tmp.push(index)
+            }
+          }
+          return totalArr
+        }
+      }
+      let quanpaiFun = doCombination([[1, 2, 3], ['a', 'b', 'c'], ['你', '我']])
+      console.log(quanpaiFun, 'aaa')
+
+      // 实现递归处理数据结构
+      let data = [
+        {
+          id: 1,
+          name: '部门A',
+          parentId: 0
+        },
+        {
+          id: 2,
+          name: '部门B',
+          parentId: 0
+        },
+        {
+          id: 3,
+          name: '部门C',
+          parentId: 1
+        },
+        {
+          id: 4,
+          name: '部门D',
+          parentId: 1
+        },
+        {
+          id: 5,
+          name: '部门E',
+          parentId: 2
+        },
+        {
+          id: 6,
+          name: '部门F',
+          parentId: 3
+        },
+        {
+          id: 7,
+          name: '部门G',
+          parentId: 2
+        },
+        {
+          id: 8,
+          name: '部门H',
+          parentId: 4
+        }
+      ]
+      function changeGuilei(arr, parentId) {
+        let ary = []
+        arr.forEach(element => {
+          if (element.parentId == parentId) {
+            ary.push(element)
+            let arr_ = changeGuilei(arr, element.id) || []
+            if (arr_.length) {
+              element.chridren = arr_
+            }
+          }
+        })
+        return ary
+      }
+      let resData = changeGuilei(data, 0)
+      console.log(resData, '更换后数据')
+    </script>
+  </body>
+</html>

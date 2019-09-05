@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let initializeArrayWithRangeRight = (end, start = 0, step = 1) =>
+        Array.from({ length: Math.ceil((end - start + 1) / step) }).map(
+          (i, index, arr) => (arr.length - index - 1) * step + start
+        )
+      let res1 = initializeArrayWithRangeRight(5) // [5,4,3,2,1,0]
+      let res2 = initializeArrayWithRangeRight(7, 3) // [7,6,5,4,3]
+      let res3 = initializeArrayWithRangeRight(9, 0, 2) // [8,6,4,2,0]
+
+      console.log(res1, res2, res3)
+    </script>
+  </body>
+</html>

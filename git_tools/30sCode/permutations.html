@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let permutations = arr => {
+        let len = arr.length,
+          res = []
+        let digui = function(ary, arr = []) {
+          if (
+            arr.length === ary.length &&
+            !res.map(item => item.toString()).includes(arr.toString())
+          ) {
+            res.push(arr)
+          } else {
+            if (ary.length <= arr.length) return
+            for (let i = 0; i < ary.length; i++) {
+              let arr_ = [...arr]
+              if (!arr_.includes(ary[i])) {
+                arr_.push(ary[i])
+                digui(ary, arr_)
+              }
+            }
+          }
+        }
+        digui(arr)
+        return res
+      }
+
+      const permutations_GF = arr => {
+        if (arr.length <= 2)
+          return arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr
+        return arr.reduce(
+          (acc, item, i) =>
+            acc.concat(
+              permutations_GF([...arr.slice(0, i), ...arr.slice(i + 1)]).map(
+                val => [item, ...val]
+              )
+            ),
+          []
+        )
+      }
+      let res1 = permutations_GF([1, 33, 5, 0]) // [ [ 1, 33, 5 ], [ 1, 5, 33 ], [ 33, 1, 5 ], [ 33, 5, 1 ], [ 5, 1, 33 ], [ 5, 33, 1 ] ]
+      console.log(res1)
+    </script>
+  </body>
+</html>

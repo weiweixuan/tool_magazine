@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var arr = [
+        { id: 1, label: 'a', value: 'aa' },
+        { id: 2, label: 'b', value: 'bb' },
+        { id: 3, label: 'c', value: 'cc' },
+        { id: 4, label: 'd', value: 'dd' },
+        { id: 5, label: 'e', value: 'ee' }
+      ]
+
+      function sort(arr, args) {
+        return val.map(item => {
+          for (let i = 0, len = arr.length; i < len; i++) {
+            if (item == arr[i].id) {
+              return arr[i].value
+            }
+          }
+        })
+      }
+      var res = [2, 4, 1, 5, 3]
+      let a = sort(arr, res) // ['aa','bb','cc','dd','ee']
+      console.log(a)
+
+      var res1 = [2, 5, 3]
+      let b = sort(arr, res1) // ['bb','cc','ee']
+      console.log(b)
+
+      var res2 = [2, 3, 5]
+      let c = sort(arr, res2) // ['bb','cc','ee']
+      console.log(c)
+    </script>
+  </body>
+</html>

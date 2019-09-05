@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let initializeNDArray = (val, ...arr) => {
+        console.log(val, arr, 'xxx')
+        return arr.length > 1
+          ? Array.from({ length: arr.shift() }, () =>
+              initializeNDArray(val, ...arr)
+            )
+          : Array(arr[0]).fill(val)
+      }
+
+      let res1 = initializeNDArray(1, 3) // [1,1,1]
+      let res2 = initializeNDArray(5, 3, 2, 2) // [[[5,5],[5,5]],[[5,5],[5,5]]]
+
+      console.log(res1, res2)
+    </script>
+  </body>
+</html>

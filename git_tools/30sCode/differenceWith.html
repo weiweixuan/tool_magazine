@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let differenceWith = (arr, val, fn) =>
+        arr.filter(a => val.findIndex(b => fn(a, b)) === -1)
+
+      let res1 = differenceWith(
+        [1, 1.2, 1.5, 3, 0],
+        [1.9, 3, 0],
+        (a, b) => Math.round(a) === Math.round(b)
+      ) // [1, 1.2]
+      console.log(res1)
+    </script>
+  </body>
+</html>

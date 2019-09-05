@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let longestItem = (...arr) =>
+        arr.reduce(
+          (prev, item) => (
+            item.length > prev.len && (prev = { len: item.length, val: item }),
+            prev
+          ),
+          { len: 0, val: '' }
+        ).val
+      let res1 = longestItem('this', 'is', 'a', 'testcase') // 'testcase'
+      let res2 = longestItem(...['a', 'ab', 'abc']) // 'abc'
+      let res3 = longestItem(...['a', 'ab', 'abc'], 'abcd') // 'abcd'
+      let res4 = longestItem([1, 2, 3], [1, 2], [1, 2, 3, 4, 5]) // [1, 2, 3, 4, 5]
+      let res5 = longestItem([1, 2, 3], 'foobar') // 'foobar'
+      console.log(
+        res1,
+        '-------',
+        res2,
+        '-------',
+        res3,
+        '---------',
+        res4,
+        '-----------',
+        res5
+      )
+    </script>
+  </body>
+</html>

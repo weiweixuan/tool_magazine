@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //  使用for循环、while循环和递归写出3个函数来计算给定数列的总和。
+      let arr = [5, 4, 3, 2, 1, 6, 7, 8, 9, 0]
+
+      let sum = 0
+      for (let i = 0; i < arr.length; i++) {
+        sum += arr[i]
+      }
+      console.log(sum)
+
+      let sum2 = 0,
+        index = 0
+      while (index < arr.length) {
+        sum2 += arr[index]
+        index++
+      }
+      console.log(sum2)
+
+      function add(arr, curIndex, sum) {
+        return curIndex < arr.length
+          ? ((sum += arr[curIndex]), add(arr, curIndex + 1, sum))
+          : sum
+      }
+      let ers = add(arr, 0, 0)
+      console.log(ers, 'zz')
+
+      //编写一个交错合并列表元素的函数。例如：给定的两个列表为[a，B，C]和[1，2，3]，函数返回[a，1，B，2，C，3]。
+      let minxin = (arr1, arr2) => {
+        let max = Math.max(arr1.length, arr2.length),
+          arr = []
+        for (let i = 0; i < max; i++) {
+          if (i < arr1.length) {
+            arr.push(arr1[i])
+          }
+          if (i < arr2.length) {
+            arr.push(arr2[i])
+          }
+        }
+        return arr
+      }
+      let res = minxin(['a', 'b', 'c'], [1, 3])
+      console.log(res)
+
+      //编写一个计算前100位斐波那契数的函数。根据定义，斐波那契序列的前两位数字是0和1，随后的每个数字是前两个数字的和。例如，前10位斐波那契数为：0，1，1，2，3，5，8，13，21，34。
+      function feibo(count) {
+        let prev = 0,
+          next = 1,
+          arr = []
+        while (count > 2) {
+          let computer = prev + next
+          arr.push(computer)
+          prev = next
+          next = computer
+          count--
+        }
+        return arr.unshift(0, 1), arr
+        console.log(arr, 'xxx')
+      }
+      let feiboRes = feibo(100)
+      console.log(feiboRes, 'iii')
+
+      //编写一个能将给定非负整数列表中的数字排列成最大数字的函数。例如，给定[50,2,51,1,9]，最大数字为95021。
+      function returnMax(arr) {
+        let arr_ = [...arr].map(String),
+          res = ''
+        while (arr_.length) {
+          let maxItem = arr_.reduce((prev, item) => {
+            let max = prev,
+              cur = item,
+              prevVal
+            while ((max || cur) && max[0] === cur[0]) {
+              prevVal = cur[0]
+              cur = cur.slice(1)
+              max = max.slice(1)
+            }
+            // 分情况讨论
+            // 1.比较双方同位数
+            if (cur && max && cur > max) {
+              prev = item
+            }
+            // 2.不同位数
+            if (!cur && max) {
+              if (max < prevVal) {
+                prev = item
+              }
+            }
+            if (!max && cur) {
+              if (cur > prevVal) {
+                prev = item
+              }
+            }
+            return prev
+          }, '0')
+          let indexMax = arr_.findIndex(item => item === maxItem)
+          res += String(arr_.splice(indexMax, 1)[0])
+        }
+        return res
+      }
+      let Maxnum = returnMax([3, 31, 32, 33, 4, 9, 21, 99, 98])
+      console.log(Maxnum, 'HHH')
+
+      //编写一个在1，2，…，9（顺序不能变）数字之间插入+或-或什么都不插入，使得计算结果总是100的程序，并输出所有的可能性。例如：1 + 2 + 34 – 5 + 67 – 8 + 9 = 100。
+      function showAllChange(arr1, arr2, arr, str = '') {
+        let arr1_ = [...arr1],
+          len = arr1_.length
+        if (len > 1) {
+          str += arr1_.shift()
+          for (let i = 0; i < arr2.length; i++) {
+            let str_clone = str
+            str_clone += arr2[i]
+            showAllChange(arr1_, arr2, arr, str_clone)
+          }
+        } else {
+          str += arr1_[0]
+          if (eval(str) == 100) {
+            arr.push(str)
+          }
+        }
+      }
+      let arrAll = []
+      showAllChange([1, 2, 3, 4, 5, 6, 7, 8, 9], ['+', '-', ''], arrAll)
+      console.log(arrAll)
+    </script>
+  </body>
+</html>

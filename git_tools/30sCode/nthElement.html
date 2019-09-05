@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let nthElement = (arr, val) => {
+        let len = arr.length
+        if (val < 0) {
+          while (val < 0) {
+            val += len
+          }
+        } else {
+          val = val % len
+        }
+        return arr[val]
+      }
+      let res1 = nthElement(['a', 'b', 'c'], 10) // 'b'
+      let res2 = nthElement(['a', 'b', 'b'], -6) // 'a'
+      console.log(res1, res2)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let difference = (arr1, arr2) =>
+        arr1.reduce(
+          (prev, item) => (!arr2.includes(item) && prev.push(item), prev),
+          []
+        )
+      // 官方写法
+      let difference_GF = (arr1, arr2) => {
+        const s = new Set(arr2)
+        return arr1.filter(item => !s.has(item))
+      }
+      let res = difference_GF([1, 2, 3], [1, 2, 4]) // [3]
+      console.log(res)
+    </script>
+  </body>
+</html>

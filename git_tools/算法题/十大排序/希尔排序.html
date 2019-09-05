@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+    <span class="aaa"> </span>
+    <script>
+      // 希尔排序
+      let arr = [6, 10, 88, 9, 2, 5, -1, 0, 100]
+      function xier_(arr, groupList = 2) {
+        let groupCount = Math.ceil(arr.length / groupList)
+        for (let i = 0; i < groupCount; i++) {
+          //插入排序
+          for (let j = 1; j < groupList; j++) {
+            let index = j
+            while (
+              index >= 0 &&
+              arr[index * groupCount] > arr[(index - 1) * groupCount]
+            ) {
+              change(arr, index * groupCount, (index - 1) * groupCount)
+              index--
+            }
+          }
+        }
+        if (groupCount == 1) {
+          return arr
+        }
+        xier_(arr, groupCount * 2)
+      }
+
+      function change(arr, i, j) {
+        ;[arr[j], arr[i]] = [arr[i], arr[j]]
+      }
+      Array.prototype.xier = function() {
+        xier_(this)
+      }
+      arr.xier()
+      console.log(arr)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let JSONtoCSV = (arr1, arr2, split = ',') =>
+        "'" +
+        arr2.join(split) +
+        arr1.reduce(
+          (prev, item, index) => (
+            (prev +=
+              '\\n' +
+              arr2
+                .reduce(
+                  (prev_child, item_child) => (
+                    prev_child.push(
+                      item[item_child] ? `"${item[item_child]}"` : `""`
+                    ),
+                    prev_child
+                  ),
+                  []
+                )
+                .join(split)),
+            prev
+          ),
+          ''
+        ) +
+        "'"
+      let res1 = JSONtoCSV(
+        [{ a: 1, b: 2 }, { a: 3, b: 4, c: 5 }, { a: 6 }, { b: 7 }],
+        ['a', 'b']
+      ) // 'a,b\n"1","2"\n"3","4"\n"6",""\n"","7"'
+      let res2 = JSONtoCSV(
+        [{ a: 1, b: 2 }, { a: 3, b: 4, c: 5 }, { a: 6 }, { b: 7 }],
+        ['a', 'b'],
+        ';'
+      ) // 'a;b\n"1";"2"\n"3";"4"\n"6";""\n"";"7"'
+      console.log(res1, '-------', res2)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let dropRightWhile = (arr, fn) => {
+        let ary = [...arr]
+        for (let len = ary.length, i = len - 1; i >= 0; i--) {
+          if (fn(ary[i])) {
+            break
+          } else {
+            ary.pop()
+          }
+        }
+        return ary
+      }
+      const dropRightWhile_GF = (arr, func) => {
+        let rightIndex = arr.length
+        while (rightIndex-- && !func(arr[rightIndex]));
+        return arr.slice(0, rightIndex + 1)
+      }
+      let res1 = dropRightWhile([1, 2, 3, 4], n => n < 3) // [1, 2]
+      console.log(res1)
+    </script>
+  </body>
+</html>

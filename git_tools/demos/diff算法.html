@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class CreateElement {
+        constructor(dom, attrList, children = '') {
+          this.dom = dom
+          this.attrList = attrList
+          this.children = children
+        }
+      }
+      function createElement(dom, attrList, children = '') {
+        return new CreateElement(dom, attrList, children)
+      }
+      // 设置属性和value
+      function setAttr(node, key, value) {
+        switch (key) {
+          case 'value':
+            if (
+              node.tagName.toUpperCase() === 'INPUT' ||
+              node.tagName.toUpperCase() === 'TEXTAREA'
+            ) {
+              node.value = value
+            } else {
+              node.setAttribute(key, value)
+            }
+            break
+          case 'style':
+            node.style.cssText = value
+            break
+          default:
+            node.setAttribute(key, value)
+            break
+        }
+      }
+
+      function render(virtualDom) {
+        let dom = document.createElement(virtualDom.dom)
+        for (let key in virtualDom.attrList) {
+          setAttr(dom, key, virtualDom.attrList[key])
+        }
+        for (item of virtualDom.children) {
+          let node
+          if (item instanceof CreateElement) {
+            node = render(item)
+          } else {
+            node = document.createTextNode(item)
+          }
+          dom.appendChild(node)
+        }
+        return dom
+      }
+
+      function renderDom(dom, parent) {
+        parent.appendChild(dom)
+      }
+
+      let virtualDom1 = createElement('ul', { class: 'list' }, [
+        createElement('li', { class: 'item', style: 'color:red' }, [
+          '我是第一个元素'
+        ]),
+        createElement('li', { class: 'item' }, ['b']),
+        createElement('li', { class: 'item' }, ['c']),
+        'd',
+        createElement('li', { class: 'item' }, ['e'])
+      ])
+      let virtualDom2 = createElement('ul', { class: 'list' }, [
+        createElement('li', { class: 'item' }, ['1']),
+        createElement('li', { class: 'item' }, ['2']),
+        createElement('li', { class: 'item' }, ['3'])
+      ])
+      let el = render(virtualDom1)
+      console.log(el)
+      renderDom(el, document.body)
+      // let patchs = diff(virtualDom1, virtualDom2)
+    </script>
+  </body>
+</html>
