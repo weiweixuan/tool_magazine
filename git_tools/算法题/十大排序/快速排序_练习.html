@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 6, 7, 9, 0, 1, 4, 5, 7, 76, 87, 6, 6, 55];
+
+    function quick(arr, left, right) {
+      let len = arr.length,
+        zjIndex;
+      left = typeof left === 'number' ? left : 0;
+      right = typeof right === 'number' ? right : len - 1;
+      if (left < right) {
+        zjIndex = fq(arr, left, right);
+        quick(arr, left, zjIndex - 1);
+        quick(arr, zjIndex + 1, right)
+      }
+      return arr;
+    }
+
+    function fq(arr, left, right) {
+      let flag = left + 1;
+      for (let j = left; j <= right; j++) {
+        if (arr[j] < arr[left]) {
+          change(arr, flag, j)
+          flag++;
+        }
+      }
+      change(arr, flag - 1, left)
+      return flag - 1;
+    }
+
+    function change(arr, prev, next) {
+      [arr[prev], arr[next]] = [arr[next], arr[prev]]
+    }
+
+    let res = quick(arr)
+    console.log(res)
+  </script>
+</body>
+
+</html>

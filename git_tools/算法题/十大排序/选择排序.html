@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      // 选择排序
-      let arr = [6, 5, 10, 2, 6, 88, 9, 2, 5, -1, 0, -1, 100]
-      Array.prototype.xuanze = function() {
-        let len = this.length
-        for (let i = 0; i < len - 1; i++) {
-          let key = i
-          for (let j = i; j < len; j++) {
-            if (this[j] < this[key]) {
-              key = j
-            }
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 6, 7, 9, 0, 1, 4, 5, 7, 76, 87, 6, 6, 55];
+
+    function select(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        let minIndex = i;
+        for (let j = i; j < arr.length; j++) {
+          if (arr[j] < arr[minIndex]) {
+            minIndex = j;
           }
-          ;[this[key], this[i]] = [this[i], this[key]]
         }
+        change(arr, i, minIndex)
       }
-      arr.xuanze()
-      console.log(arr)
-    </script>
-  </body>
+      return arr;
+    }
+
+    function change(arr, prev, next) {
+      [arr[prev], arr[next]] = [arr[next], arr[prev]]
+    }
+
+    let res = select(arr)
+    console.log(res)
+  </script>
+</body>
+
 </html>

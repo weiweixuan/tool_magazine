@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      async function awaitIng() {
+        for (let i = 0; i < 5; i++) {
+          let res = await new Promise(resolve => setTimeout(resolve, 1000, i))
+          console.log(res)
+        }
+      }
+      awaitIng()
+      function getPro(val, timer) {
+        return new Promise(resolve => setTimeout(resolve, timer, val))
+      }
+      async function get() {
+        await Promise.all([getPro(1, 1000), getPro(2, 2000)]).then(res =>
+          console.log(res, '我擦')
+        )
+        // console.log(a, b, 'xxx')
+      }
+      get()
+    </script>
+  </body>
+</html>

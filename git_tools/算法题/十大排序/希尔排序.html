@@ -20,7 +20,7 @@
             let index = j
             while (
               index >= 0 &&
-              arr[index * groupCount] > arr[(index - 1) * groupCount]
+              arr[index * groupCount] < arr[(index - 1) * groupCount]
             ) {
               change(arr, index * groupCount, (index - 1) * groupCount)
               index--

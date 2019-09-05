@@ -1,52 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script>
-      // 插入排序
-      let arr = [6, 5, 10, 2, 6, 88, 9, 0, -1, 100]
-      Array.prototype.charu = function() {
-        console.time('开始')
-        for (let i = 1, len = this.length; i < len; i++) {
-          let cur = this.splice(i, 1)[0]
-          for (let j = 0; j < i; j++) {
-            if (j == 0 && cur < this[0]) {
-              this.unshift(cur)
-              break
-            }
-            if (j == i - 1 && cur >= this[i - 1]) {
-              this.splice(i, 0, cur)
-              break
-            }
-            if (cur < this[j]) {
-              this.splice(j, 0, cur)
-              break
-            }
-          }
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 6, 7, 9, 0, 1, 4, 5, 7, 76, 87, 6, 6, 55];
+
+    function insert(arr) {
+      for (let i = 1; i < arr.length; i++) {
+        let j = i;
+        while (j >= 0 && arr[j] < arr[j - 1]) {
+          change(arr, j, j - 1)
+          j--;
         }
-        console.timeEnd('开始')
       }
-      // 简单写法
-      Array.prototype.charu2 = function() {
-        console.time('开始')
-        for (let i = 1, len = this.length; i < len; i++) {
-          let cur = this[i]
-          let safe = i - 1
-          while (safe >= 0 && cur < this[safe]) {
-            this[safe + 1] = this[safe]
-            safe--
-          }
-          this[safe + 1] = cur
-        }
-        console.timeEnd('开始')
-      }
-      arr.charu()
-      console.log(arr)
-    </script>
-  </body>
+      return arr;
+    }
+
+    function change(arr, prev, next) {
+      [arr[prev], arr[next]] = [arr[next], arr[prev]]
+    }
+
+    let res = insert(arr)
+    console.log(res)
+  </script>
+</body>
+
 </html>
