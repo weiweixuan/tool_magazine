@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //  在一个字符串数组中有红、黄、蓝三种颜色的球，且个数不相等、顺序不一致，请为该数组排序。使得排序后数组中球的顺序为:黄、红、蓝。
+      //例如：，排序后为：黄黄黄红红红红红蓝蓝蓝。
+      let sort = (str, aimAry) =>
+        Array.from(str)
+          .reduce(
+            (prev, item) => (prev[aimAry.indexOf(item)].push(item), prev),
+            Array.from({ length: aimAry.length }, child => [])
+          )
+          .flat(1)
+          .join('')
+      // 高级写法
+      let sort_GJ = (str, sortstr) => {
+        let sortObj = [...sortstr].reduce(
+          (prev, item, index) => ((prev[item] = index), prev),
+          {}
+        )
+        return str
+          .split('')
+          .sort((prev, next) => sortObj[prev] - sortObj[next])
+          .join('')
+      }
+      let res = sort('红蓝蓝黄红黄蓝红红黄红', '黄红蓝')
+      let res_GJ = sort_GJ('红蓝蓝黄红黄蓝红红黄红', '黄红蓝')
+      console.log(res, res_GJ)
+    </script>
+  </body>
+</html>

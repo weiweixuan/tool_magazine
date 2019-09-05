@@ -1,51 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-
-<body>
-  <script>
-    let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 6, 7, 9, 0, 1, 4, 5, 7, 76, 87, 6, 6, 55];
-
-    function quick(arr, left, right) {
-      let len = arr.length,
-        partitionIndex;
-      left = typeof left === 'number' ? left : 0;
-      right = typeof right === 'number' ? right : len - 1;
-      if (left < right) {
-        partitionIndex = partition(arr, left, right)
-        quick(arr, left, partitionIndex - 1)
-        quick(arr, partitionIndex + 1, right)
-      }
-      return arr;
-    }
-
-    function partition(arr, left, right) {
-      let cur = left,
-        next = left + 1;
-      for (let i = next; i <= right; i++) {
-        if (arr[i] < arr[cur]) {
-          change(arr, next, i)
-          next++;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+    <span class="aaa"> </span>
+    <script>
+      // 快速排序
+      let arr = [6, 10, 88, 9, 2, 5, -1, 0, 100]
+      function quick(arr, left, right) {
+        let len = arr.length,
+          partitionIndex
+        left = typeof left === 'number' ? left : 0
+        right = typeof right === 'number' ? right : len - 1
+        if (left < right) {
+          partitionIndex = partition(arr, left, right)
+          quick(arr, left, partitionIndex - 1)
+          quick(arr, partitionIndex + 1, right)
         }
+        return arr
       }
-
-      change(arr, cur, next - 1)
-      return next - 1;
-    }
-
-    function change(arr, prev, next) {
-      [arr[prev], arr[next]] = [arr[next], arr[prev]]
-    }
-
-    let res = quick(arr)
-    console.log(res)
-  </script>
-</body>
-
+      function partition(arr, left, right) {
+        let index = left + 1
+        for (let i = index; i <= right; i++) {
+          if (arr[left] > arr[i]) {
+            change(arr, index, i)
+            index++
+          }
+        }
+        change(arr, left, index - 1)
+        return index - 1
+      }
+      function change(arr, i, j) {
+        ;[arr[j], arr[i]] = [arr[i], arr[j]]
+      }
+      Array.prototype.kuaisu = function() {
+        quick(this)
+      }
+      arr.kuaisu()
+      console.log(arr)
+    </script>
+  </body>
 </html>

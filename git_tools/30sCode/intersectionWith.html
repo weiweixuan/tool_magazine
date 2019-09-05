@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let intersectionWith = (arr1, arr2, fn) =>
+        arr1.filter(item => arr2.some(child => fn(item, child)))
+      let intersectionWith_GF = (arr1, arr2, fn) =>
+        arr1.filter(item => arr2.findIndex(child => fn(child, item)) != -1)
+      let res1 = intersectionWith_GF(
+        [1, 1.2, 1.5, 3, 0],
+        [1.9, 3, 0, 3.9],
+        (a, b) => Math.round(a) === Math.round(b)
+      ) // [1.5, 3, 0]
+      console.log(res1)
+    </script>
+  </body>
+</html>

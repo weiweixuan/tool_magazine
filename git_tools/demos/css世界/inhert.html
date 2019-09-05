@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .box {
+        position: relative;
+        font-size: 1rem;
+        color: white;
+        background: #ccc;
+        border: 5px solid green;
+        width: 400px;
+        height: 200px;
+        margin-top: 100px;
+      }
+      .box > div {
+        display: inline-block;
+        color: inherit;
+        border: inherit;
+      }
+      .box::before {
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        background: inherit;
+        border: inherit;
+        border-right: 0;
+        border-bottom: 0;
+        transform: rotate(45deg);
+        top: -0.65rem;
+        left: 1rem;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      inherit这个属性值总是能等于父元素的该样式
+      <div>我是子元素</div>
+    </div>
+    <button onclick="change()">change</button>
+    <script>
+      let box = document.getElementsByClassName('box')[0]
+      function change() {
+        // 修改样式
+        // 1.修改dom.style这个对象，采用Object.assign()合并对象
+        // Object.assign(box.style, {
+        //   background: 'red',
+        //   border: '5px solid yellow'
+        // })
+        // 2.cssText
+        box.style.cssText = 'background:red;border:5px solid blue'
+        // 获取dom的css样式
+        let bg = window.getComputedStyle(box, null).background
+        console.log(bg, 'xx')
+      }
+    </script>
+  </body>
+</html>

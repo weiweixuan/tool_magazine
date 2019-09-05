@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./layui_demo/node_modules/jquery/dist/jquery.min.js"></script>
+  </head>
+  <body>
+    <script>
+      let arr = [4, 5, 2, 1, 6, 77, 9, -5]
+      // 冒泡排序
+      function maopao(arr) {
+        let result = [...arr]
+        for (let i = 1, len = result.length; i < len; i++) {
+          let flag = true
+          for (let j = 0; j < len - i; j++) {
+            if (result[j] > result[j + 1]) {
+              flag = false
+              ;[result[j], result[j + 1]] = [result[j + 1], result[j]]
+            }
+          }
+          if (flag) break
+        }
+        return result
+      }
+      let res_maopao = maopao(arr)
+      console.log(res_maopao, 'maopao')
+
+      // 插入排序
+      function charu(arr) {
+        let result = [...arr]
+        for (let i = 1, len = result.length; i < len; i++) {
+          let key = i
+          while (key > 0 && result[key] < result[key - 1]) {
+            ;[result[key - 1], result[key]] = [result[key], result[key - 1]]
+            key--
+          }
+        }
+        return result
+      }
+      let res_charu = charu(arr)
+      console.log(res_charu, 'charu')
+
+      // 选择排序
+      function xuanze(arr) {
+        let result = [...arr]
+        for (let i = 0, len = result.length; i < len; i++) {
+          let min = i
+          for (let j = i; j < len; j++) {
+            if (result[j] < result[min]) {
+              min = j
+            }
+          }
+          ;[result[i], result[min]] = [result[min], result[i]]
+        }
+        return result
+      }
+      let res_xuanze = xuanze(arr)
+      console.log(res_xuanze, 'xuanze')
+
+      // 归并排序
+      function split(arr) {
+        let len = arr.length
+        if (len == 1) {
+          return arr
+        }
+        let center = Math.floor(len / 2)
+        return merge(split(arr.slice(0, center)), split(arr.slice(center)))
+      }
+      function merge(left, right) {
+        let arr = []
+        while (left.length && right.length) {
+          if (left[0] > right[0]) {
+            arr.push(right.shift())
+          } else {
+            arr.push(left.shift())
+          }
+        }
+        arr.push(...left, ...right)
+        return arr
+      }
+      function guibing(arr) {
+        let result = [...arr]
+        return split(result)
+      }
+      let res_guibing = guibing(arr)
+      console.log(res_guibing, 'guibing')
+    </script>
+  </body>
+</html>

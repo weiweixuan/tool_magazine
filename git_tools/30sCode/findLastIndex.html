@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Document</title>
-</head>
-
-<body>
-  <script>
-    let findLastIndex = (arr, fn) => {
-      let res = Object.entries(arr.reduce((prev, item, index) => {
-        fn(item) && (prev[index] = item);
-        return prev
-      }, {})).pop()
-      return res.length ? `${res[1] }(index of the value ${res[0]})` : `-1 (default value when not found)`;
-    }
-    let a = findLastIndex([1, 2, 3, 4], n => n % 2 === 1); // 2 (index of the value 3)
-    let b = findLastIndex([1, 2, 3, 4], n => n === 5); // -1 (default value when not found)
-    console.log(a, b)
-  </script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let findLastIndex = (arr, fn) => {
+        console.time('my')
+        let res = (Object.entries(
+          arr.reduce(
+            (prev, item, index) => (fn(item) && (prev[index] = item), prev),
+            {}
+          )
+        ).pop() || [-1])[0]
+        console.timeEnd('my')
+        return res
+      }
+      const findLastIndex_GF = (arr, fn) => {
+        console.time('gf')
+        let res = (arr
+          .map((val, i) => [i, val])
+          .filter(([i, val]) => fn(val))
+          .pop() || [-1])[0]
+        console.timeEnd('gf')
+        return res
+      }
+      //计算对比，数据越庞大，我的写法越费时，当数据量少时费时比较少
+      let arr = Array.from({ length: 1000 }, (item, index) => index)
+      let res1 = findLastIndex(arr, n => n % 2 === 1) // 2 (index of the value 3) my: 0.202880859375ms
+      let res2 = findLastIndex_GF(arr, n => n % 2 === 1) // -1 (default value when not found) gf: 0.516845703125ms
+      console.log(res1, res2)
+    </script>
+  </body>
 </html>

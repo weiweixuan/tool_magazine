@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let deepFlatten = arr =>
+        arr.reduce(
+          (prev, item) => (
+            Array.isArray(item)
+              ? prev.push(...deepFlatten(item))
+              : prev.push(item),
+            prev
+          ),
+          []
+        )
+      // 官方写法
+      let deepFlatten_GF = arr =>
+        [].concat(
+          ...arr.map(item =>
+            Array.isArray(item) ? deepFlatten_GF(item) : item
+          )
+        )
+      let res = deepFlatten_GF([1, [2], [[3], 4], 5]) // [1,2,3,4,5]
+      console.log(res)
+    </script>
+  </body>
+</html>

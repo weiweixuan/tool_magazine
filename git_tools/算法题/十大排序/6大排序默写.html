@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [6, 1, 2, 3, 4, 5, 22, 67, 8, 54, 0, -13]
+
+      function change(arr, left, right) {
+        ;[arr[left], arr[right]] = [arr[right], arr[left]]
+      }
+      // 冒泡排序
+      function maopao(arrs) {
+        let arr = [...arrs],
+          len = arr.length
+        for (let i = 1; i < len; i++) {
+          for (let j = 0; j < len - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+              change(arr, j, j + 1)
+            }
+          }
+        }
+        return arr
+      }
+      let res1 = maopao(arr)
+      // console.log(res1)
+
+      // 插入排序
+      function charu(arr_) {
+        let arr = [...arr_],
+          len = arr.length
+        for (let j = 1; j < len; j++) {
+          let keys = j
+          while (keys > 0 && arr[keys] < arr[keys - 1]) {
+            change(arr, keys, keys - 1)
+            keys--
+          }
+        }
+        return arr
+      }
+      let res2 = charu(arr)
+      // console.log(res2)
+
+      // 选择排序
+      function xuanze(arr_) {
+        let arr = [...arr_],
+          len = arr.length
+        for (let i = 0; i < len; i++) {
+          let minIndex = i
+          for (let j = i; j < len; j++) {
+            if (arr[j] < arr[minIndex]) {
+              minIndex = j
+            }
+          }
+          change(arr, minIndex, i)
+        }
+        return arr
+      }
+      let res3 = xuanze(arr)
+      // console.log(res3)
+
+      // 归并排序
+      function gui(arr) {
+        let len = arr.length,
+          centerIndex = Math.floor(len / 2)
+        if (len == 1) return arr
+        return bin(gui(arr.slice(0, centerIndex)), gui(arr.slice(centerIndex)))
+      }
+      function bin(left, right) {
+        let arr = []
+        while (left.length && right.length) {
+          if (left[0] > right[0]) {
+            arr.push(right.shift())
+          } else {
+            arr.push(left.shift())
+          }
+        }
+        arr.push(...left, ...right)
+        return arr
+      }
+      let res4 = gui(arr)
+      // console.log(res4)
+
+      // 快速排序
+      function quick(arr, left, right) {
+        left = typeof left === 'number' ? left : 0
+        right = typeof right === 'number' ? right : arr.length - 1
+        if (left < right) {
+          let fenquIndex = getFenquFun(arr, left, right)
+          quick(arr, left, fenquIndex - 1)
+          quick(arr, fenquIndex + 1, right)
+        }
+        return arr
+      }
+      function getFenquFun(arr, left, right) {
+        let index = left + 1
+        for (let i = index; i <= right; i++) {
+          if (arr[i] < arr[left]) {
+            change(arr, index, i)
+            index++
+          }
+        }
+        change(arr, index - 1, left)
+        return index - 1
+      }
+      let res5 = quick(arr)
+      // console.log(res5)
+
+      // 希尔排序
+      function xier(arr_, group = 2) {
+        let arr = [...arr_],
+          count = Math.ceil(arr.length / group)
+        for (let i = 0; i < count; i++) {
+          for (let j = 1; j < group; j++) {
+            let index = j
+            while (
+              index >= 0 &&
+              arr[index * count] < arr[count * (index - 1)]
+            ) {
+              change(arr, index * count, (index - 1) * count)
+              index--
+            }
+          }
+        }
+        if (count === 1) return arr
+        xier(arr, group * 2)
+        return arr
+      }
+
+      let res6 = xier(arr)
+      console.log(res6)
+    </script>
+  </body>
+</html>

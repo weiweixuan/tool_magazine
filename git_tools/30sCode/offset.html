@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let offset = (arr, val) => {
+        let len = arr.length
+        if (val < 0) {
+          while (val < 0) {
+            val += len
+          }
+        } else {
+          val = val % len
+        }
+        return [...arr.slice(val), ...arr.slice(0, val)]
+      }
+      // 官方方法不兼容随意数字
+      const offset_GF = (arr, offset) => [
+        ...arr.slice(offset),
+        ...arr.slice(0, offset)
+      ]
+      let res1 = offset([1, 2, 3, 4, 5], 8) // [3, 4, 5, 1, 2]
+      let res2 = offset([1, 2, 3, 4, 5], -23) // [4, 5, 1, 2, 3]
+      console.log(res1, res2)
+    </script>
+  </body>
+</html>

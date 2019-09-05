@@ -1,44 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-
-<body>
-  <script>
-    let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 6, 7, 9, 0, 1, 4, 5, 7, 76, 87, 6, 6, 55];
-
-    function gui(arr) {
-      let len = arr.length
-      if (len <= 1) {
-        return arr
-      }
-      let flag = Math.floor(len / 2);
-      return bin(gui(arr.slice(0, flag)), gui(arr.slice(flag, len)))
-    }
-
-    function bin(left, right) {
-      let arr = []
-      while (left.length && right.length) {
-        if (left[0] < right[0]) {
-          arr.push(left.shift())
-        } else {
-          arr.push(right.shift())
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 归并排序
+      let arr = [6, 5, 10, 2, 6, 88, 9, 2, 5, -1, 0, -1, 100]
+      function split(arr) {
+        let len = arr.length
+        if (len == 1) {
+          return arr
         }
+        let middle = Math.floor(len / 2)
+        return merge(split(arr.slice(0, middle)), split(arr.slice(middle)))
       }
-      arr.push(...left, ...right)
-      return arr;
-    }
-
-
-
-    let res = gui(arr)
-    console.log(res)
-  </script>
-</body>
-
+      function merge(left, right) {
+        let result = []
+        while (left.length && right.length) {
+          if (left[0] <= right[0]) {
+            result.push(left.shift())
+          } else {
+            result.push(right.shift())
+          }
+        }
+        if (left.length) {
+          result.push(...left)
+        }
+        if (right.length) {
+          result.push(...right)
+        }
+        return result
+      }
+      Array.prototype.guibing = function() {
+        return split(this)
+      }
+      let res = arr.guibing()
+      console.log(arr, res)
+    </script>
+  </body>
 </html>

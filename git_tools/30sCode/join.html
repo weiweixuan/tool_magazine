@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let join = (arr, split = ',', end) => {
+        let ary = [...arr]
+        if (end) {
+          ary.push(ary.splice(-2, 2).join(end))
+        }
+        return ary.join(split)
+      }
+      let res1 = join(['pen', 'pineapple', 'apple', 'pen'], ',', '&') // "pen,pineapple,apple&pen"
+      let res2 = join(['pen', 'pineapple', 'apple', 'pen'], ',') // "pen,pineapple,apple,pen"
+      let res3 = join(['pen', 'pineapple', 'apple', 'pen']) // "pen,pineapple,apple,pen"
+      console.log(res1, '-------', res2, '-------', res3)
+    </script>
+  </body>
+</html>

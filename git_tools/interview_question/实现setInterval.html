@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 用 setTimeout 实现 setInterval，阐述实现的效果与setInterval的差异
+      function setInterval_(fn, timer, args) {
+        setInterval_._timer_ && clearTimeout(setInterval_._timer_)
+        !setInterval_.clearTimeout_ &&
+          (setInterval_._timer_ = setTimeout(() => {
+            fn.call(this, args)
+            setInterval_(fn, timer, args)
+          }, timer))
+      }
+      setInterval_.clear = function() {
+        this.clearTimeout_ = true
+        clearTimeout(this._timer_)
+      }
+      setInterval_(console.log, 1000, '测试下')
+      // 5秒时清理定时器
+      setTimeout(() => {
+        setInterval_.clear()
+      }, 5000)
+    </script>
+  </body>
+</html>

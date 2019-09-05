@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      Function.prototype.sayHi = '大家好，我是定义在原型上的方法'
+      a.prototype.sayHi = '我是自已的方法'
+      function a() {
+        console.log(this.name, 'aa')
+      }
+      let b = () => {
+        console.log(this.name, 'bb')
+      }
+      console.dir(a.prototype)
+      console.dir(Object.getPrototypeOf(a))
+      console.dir(Object.getPrototypeOf(b))
+    </script>
+  </body>
+</html>

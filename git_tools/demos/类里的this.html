@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      var name = 'weiwei'
+      class Person {
+        constructor(name, age) {
+          this.name = name
+          this.age = age
+        }
+        static show() {
+          console.log(this.name, '静态方法')
+        }
+        c = () => {
+          console.log('我是类的属性')
+        }
+        c() {
+          console.log('我是原型方法')
+        }
+        a() {
+          console.log(this.name, 'a方法')
+        }
+        b() {
+          console.log(this.age, 'b方法')
+        }
+      }
+      let penny = new Person('penny', '23')
+      console.log(penny, 'xxx')
+      // penny.a()
+      // penny.b()
+      // Person.show()
+
+      // class Baby extends Person {
+      //   constructor(name, age, father) {
+      //     super(name, age)
+      //     this.father = father
+      //   }
+      //   shows() {
+      //     console.log(this)
+      //   }
+      //   showa() {
+      //     super.a()
+      //     console.log('父类的showa方法')
+      //   }
+      // }
+      // let child = new Baby('薇薇', '2', '魏魏')
+      // console.log(child)
+      // child.showa()
+    </script>
+  </body>
+</html>

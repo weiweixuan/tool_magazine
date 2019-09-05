@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function getvalue(val) {
+        return new Promise(resolve => {
+          setTimeout(resolve, 1000, val)
+        })
+      }
+      async function getAsyncvalue(val) {
+        return await new Promise(resolve => {
+          setTimeout(resolve, 1000, val)
+        })
+      }
+      async function fun1(val) {
+        let a = await getvalue('a')
+        console.log(a)
+        return a
+      }
+      async function fun2(val) {
+        let a = await getAsyncvalue('b')
+        console.log(a)
+        return a
+      }
+      let res1 = fun1()
+      let res2 = fun2()
+      res1.then(val => console.log('那导致1啦', val))
+      res2.then(val => console.log('那导致2啦', val))
+    </script>
+  </body>
+</html>

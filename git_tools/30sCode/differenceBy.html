@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let differenceBy = (arr1, arr2, fn) => {
+        arr2 = new Set(arr2.map(fn))
+        return arr1.map(fn).filter(item => !arr2.has(item))
+      }
+      let res1 = differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor) // [1]
+      let res2 = differenceBy([{ x: 2 }, { x: 1 }], [{ x: 1 }], v => v.x) // [2]
+      console.log(res1, res2)
+    </script>
+  </body>
+</html>

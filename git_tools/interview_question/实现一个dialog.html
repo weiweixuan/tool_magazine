@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //    实现一个 Dialog 类，Dialog可以创建 dialog 提示框，提示框支持可拖拽（腾讯）
+      class Dialog {
+        constructor({
+          val = '',
+          bgColor = 'rgba(0,0,0,0.5)',
+          color = '#fff',
+          width = 200,
+          height = 50
+        }) {
+          // 获取屏幕宽高
+          let W = innerHeight,
+            H = innerWidth
+          this.width = width
+          this.dom
+          this.height = height
+          this.bgColor = bgColor
+          this.color = color
+          this.val = val
+          this.left = (W - width) / 2
+          this.top = (H - height) / 2
+          this.offsetX = 0
+          this.offsetY = 0
+          this.switch = false
+          this.init()
+        }
+        init() {
+          // 创建元素
+          let box = document.createElement('div'),
+            that = this
+          // 添加样式
+          box.style.cssText = `width:${this.width}px;height:${
+            this.height
+          }px;background:${this.bgColor};border-radius:${this.height /
+            10}px;display:flex;justify-content:center;align-items: center;position:fixed;top:${
+            this.top
+          }px;cursor: pointer;left:${this.left}px;color:${this.color}`
+          // 设置内容
+          box.innerHTML = this.val
+          // 添加事件
+          box.addEventListener('mousedown', this.dragStart.bind(this))
+          box.addEventListener('mouseup', this.dragup.bind(this))
+          box.addEventListener('mousemove', this.dragmove.bind(this))
+          this.dom = box
+          // 添加到body上
+          document.body.appendChild(box)
+        }
+        dragStart(e) {
+          e.preventDefault()
+          this.switch = true
+          const { offsetX, offsetY } = event
+          this.offsetX = offsetX
+          this.offsetY = offsetY
+        }
+        dragmove() {
+          if (!this.switch) return false
+          const { pageX, pageY } = event
+          this.left = pageX - this.offsetX
+          this.top = pageY - this.offsetY
+          this.active()
+        }
+        active() {
+          this.dom.style.top = `${this.top}px`
+          this.dom.style.left = `${this.left}px`
+        }
+        dragup(e) {
+          this.switch = false
+          this.offsetX = 0
+          this.offsetY = 0
+        }
+        clear() {
+          document.body.remove(this.dom)
+        }
+      }
+      let dom = new Dialog({
+        val: '我是Mr.V，请多指教',
+        width: 300,
+        height: 100,
+        color: 'red',
+        bgColor: 'skyblue'
+      })
+      // 5秒后清理
+      setTimeout(() => {
+        dom.clear()
+      }, 5000)
+    </script>
+  </body>
+</html>

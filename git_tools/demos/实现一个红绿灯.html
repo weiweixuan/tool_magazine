@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      // 实现一个红绿灯，黄灯一秒，红灯两秒，绿灯三秒轮询
+      // async
+      function getAsync(time, str) {
+        return new Promise(resolve => {
+          setTimeout(
+            val => {
+              console.log(val)
+              resolve()
+            },
+            time,
+            str
+          )
+        })
+      }
+      async function redGreen() {
+        while (true) {
+          let yellow = await getAsync(1000, '黄灯')
+          let red = await getAsync(2000, '红灯')
+          let green = await getAsync(3000, '绿灯')
+        }
+      }
+      // redGreen()
+      // Promise
+      function fun() {
+        Promise.resolve().then(() => {
+          getAsync(1000, '黄灯').then(() => {
+            getAsync(2000, '红灯').then(() => {
+              getAsync(3000, '绿灯').then(fun)
+            })
+          })
+        })
+      }
+      // fun()
+      // promise非嵌套
+      let yellow = () => getAsync(1000, '黄色')
+      let red = () => getAsync(2000, '红色')
+      let green = () => getAsync(3000, '绿色')
+      function getReturn() {
+        Promise.resolve()
+          .then(yellow)
+          .then(red)
+          .then(green)
+          .then(getReturn)
+      }
+      getReturn()
+    </script>
+  </body>
+</html>
