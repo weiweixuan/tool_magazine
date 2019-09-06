@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //在1000个数中查找一个数
+      let diguiCount = (noDiguiCount = 0)
+      // 递归算法
+      let arr = Array.from({ length: 1000 }, (item, index) => index + 1)
+      let erfen = (arr, aim, left, right) => {
+        console.log('diguiCount', ++diguiCount)
+        left = typeof left === 'number' ? left : 0
+        right = typeof right === 'number' ? right : arr.length - 1
+        if (left == right) return 'not find'
+        let center = Math.ceil((right + left) / 2)
+        if (arr[center] == aim) {
+          return `在数组的位置为${center}`
+        } else if (arr[center] > aim) {
+          return erfen(arr, aim, left, center)
+        } else {
+          return erfen(arr, aim, center, right)
+        }
+      }
+      // 非递归算法
+      let not_digui = (arr, key) => {
+        let left = 0,
+          right = arr.length - 1,
+          center = Math.ceil((right + left) / 2)
+        while (right != left) {
+          console.log('noDiguiCount', ++noDiguiCount)
+          if (arr[center] === key) {
+            return `在数组的位置为${center}`
+          } else if (arr[center] > key) {
+            right = center
+          } else {
+            left = center
+          }
+          center = Math.ceil((right + left) / 2)
+        }
+        return 'not find'
+      }
+      let res = erfen(arr, 111)
+      console.log(res)
+      let res_nodigui = not_digui(arr, 1222)
+      console.log(res_nodigui)
+    </script>
+  </body>
+</html>
