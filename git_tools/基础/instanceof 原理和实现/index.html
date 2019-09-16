@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Father() {}
+      Father.prototype.say = function() {}
+      function Child() {}
+      Child.prototype.hello = function() {}
+
+      // 初始化一个子类
+      let child = new Child()
+      // 子类原型对象继承父类原型
+      Object.setPrototypeOf(Object.getPrototypeOf(child), Father.prototype)
+      // console.log(',,,', Object.getPrototypeOf(Father) === Father.__proto__)
+      function new_instance_of(child, Father) {
+        let rightProto = Father.prototype // 取右表达式的 prototype 值
+        let leftVaule_pro = Object.getPrototypeOf(child) // 取左表达式的__proto__值
+        while (true) {
+          if (leftVaule_pro === null) {
+            return false
+          }
+          if (leftVaule_pro === rightProto) {
+            return true
+          }
+          leftVaule_pro = Object.getPrototypeOf(leftVaule_pro)
+        }
+      }
+      console.log(child instanceof Child)
+      console.log(child instanceof Father)
+      console.log('测试---------------------')
+      console.log(new_instance_of(child, Child))
+      console.log(new_instance_of(child, Father))
+      // 测试
+      // 实现三个类，逐级继承
+      function A() {}
+      A.prototype.a = function() {}
+      function B() {}
+      B.prototype.b = function() {}
+      function C() {}
+      C.prototype.c = function() {}
+      C.prototype.__proto__ = B.prototype
+      B.prototype.__proto__ = A.prototype
+      // console.dir(A)
+      // console.dir(B)
+      // console.dir(C)
+      // console.dir(Object.getPrototypeOf(A))
+      // console.dir(Object.getPrototypeOf(B))
+      // console.dir(Object.getPrototypeOf(C))
+    </script>
+  </body>
+</html>

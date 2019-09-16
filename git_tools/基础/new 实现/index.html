@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个new
+      function Person(name, age) {
+        this.name = name
+        this.age = age
+      }
+      Person.prototype.say = function() {
+        console.log(this.name)
+      }
+      function getNew(target, ...args) {
+        // 创建一个空对象，并连接到原型
+        let obj = Object.create(target.prototype)
+        // 判断是否有返回值/ 有就返回，没有就返回创建的对象
+        let res = target.apply(obj, args)
+        return res instanceof Object ? res : obj
+      }
+      let res = getNew(Person, '微微', 23)
+      res.say()
+      console.log(res, '我是新建对象')
+    </script>
+  </body>
+</html>

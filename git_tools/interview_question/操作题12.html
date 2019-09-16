@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+    请对rourelist进行控制
+    首先,将数据中的status的0/1替换为取消/确认
+    第二,将数据中polyline为空的数据过滤掉
+    第三,对数据中的polytne进行处理,按":"进行分割成数组,数组中的子元素按"."分割成数组去除数组中存在undefin元素
+    */
+      let routelist = [
+        { name: '线路1', status: 1, polyines: '116.22:21.223:223.2623' },
+        { name: '线路2', status: 0, polyines: '116.22:21.223:undefined.2623' },
+        { name: '线路3', status: 1, polyines: '116.22:21.223:undefined.2623' },
+        { name: '线路4', status: 1, polyines: null }
+      ]
+      function changeData(arr) {
+        arr = JSON.parse(JSON.stringify(arr))
+        return arr
+          .filter(item => item.polyines)
+          .map(item => {
+            item.status = item.status == '1' ? '确认' : '取消'
+            item.polyines = item.polyines
+              .split(':')
+              .filter(item => item.indexOf('undefined') == -1)
+              .map(item => item.split('.'))
+            return item
+          })
+      }
+      let res = changeData(routelist)
+      console.log(res, routelist)
+    </script>
+  </body>
+</html>
