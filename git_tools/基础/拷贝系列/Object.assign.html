@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let aim = { name: 'weiwei', age: 12 }
+      target = { name: 'penny', say: 'hello' }
+      let a = {
+        name: 'advanced',
+        age: 18
+      }
+      let b = {
+        name: 'muyiy',
+        book: {
+          title: "You Don't Know JS",
+          price: '45'
+        }
+      }
+      if (typeof Object.prototype.assign_ !== 'function') {
+        Object.defineProperty(Object, 'assign_', {
+          value: function(target, ...aim) {
+            if (target == null)
+              throw new TypeError('Cannot convert undefined or null to object')
+          },
+          writable: true,
+          enumerable: false,
+          configurable: true
+        })
+      }
+      Object.assign_ = function(target, ...aim) {
+        console.log(target, aim)
+        if (aim.length) {
+          for (let item of aim) {
+            for (let key in item) {
+              target[key] = item[key]
+            }
+          }
+        }
+        return target
+      }
+      console.dir(Object)
+      let res = Object.assign_(a, b)
+      console.log(res, a, res === a)
+    </script>
+  </body>
+</html>

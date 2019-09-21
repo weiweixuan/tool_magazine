@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="INCREMENT">INCREMENT</button>
+    <button id="DECREMENT">DECREMENT</button>
+    <script>
+      // 实现一个createStore
+      function createStore(reducer, state = {}) {
+        let state_ = state,
+          listeners = [] //闭包缓存一个集中state_和订阅队列
+        // 获取state_
+        function getState() {
+          return state_
+        }
+        // 订阅
+        function subscribe(fn) {
+          listeners.push(fn)
+        }
+        // 更新state_
+        function dispatch(action) {
+          // 匹配reducer里的规则
+          state_ = reducer(state_, action)
+          for (let i = 0; i < listeners.length; i++) {
+            // 获取每个事件调用
+            let itemFn = listeners[i]
+            itemFn()
+          }
+        }
+        // 暴露出接口
+        return {
+          getState,
+          subscribe,
+          dispatch
+        }
+      }
+      let obj = { count: 0 }
+      // 创建一个state
+      store = createStore(reducer, obj)
+      // 订阅一些方法
+      store.subscribe(() => {
+        let state = store.getState()
+        console.log('修改后的count为', state.count)
+      })
+
+      // reducer方法实现指定修改
+      const actionType = {
+        INCREMENT: 'INCREMENT',
+        DECREMENT: 'DECREMENT'
+      }
+      function reducer(state, action) {
+        const { type, payload } = action
+        switch (type) {
+          case actionType.INCREMENT:
+            return { count: state.count + 1 }
+          case actionType.DECREMENT:
+            return { count: state.count - 1 }
+          default:
+            return state
+        }
+      }
+      // 修改数据方法
+      function change(type) {
+        store.dispatch({
+          type
+        })
+      }
+
+      let INCREMENT = document.getElementById('INCREMENT')
+      let DECREMENT = document.getElementById('DECREMENT')
+      INCREMENT.addEventListener('click', () => {
+        change(actionType.INCREMENT)
+      })
+      DECREMENT.addEventListener('click', () => {
+        change(actionType.DECREMENT)
+      })
+      /*
+        总的思路：
+        首先定义常量来解释这个action是用来干什么的
+        再触发定义action修改state，
+        dispatch中根据action的type的不同，匹配不同的reducer，
+        在reducer中改变state值，state值改变后订阅的方法都会调用一遍，页面渲染
+      */
+    </script>
+  </body>
+</html>

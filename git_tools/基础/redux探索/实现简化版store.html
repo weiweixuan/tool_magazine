@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个createStore
+      function createStore(state) {
+        let state_ = state,
+          listeners = [] //闭包缓存一个集中state_和订阅队列
+        // 获取state_
+        function getState() {
+          return state_
+        }
+        // 订阅
+        function subscribe(fn) {
+          listeners.push(fn)
+        }
+        // 更新state_
+        function changeState(newState) {
+          state_ = newState
+          for (let i = 0; i < listeners.length; i++) {
+            // 获取每个事件调用
+            let itemFn = listeners[i]
+            itemFn()
+          }
+        }
+        // 暴露出接口
+        return {
+          getState,
+          subscribe,
+          changeState
+        }
+      }
+      let obj = {
+        counter: {
+          count: 0
+        },
+        info: {
+          name: '',
+          description: ''
+        }
+      }
+      // 创建一个state
+      store = createStore(obj)
+      // 订阅一些方法
+      store.subscribe(() => {
+        let state = store.getState()
+        console.log('更新后的数据为', state)
+      })
+      // 修改数据试试
+      store.changeState({
+        ...store.getState(),
+        info: {
+          name: 'weiwei',
+          description: 'love penny'
+        }
+      })
+    </script>
+  </body>
+</html>

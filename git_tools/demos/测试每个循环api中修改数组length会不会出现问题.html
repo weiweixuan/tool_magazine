@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      // 第一个foreach
+      let f_each = ary => {
+        let arr = [...ary]
+        arr.forEach((child, index) => {
+          if (child == 5) {
+            arr.splice(index, 1)
+            console.log(arr, 'iiiiii')
+          }
+          console.log('我是' + child + '我的下表是' + index)
+        })
+      }
+      f_each(arr)
+      console.log('-------------------------map----------------------------')
+      let f_map = ary => {
+        let arr = [...ary]
+        arr.map((child, index) => {
+          if (child == 5) {
+            arr.splice(index, 1)
+            console.log(arr, 'iiiiii')
+          }
+          console.log('我是' + child + '我的下表是' + index)
+        })
+      }
+      f_map(arr)
+      console.log('-------------------------reduce----------------------------')
+      let f_reduce = ary => {
+        let arr = [...ary]
+        arr.reduce((prev, child, index) => {
+          if (child == 5) {
+            arr.splice(index, 1)
+            console.log(arr, child, 'iiiiii')
+          }
+          console.log('我是' + child + '我的下表是' + index)
+        })
+      }
+      f_reduce(arr)
+      // 结果为：循环内，及时内部改变了数组的length，但是任然不影响当次的变量值，对下次的值会有影响
+    </script>
+  </body>
+</html>

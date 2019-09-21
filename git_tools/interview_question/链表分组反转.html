@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 反转链表，每 k 个节点反转一次，不足 k 就保持原有顺序
+      let a = {
+        value: 1,
+        next: {
+          value: 2,
+          next: {
+            value: 3,
+            next: {
+              value: 4,
+              next: {
+                value: 5,
+                next: {
+                  value: 6,
+                  next: {
+                    value: 7,
+                    next: {
+                      value: 8,
+                      next: null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      function reverseList(list, count = 1) {
+        list = { value: '哨兵', next: list }
+        let index = 0,
+          ary = [],
+          curr = list,
+          header = list,
+          header_curr = header
+        while (curr.next) {
+          ary.push(curr.next)
+          index++
+          curr = curr.next
+          if (index === count) {
+            reverseJoin(header_curr, ary.reverse())
+            // header_curr = ary
+            console.log(header_curr, 'iii')
+            ary = []
+            index = 0
+          }
+        }
+        return header.next
+      }
+      function reverseJoin(list, ary) {
+        console.log(list, ary, '溴铵在')
+        let curr = list
+        let next = ary[0].next // 保留最后一个引用
+        for (let item of ary) {
+          curr.next = item
+          curr = curr.next
+        }
+        // curr.next = next
+      }
+      let res = reverseList(a, 3)
+      console.log(a, res)
+    </script>
+  </body>
+</html>
