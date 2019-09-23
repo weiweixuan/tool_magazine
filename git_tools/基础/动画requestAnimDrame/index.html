@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background: gray;
+      position: absolute;
+      top: 300px;
+      left: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <button id='start'>点我开启requestAnimFrame</button>
+  <button id='end'>点我关闭requestAnimFrame</button>
+  <div></div>
+</body>
+<script>
+  let btn = document.querySelector('#start');
+  let div = document.querySelector("div")
+  let end = document.querySelector("#end")
+  btn.addEventListener('click', start, null)
+  end.addEventListener('click', stop, null)
+  timer = null;
+
+  function move() {
+    let left = parseInt(getComputedStyle(div).left)
+    div.style.left = left + 2 + 'px';
+    timer = requestAnimFrame(move, div)
+  }
+
+  function stop() {
+    cancelAnimationFrame(timer)
+  }
+  window.requestAnimFrame = (function () {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function ( /* function */ callback, /* DOMElement */ element) {
+        window.setTimeout(callback, 1000 / 60);
+      };
+  })();
+
+  function start() {
+    timer = requestAnimFrame(move, div)
+  }
+</script>
+
+</html>
