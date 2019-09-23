@@ -61,14 +61,15 @@
         }
       }
       function combineReducers(reducers) {
-        let keys = Object.keys(reducers)
+        let keys = Object.keys(reducers) // 闭包缓存了所有reducers的keys 和 总的reducers对象
+        //返回一个reducer传递state和action
         return function(prevState = {}, action) {
           let newState = {}
           for (let i = 0; i < keys.length; i++) {
-            let key = keys[i]
-            let itemReducer = reducers[key]
-            let prevItem = prevState[key]
-            newState[key] = itemReducer(prevItem, action)
+            let key = keys[i] //拿到每一个key的值
+            let itemReducer = reducers[key] //获取对应的reducer
+            let prevItem = prevState[key] //找到相对应模块的state
+            newState[key] = itemReducer(prevItem, action) // 执行该模块的reducer返回一个该模块的新state
           }
           return newState
         }
@@ -100,22 +101,12 @@
           }
         }
         // 初始化一下state
-        dispatch(state, { type: '' })
+        dispatch({ type: Symbol() })
         // 暴露出接口
         return {
           getState,
           subscribe,
           dispatch
-        }
-      }
-      let obj = {
-        setting: {
-          name: '小设置',
-          age: '22'
-        },
-        main: {
-          name: '小主页',
-          age: '23'
         }
       }
       // 创建一个state
