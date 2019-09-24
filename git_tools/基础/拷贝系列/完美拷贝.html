@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个浅拷贝
+      let copy_light = data => {
+        let obj = {}
+        // 遍历data的属性(包含原型链上可枚举的属性)
+        for (let i in data) {
+          // 判断是否是自有属性
+          if (Object.prototype.hasOwnProperty.call(data, i)) {
+            obj[i] = data[i]
+          }
+        }
+        return obj
+      }
+
+      // 简单的深拷贝
+      let copy_deep_easy = data => {
+        let obj = {}
+        // 遍历data的属性(包含原型链上可枚举的属性)
+        for (let i in data) {
+          // 判断是否是自有属性
+          if (Object.prototype.hasOwnProperty.call(data, i)) {
+            if (typeof data[i] === 'object') {
+              obj[i] = copy_deep_easy(data[i])
+            } else {
+              obj[i] = data[i]
+            }
+          }
+        }
+        return obj
+      }
+
+      // 增强的深拷贝
+      let copy_deep = (data, hash = []) => {
+        //  判断类型
+        if (typeof data === 'object' && data != null) {
+          // 判断是否时循环引用(用map存储)
+          console.log(hash, data, 'iii')
+          let isExist = hash.find(item => item.data === data)
+          if (isExist) return isExist.target
+          // 判断是否是数组
+          let target = Array.isArray(data) ? [] : {}
+          // 数组保存对象(保留对原地址和colone地址的引用)
+          hash.push({
+            data,
+            target
+          })
+          // 判断是否为symbols类型
+          let symbolList = Object.getOwnPropertySymbols(data)
+          if (symbolList.length) {
+            symbolList.forEach(element => {
+              if (typeof element === 'object') {
+                target[element] = copy_deep(data[element], hash)
+              } else {
+                target[element] = data[element]
+              }
+            })
+          }
+          // 遍历data的属性(包含原型链上可枚举的属性)
+          for (let i in data) {
+            // 判断是否是自有属性
+            if (Object.prototype.hasOwnProperty.call(data, i)) {
+              if (typeof data[i] === 'object') {
+                target[i] = copy_deep(data[i], hash)
+              } else {
+                target[i] = data[i]
+              }
+            }
+          }
+          return target
+        } else {
+          return data
+        }
+      }
+      // 循环引用
+      let a = {}
+      b = { 1: a, 2: a }
+      let res = copy_deep(b)
+      console.log(b, res, b[1] === b[2], res[1] === res[2])
+    </script>
+  </body>
+</html>

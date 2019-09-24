@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let pullBy = (arr, pullArr, fn) => {
+        for (let i = 0; i < arr.length; i++) {
+          if (pullArr.some(child => fn(child) === fn(arr[i]))) {
+            arr.splice(i, 1)
+            i--
+          }
+        }
+      }
+      var myArray = [{ x: 1 }, { x: 2 }, { x: 3 }, { x: 1 }]
+      pullBy(myArray, [{ x: 1 }, { x: 3 }], o => o.x) // myArray = [{ x: 2 }]
+      console.log(myArray)
+    </script>
+  </body>
+</html>

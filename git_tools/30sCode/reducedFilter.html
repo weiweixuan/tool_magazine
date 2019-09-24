@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let reducedFilter = (arr, attrList, fn) =>
+        arr.reduce((prev, item) => {
+          if (fn(item)) {
+            let obj = {}
+            attrList.forEach(element => {
+              obj[element] = item[element]
+            })
+            prev.push(obj)
+          }
+          return prev
+        }, [])
+      const data = [
+        {
+          id: 1,
+          name: 'john',
+          age: 24
+        },
+        {
+          id: 2,
+          name: 'mike',
+          age: 50
+        }
+      ]
+
+      let res = reducedFilter(data, ['id', 'name'], item => item.age > 24) // [{ id: 2, name: 'mike'}]
+      console.log(res)
+    </script>
+  </body>
+</html>

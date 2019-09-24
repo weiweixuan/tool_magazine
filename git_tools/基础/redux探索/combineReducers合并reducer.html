@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // combineReducers把多个reducer合并成一个reducer
+      //入参是一个对象，包含多个reducer
+      // 主页的reducer
+      function mainReducer(state, action) {
+        const { type } = action
+        switch (type) {
+          // ...
+          default:
+            return state
+        }
+      }
+      // 设置的reducer
+      function settingReducer(state, action) {
+        const { type } = action
+        switch (type) {
+          // ...
+          default:
+            return state
+        }
+      }
+      function combineReducers(reducers) {
+        let keys = Object.keys(reducers)
+        return function(prevState = {}, action) {
+          let newState = {}
+          for (let i = 0; i < keys.length; i++) {
+            let key = keys[i]
+            let itemReducer = reducers[key]
+            let prevItem = prevState[key]
+            newState[key] = reducer(prevItem, action)
+          }
+          return newState
+        }
+      }
+      let reducer = combineReducers({
+        main: mainReducer,
+        setting: settingReducer
+      })
+      console.log(reducer, 'sss')
+    </script>
+  </body>
+</html>
