@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Father(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    Father.prototype.say = function () {
+      console.log(this.nmae)
+    }
+    let fa = new Father('weiwei', 23)
+    let fa1 = new Object(fa)
+    let fa2 = Object(fa)
+    console.log(fa === fa1)
+    console.log(fa === fa2)
+    console.log(fa1 === fa2) //如果原值为对象的话：new Object()和Object()包裹一下不改变原值引用
+    let str = 'aa'
+    let str1 = Object(str)
+    let str2 = new Object(str)
+    console.log(str === str1)
+    console.log(str === str2)
+    console.log(str1 === str2) // 如果原值为非对象的话：new Object()和Object()包裹一下均转为新对象输出，保留新的引用地址
+
+    // 接下来介绍一下 Object.create(),该方法会创建一个空对象，并集成传入的对象；
+    let cre = Object.create(fa)
+    console.log(cre) //{}
+    // 还有第二个参数， Object.defineProperties(),给该对象添加数据属性
+    let cre2 = Object.create(fa, {
+      name: {
+        value: 'penny',
+        writable: true,
+        enumerable: true,
+        configurable: false
+      }
+    })
+    console.log(cre2, cre2.name);
+    // 下面我们来实现一个create
+    function create(prototype) {
+      function Fn() {}
+      Fn.prototype = prototype;
+      return new Fn();
+    }
+    let c = create(fa)
+    console.log(c, cre)
+  </script>
+</body>
+
+</html>
