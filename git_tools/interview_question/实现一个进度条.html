@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      function createDom({ name = 'div', cssText = '', value = '' }) {
+        let dom = document.createElement(name)
+        dom.style.cssText = cssText
+        dom.innerHTML = value
+        return dom
+      }
+      function getProgress(
+        val = 0,
+        { color = 'skyblue', background = '#eee', animetionTimer = 1 } = {
+          color: 'skyblue',
+          background: '#eee',
+          animetionTimer: 1
+        },
+        parent = document.body
+      ) {
+        // 判断入参类型
+        val = Number(val)
+        if (!(val >= 0 && val <= 100)) throw new Error('请输入0~100的数字！')
+        let isInit = true
+        let father = createDom({
+          cssText: `width:280px;height:30px;display:flex;align-items:center;`
+        })
+        let show = createDom({
+          cssText: `font-size:20px;color:${color};margin-left:10px;`,
+          value: '0%'
+        })
+        // 实现一个进度条
+        let box = createDom({
+          cssText: `width:200px;height:30px;position:relative;background:${background};border-radius:15px;overflow:hidden;`
+        })
+        let dom = createDom({
+          cssText: `width:0px;height:30px;background:${color};transition: all linear ${animetionTimer}s;`
+        })
+        box.appendChild(dom)
+        father.appendChild(box)
+        father.appendChild(show)
+        parent.appendChild(father)
+        let update = function(value) {
+          value = Number(value)
+          if (!(value >= 0 && value <= 100))
+            throw new Error('请输入0~100的数字！')
+          dom.style.width = `${2 * value}px`
+          // 判断值是增加还是减少
+          if (isInit) {
+            val = 0
+            isInit = false
+          }
+          let flag = val > value ? -1 : 1
+          // 每个变化执行时间
+          let t = Math.floor(1000 / Math.abs(val - value))
+          let timer1 = setInterval(() => {
+            if (val == value) return
+            val = val + flag
+            show.innerHTML = val + '%'
+          }, t * animetionTimer)
+          let timer2 = setTimeout(() => {
+            val = value
+            show.innerHTML = val + '%'
+            clearInterval(timer1)
+            clearTimeout(timer2)
+          }, 1000 * animetionTimer)
+        }
+        setTimeout(() => {
+          update(val)
+        }, 0)
+        return update
+      }
+      let change = getProgress(50)
+      setTimeout(() => {
+        change(99)
+      }, 3000)
+    </script>
+  </body>
+</html>
