@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+     给一个数组，实现排序：
+     所有的奇数位数字比相邻偶数位要大
+     */
+      let sortFun = arr => {
+        let ary = [...arr].sort((a, b) => a - b),
+          len = Math.ceil(ary.length / 2)
+        let res = []
+        for (let i = 0; i < len; i++) {
+          res = res.concat(ary[i + len], ary[i])
+        }
+        return res
+      }
+      let arr = Array.from({ length: 10 }, (item, index) => index + 1)
+      let res = sortFun(arr)
+      console.log(res)
+    </script>
+  </body>
+</html>
