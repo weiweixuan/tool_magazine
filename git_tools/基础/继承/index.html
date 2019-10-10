@@ -1,46 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-
-<body>
-  <script>
-    // 继承的终极版
-    // 父类
-    function Parent(name, age) {
-      this.name = name;
-      this.age = age;
-    }
-    Parent.prototype.say = function () {
-      console.log(`我叫${this.name}，我今年${this.age}岁`)
-    }
-    // 子类
-    function Child(name, age, skil) {
-      Parent.call(this, name, age);
-      this.skil = skil;
-    }
-    // 继承函数
-    function inherit(ch, fa) {
-      let obj = Object.create(fa.prototype, {
-        constructor: {
-          value: ch
-        }
-      })
-      // 这种直接写是可枚举的，应该用代理写
-      ch.prototype = obj;
-    }
-    inherit(Child, Parent)
-    let child = new Child('weiwei', 23, 'study')
-    let father = new Parent('penny', 24)
-    console.dir(child)
-    console.dir(father)
-    child.say();
-  </script>
-</body>
-
+  <body>
+    <script>
+      // 继承的终极版
+      // 父类
+      function Parent(name, age) {
+        this.name = name
+        this.age = age
+      }
+      Parent.prototype.say = function() {
+        console.log(`我叫${this.name}，我今年${this.age}岁`)
+      }
+      // 子类
+      function Child(name, age, skil) {
+        Parent.call(this, name, age)
+        this.skil = skil
+      }
+      // 继承函数
+      function inherit(ch, fa) {
+        let obj = Object.create(fa.prototype, {
+          constructor: {
+            value: ch
+          }
+        })
+        // 这种直接写是可枚举的，应该用代理写
+        ch.prototype = obj
+      }
+      inherit(Child, Parent)
+      let child = new Child('weiwei', 23, 'study')
+      let father = new Parent('penny', 24)
+      console.dir(child)
+      console.dir(father)
+      child.say()
+    </script>
+  </body>
 </html>

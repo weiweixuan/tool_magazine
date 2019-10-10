@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="demo">我是测试文字</div>
+    <button>点击修改</button>
+    <script>
+      /*
+          对象的属性更改，页面更新
+      */
+      const dom = document.getElementById('demo')
+      const btn = document.getElementsByTagName('button')[0]
+      btn.addEventListener('click', () => {
+        let res = prompt('请填写输入title值')
+        if (!!res) {
+          obj.title = res
+          console.log('相等吗', dom.textContent === res)
+        }
+      })
+      let obj = { title: null }
+      function observe(data, key) {
+        obj = new Proxy(data, {
+          set(data_, key_, value_) {
+            if (key_ === key) {
+              dom.textContent = value_
+              return Reflect.set(data_, key_, value_)
+            } else {
+              throw new Error(`请修改 ${key} 这个属性,页面才会实时变更！！！`)
+            }
+          }
+        })
+      }
+      observe(obj, 'title')
+    </script>
+  </body>
+</html>
