@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //探索promise
+      // let getRes = () =>
+      //   new Promise(resolve => {
+      //     for (let i = 0; i < 10000; i++) {
+      //       console.log(i)
+      //     }
+      //     resolve('执行完成')
+      //   })
+
+      // let p1 = new Promise(resolve => {
+      //   console.log(111)
+      //   resolve(getRes())
+      //   console.log(222)
+      // })
+      // p1.then(res => {
+      //   console.log(res)
+      // })
+      new Promise(resolve => {
+        // 外层为 outerResolve 内层为 innerResolve
+        resolve(Promise.resolve())
+      }).then(() => {
+        console.log('resolvePromise resolved')
+      })
+
+      let resolvePromiseThen = Promise.resolve().then(res => {
+        console.log('promise1')
+      })
+      resolvePromiseThen
+        .then(() => {
+          console.log('promise2')
+        })
+        .then(() => {
+          console.log('promise3')
+        })
+    </script>
+  </body>
+</html>

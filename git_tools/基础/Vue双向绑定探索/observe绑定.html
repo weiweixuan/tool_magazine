@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // let obj_ = {
+      //   book1: {
+      //     name: 'js高级程序设计'
+      //   },
+      //   book2: 'jquery'
+      // }
+      // function define_(data, key, val) {
+      //   observe(val)
+      //   Object.defineProperty(data, key, {
+      //     get() {
+      //       console.log('get数据被劫持')
+      //       return val
+      //     },
+      //     set() {},
+      //     enumerable: true,
+      //     configurable: true
+      //   })
+      // }
+      // function observe(obj) {
+      //   if (!obj || typeof data !== 'object') return false
+      //   Object.keys(obj).forEach(item => define_(obj, item, obj[item]))
+      // }
+      // observe(obj_)
+      // console.log(obj_.book2)
+      //--------------------------------------------------------------------------
+      console.log('=++++++++++++++++++++++++++++++++++++++=')
+      function defineReactive(data, key, val) {
+        observe(val) // 递归遍历所有子属性
+        Object.defineProperty(data, key, {
+          enumerable: true,
+          configurable: true,
+          get: function() {
+            console.log('11被劫持了')
+            return val
+          },
+          set: function(newVal) {
+            val = newVal
+            console.log(
+              '属性' +
+                key +
+                '已经被监听了，现在值为：“' +
+                newVal.toString() +
+                '”'
+            )
+          }
+        })
+      }
+
+      function observe(data) {
+        if (!data || typeof data !== 'object') {
+          return
+        }
+        Object.keys(data).forEach(function(key) {
+          defineReactive(data, key, data[key])
+        })
+      }
+
+      var library = {
+        book1: {
+          name: ''
+        },
+        book2: ''
+      }
+      observe(library)
+      console.log(library.book1.name)
+      // library.book1.name = 'vue权威指南' // 属性name已经被监听了，现在值为：“vue权威指南”
+      // library.book2 = '没有此书籍' // 属性book2已经被监听了，现在值为：“没有此书籍”
+    </script>
+  </body>
+</html>

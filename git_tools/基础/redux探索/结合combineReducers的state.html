@@ -89,6 +89,11 @@
         // 订阅
         function subscribe(fn) {
           listeners.push(fn)
+          // 退订
+          return function() {
+            let index = listeners.indexOf(fn)
+            listeners.splice(index, 1)
+          }
         }
         // 更新state_
         function dispatch(action) {
@@ -112,11 +117,15 @@
       // 创建一个state
       store = createStore(reducerAll)
       // 订阅一些方法
-      store.subscribe(() => {
+      let unSubcribe = store.subscribe(() => {
         let state = store.getState()
         console.log('修改后的state为', state)
       })
-
+      // 10s后退订
+      setTimeout(() => {
+        console.log('退订啦')
+        unSubcribe() //退订
+      }, 10000)
       console.log(store.getState())
       // 修改数据方法
       function change(type, payload) {

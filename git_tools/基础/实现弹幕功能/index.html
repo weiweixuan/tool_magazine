@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .content {
+        width: 600px;
+        height: auto;
+        margin: 100px auto;
+      }
+      .box {
+        height: 400px;
+        border: 1px solid gray;
+      }
+      .bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+      }
+      .print {
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="box"></div>
+      <div class="bottom">
+        <input type="text" class="print" />
+        <button class="btn">添加弹幕</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    function getDanMu(
+      list = [],
+      dom = document.body,
+      showTop = 3,
+      pipeCount = 10
+    ) {
+      function randomColor() {
+        let arr = Array.from({ length: 3 }, item =>
+          Math.floor(Math.random() * 256)
+        )
+        return `rgb(${arr.toString()})`
+      }
+      function randomSize() {
+        return Math.random() * 20 + 10
+      }
+      // 创建元素
+      function createDom(style, tagName = 'div', value = '') {
+        let dom = document.createElement(tagName)
+        dom.innerHTML = value
+        dom.style.cssText = style
+        return dom
+      }
+      // 添加管道
+      function getPipeline(dom, line = pipeCount) {
+        let arrpipe = Array.from({ length: line }, item => {
+          let child_H = Math.floor(dom.clientHeight / line)
+          let style = `height:${child_H}px;background:transparent;position:relative;overflow:hidden;`
+          return createDom(style)
+        })
+        arrpipe.forEach(item => dom.appendChild(item))
+        return {
+          arrpipe,
+          height: dom.clientHeight,
+          width: dom.offsetWidth
+        }
+      }
+      let Obj = getPipeline(box)
+      function activeItems(top = showTop) {
+        for (let i = 0; i < top; i++) {
+          create(top)
+        }
+      }
+      function create(top) {
+        let { arrpipe, height, width } = Obj
+        let prev = list.shift()
+        let style = `width:${width}px;color:${prev.color};font-size:${prev.size}px;position:absolute;top:50%;transform: translateY(-50%);left:${width}px;overflow:hidden;background:transparent;`
+        let activeDom = createDom(style, 'div', prev.title)
+        list.push(prev)
+        let pipe = Math.floor(Math.random() * top)
+        arrpipe[pipe].appendChild(activeDom)
+        move(activeDom, arrpipe[pipe])
+      }
+      function move(activeDom, father) {
+        const { width } = Obj
+        let timer = setInterval(() => {
+          let left = parseInt(getComputedStyle(activeDom).left)
+          if (left <= -width) {
+            clearInterval(timer)
+            father.removeChild(activeDom)
+            create(showTop)
+          }
+          activeDom.style.left = left - 2 + 'px'
+        }, Math.random() * 30)
+      }
+      activeItems()
+    }
+    function randomColor() {
+      let arr = Array.from({ length: 3 }, item =>
+        Math.floor(Math.random() * 256)
+      )
+      return `rgb(${arr.toString()})`
+    }
+    function randomSize() {
+      return Math.random() * 20 + 10
+    }
+    let list = [
+      { title: '我是一个弹幕1', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕2', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕3', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕4', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕5', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕6', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕7', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕8', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕9', color: randomColor(), size: randomSize() },
+      { title: '我是一个弹幕10', color: randomColor(), size: randomSize() }
+    ]
+
+    let box = document.getElementsByClassName('box')[0]
+    let print = document.getElementsByClassName('print')[0]
+    let btn = document.getElementsByClassName('btn')[0]
+    btn.addEventListener('click', function() {
+      let val = print.value
+      if (!val) return false
+      list.unshift({
+        title: val,
+        color: randomColor(),
+        size: randomSize()
+      })
+      print.value = ''
+    })
+    getDanMu(list, box, 10)
+  </script>
+</html>
