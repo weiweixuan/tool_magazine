@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //  on 方法是订阅 ，emit是触发 ， off是卸载该订阅
+      let createEventHub = () => ({
+        hub: Object.create(null),
+        on(type, fn) {
+          this.hub[type] ? this.hub[type].push(fn) : (this.hub[type] = [fn])
+        },
+        emit(type, val) {
+          ;(this.hub[type] || []).forEach(fn => {
+            fn(val)
+          })
+        },
+        off(type, fn) {
+          if (!this.hub[type]) return
+          let index = this.hub[type].indexOf(fn)
+          if (index != -1) {
+            this.hub[type].splice(index, 1)
+          }
+        }
+      })
+
+      const handler = data => console.log(data)
+      const hub = createEventHub()
+      let increment = 0
+
+      // Subscribe: listen for different types of events
+      hub.on('message', handler)
+      hub.on('message', () => console.log('Message event fired'))
+      hub.on('increment', () => increment++)
+
+      // Publish: emit events to invoke all handlers subscribed to them, passing the data to them as an argument
+      hub.emit('message', 'hello world') // logs 'hello world' and 'Message event fired'
+      hub.emit('message', { hello: 'world' }) // logs the object and 'Message event fired'
+      hub.emit('increment') // `increment` variable is now 1
+
+      // Unsubscribe: stop a specific handler from listening to the 'message' event
+      hub.off('message', handler)
+    </script>
+  </body>
+</html>
