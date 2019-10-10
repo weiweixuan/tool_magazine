@@ -7,6 +7,4 @@ interview_question这个文件夹下是一些收集的面试题，
 
 tools文件夹是一些工具函数库
 
-test文件夹是测试tools里的工具，命名需test_ + 工具库名，方便查找，谢谢
-
 后期有功能再加上……
