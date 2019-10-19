@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      getZiShu = (number = 1000) => {
+        let resList = []
+        for (let i = 2; i <= number; i++) {
+          if (i === 2) resList.push(2)
+          let half = Math.sqrt(i),
+            flag = true
+          half = Math.ceil(half)
+          for (let j = 2; j <= half; j++) {
+            if (Number.isInteger(i / j)) {
+              flag = false
+              break
+            }
+          }
+          flag && resList.push(i)
+        }
+        return resList
+      }
+      let arr = getZiShu()
+      console.log(arr, 'arr')
+    </script>
+  </body>
+</html>

@@ -12,11 +12,10 @@
     <script>
       // 快速排序
       let arr = [6, 10, 88, 9, 2, 5, -1, 0, 100]
-      function quick(arr, left, right) {
+      function quick(arr, left = 0, right = arr.length - 1) {
         let len = arr.length,
           partitionIndex
-        left = typeof left === 'number' ? left : 0
-        right = typeof right === 'number' ? right : len - 1
+
         if (left < right) {
           partitionIndex = partition(arr, left, right)
           quick(arr, left, partitionIndex - 1)
