@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //将 '10000000000' 形式的字符串，先保留两位有效数字，再以每 3 位进行分隔展示 '10.000.000.000'
+      let str = '100009999999'
+      getEffective = str => {
+        let [int, decimal] = String(Number(str).toFixed(2)).split('.')
+        let res =
+          [...int]
+            .reverse()
+            .reduce(
+              (prev, item, index) => (
+                prev.push(index % 3 === 2 ? ',' + item : item), prev
+              ),
+              []
+            )
+            .reverse()
+            .join('') + `.${decimal}`
+        if (res[0] === ',') {
+          return res.slice(1)
+        }
+        return res
+      }
+      let res = getEffective(str)
+      console.log(res, 'res')
+    </script>
+  </body>
+</html>

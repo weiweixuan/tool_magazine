@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <a href="/eat" class="router-item" replace="true">吃饭</a>
+    <a href="/work" class="router-item">工作</a>
+    <a href="/sleep" class="router-item">睡觉</a>
+    <a href="/play" class="router-item">玩游戏</a>
+    <a href="/aaa" class="router-item">其他事</a>
+    <div id="router-view"></div>
+    <script>
+      /*
+        history路由的实现：
+        主要是通过history.pushState()和history.replaceState()来修改当前的pathName来匹配路由数组,
+        然后回调来匹配插槽里的组件动态渲染页面；
+        点击返回时触发window.popState()方法，重新根据pathName匹配路由,动态渲染页面
+      */
+      class Route {
+        constructor(config) {
+          this.route = config.routes
+          this.mode = config.mode === 'hash' ? 'hash' : 'history'
+          this.init()
+        }
+        init() {
+          let that = this
+          // 第一步，注册所有的点击按钮
+          let clickBtns = document.querySelectorAll('.router-item')
+          for (let i = 0; i < clickBtns.length; i++) {
+            clickBtns[i].addEventListener(
+              'click',
+              function(e) {
+                e.preventDefault()
+                let path = this.getAttribute('href'),
+                  replace = this.getAttribute('replace')
+                if (replace) {
+                  window.history.replaceState(
+                    {},
+                    '',
+                    window.location.origin + path
+                  )
+                  that.randerView()
+                } else {
+                  window.history.pushState(
+                    {},
+                    '',
+                    window.location.origin + path
+                  )
+                  that.randerView()
+                }
+              },
+              false
+            )
+          }
+          // 注册监听方法
+          window.addEventListener(
+            'popstate',
+            function() {
+              that.randerView()
+            },
+            false
+          )
+          this.randerView()
+        }
+        randerView() {
+          let path = location.pathname || '',
+            routerView = document.querySelector('#router-view')
+          let index = this.route.findIndex(item => item.path === path)
+          if (index > -1) {
+            routerView.innerHTML = this.route[index].component
+          } else {
+            let Index_ = this.route.findIndex(item => item.path === '*')
+            if (Index_ > -1) {
+              window.history.pushState(
+                {},
+                '',
+                window.location.origin + this.route[Index_].redirect
+              )
+              this.randerView()
+            }
+          }
+        }
+      }
+      let config = {
+        mode: 'history',
+        routes: [
+          {
+            path: '/eat',
+            component: '<h1>吃饭</h1><h4>吃饭</h4>'
+          },
+          { path: '/work', component: '<h1>工作</h1><h4>工作</h4>' },
+          { path: '/sleep', component: '<h1>睡觉</h1><h4>睡觉</h4>' },
+          { path: '/play', component: '<h1>玩游戏</h1><h4>玩游戏</h4>' },
+          { path: '/404', component: '<h1>没有找到页面</h4>' },
+          { path: '*', redirect: '/404' }
+        ]
+      }
+      new Route(config)
+    </script>
+  </body>
+</html>

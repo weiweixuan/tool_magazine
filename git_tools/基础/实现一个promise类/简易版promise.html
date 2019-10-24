@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const PENDING = 'pending'
+      const RESOLVED = 'resolved'
+      const REJECTED = 'rejected'
+      class MyPromise {
+        constructor(fn) {
+          this.state = PENDING
+          this.value = null
+          this.resolveList = []
+          this.rejectList = []
+          this.resolve = val => {
+            if (this.state === PENDING) {
+              this.state = RESOLVED
+              this.value = val
+              this.resolveList.map(cb => cb(val))
+            }
+          }
+          this.reject = val => {
+            this.state = PENDING
+            this.value = val
+            this.rejectList.map(cb => cb(val))
+          }
+          try {
+            fn(this.resolve, this.reject)
+          } catch (e) {
+            reject(e)
+          }
+        }
+
+        static resolve() {
+          console.log('resolve')
+        }
+        static reject() {
+          console.log('reject')
+        }
+      }
+      let p1 = new MyPromise(function(resolve, reject) {
+        resolve('成功')
+      })
+      console.log(p1)
+      // MyPromise.resolve()
+      // MyPromise.reject()
+    </script>
+  </body>
+</html>

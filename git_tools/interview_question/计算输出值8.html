@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 一下代码输出什么？
+      let a = 0
+      let b = async () => {
+        a = a + (await 10)
+        console.log('2', a)
+      }
+      b()
+      a++
+      console.log('1', a)
+      // 1 1
+      // 2 10
+      // 在函数b中，async执行时会先执行await 后面的代码，如果结果返回是promise就执行，可是10是个number，所以就相当于执行Promise.resolve(10),但是此时的作用域被保留在了微任务中，a=0;
+    </script>
+  </body>
+</html>

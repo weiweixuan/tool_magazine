@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="/eat" class="router-item" replace="true">吃饭</a>
+    <a href="/work" class="router-item">工作</a>
+    <a href="/sleep" class="router-item">睡觉</a>
+    <a href="/play" class="router-item">玩游戏</a>
+    <a href="/aaa" class="router-item">其他事</a>
+    <div id="router-view"></div>
+    <script>
+      /*
+        哈希路由实现思路：
+        通过location.hash来修改hash值，同时触发window.hashchange方法，匹配路由动态渲染组件
+      */
+      class Route {
+        constructor(config) {
+          this.route = config.routes
+          this.mode = config.mode === 'hash' ? 'hash' : 'history'
+          this.init()
+        }
+        init() {
+          let that = this
+          // 第一步，注册所有的点击按钮
+          let clickBtns = document.querySelectorAll('.router-item')
+          for (let i = 0; i < clickBtns.length; i++) {
+            clickBtns[i].addEventListener(
+              'click',
+              function(e) {
+                e.preventDefault()
+                let path = this.getAttribute('href'),
+                  replace = this.getAttribute('replace')
+                if (replace) {
+                  let href = location.href,
+                    index = href.indexOf('#')
+                  window.location.replace(
+                    href.slice(0, index >= 0 ? index : 0) + '#' + path
+                  )
+                } else {
+                  location.hash = path
+                }
+              },
+              false
+            )
+          }
+          // 注册监听方法
+          window.addEventListener(
+            'hashchange',
+            function() {
+              console.log('object')
+              that.randerView()
+            },
+            false
+          )
+          this.randerView()
+        }
+        randerView() {
+          let hash = location.hash.slice(1),
+            routerView = document.querySelector('#router-view')
+          let index = this.route.findIndex(item => item.path === hash)
+          if (index > -1) {
+            routerView.innerHTML = this.route[index].component
+          } else {
+            let Index_ = this.route.findIndex(item => item.path === '*')
+            if (Index_ > -1) {
+              location.hash = this.route[Index_].redirect
+              this.randerView()
+            }
+          }
+        }
+      }
+      let config = {
+        mode: 'hash',
+        routes: [
+          {
+            path: '/eat',
+            component: '<h1>吃饭</h1><h4>吃饭</h4>'
+          },
+          { path: '/work', component: '<h1>工作</h1><h4>工作</h4>' },
+          { path: '/sleep', component: '<h1>睡觉</h1><h4>睡觉</h4>' },
+          { path: '/play', component: '<h1>玩游戏</h1><h4>玩游戏</h4>' },
+          { path: '/404', component: '<h1>没有找到页面</h4>' },
+          { path: '*', redirect: '/404' }
+        ]
+      }
+      new Route(config)
+    </script>
+  </body>
+</html>
