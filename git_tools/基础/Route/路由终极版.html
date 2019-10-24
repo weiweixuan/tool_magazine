@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="router_box">
+      <a href="/home" class="router" replace="true">主页</a>
+      <a href="/news" class="router">新闻</a>
+      <a href="/team" class="router">团队</a>
+      <a href="/about" class="router">关于</a>
+      <a href="/abcd" class="router">错误的路由</a>
+    </div>
+    <div id="router-view"></div>
+    <script>
+      class Router {
+        constructor(config = { mode: 'hash', routes: [] }) {
+          this.config = config
+          this.init()
+        }
+        init() {
+          const { mode, routes } = this.config
+          let btnList = document.querySelectorAll('.router'),
+            that = this
+          for (let i = 0; i < btnList.length; i++) {
+            btnList[i].addEventListener(
+              'click',
+              function(e) {
+                e.preventDefault()
+                const { mode, routes } = that.config
+                let target = this.getAttribute('href'),
+                  replace = this.getAttribute('replace'),
+                  path = location.pathname
+                if (mode === 'hash') {
+                  // 判断是否替换当前记录
+                  if (replace) {
+                    let index = path.indexOf('#')
+                    location.replace(
+                      path.slice(0, index > -1 ? index : 0) + `#${target}`
+                    )
+                  } else {
+                    location.hash = target
+                  }
+                } else {
+                  if (replace) {
+                    history.replaceState({}, '', location.origin + target)
+                  } else {
+                    history.pushState({}, '', location.origin + target)
+                  }
+                  that.render()
+                }
+              },
+              false
+            )
+          }
+          // 监听浏览器事件
+          if (mode === 'hash') {
+            window.addEventListener(
+              'hashchange',
+              () => {
+                this.render()
+              },
+              false
+            )
+          } else {
+            window.addEventListener(
+              'popstate',
+              () => {
+                this.render()
+              },
+              false
+            )
+          }
+          // 自调用一次
+          this.render()
+        }
+        render() {
+          const { mode, routes } = this.config,
+            view = document.getElementById('router-view')
+          if (mode === 'hash') {
+            let hash = location.hash.slice(1)
+            let index = routes.findIndex(item => item.path === hash)
+            console.log(index, hash, 'xiabiao')
+            if (index > -1) {
+              view.innerHTML = routes[index].component
+            } else {
+              let defaultIndex = routes.findIndex(item => item.path === '*')
+              location.hash = routes[defaultIndex].redirect
+            }
+          } else {
+            let path = location.pathname
+            let index = routes.findIndex(item => item.path === path)
+            console.log(index, path, 'xiabiao')
+            if (index > -1) {
+              view.innerHTML = routes[index].component
+            } else {
+              let defaultIndex = routes.findIndex(item => item.path === '*')
+              history.pushState(
+                {},
+                '',
+                location.origin + routes[defaultIndex].redirect
+              )
+              this.render()
+            }
+          }
+        }
+      }
+      new Router({
+        mode: 'history',
+        routes: [
+          {
+            path: '/home',
+            component: '<h1>主页</h1><h4>我是主页信息</h4>'
+          },
+          { path: '/news', component: '<h1>新闻</h1><h4>今天2019/10/24</h4>' },
+          { path: '/team', component: '<h1>团队</h1><h4>WEB前端工程师</h4>' },
+          { path: '/about', component: '<h1>关于</h1><h4>我们都要加油</h4>' },
+          { path: '*', redirect: '/home' }
+        ]
+      })
+    </script>
+  </body>
+</html>
