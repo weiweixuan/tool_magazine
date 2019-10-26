@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .box {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 600px;
+        height: 600px;
+        margin: 100px auto;
+      }
+
+      .item {
+        width: 180px;
+        height: 180px;
+        margin: 10px;
+        box-sizing: border-box;
+        line-height: 180px;
+        text-align: center;
+        background: #ccc;
+        border-radius: 10px;
+        transition: all linear 0.1s;
+        cursor: pointer;
+      }
+      .btn {
+        background: chocolate;
+        font-size: 30px;
+        width: 180px;
+        height: 180px;
+        margin: 10px;
+        box-sizing: border-box;
+        line-height: 180px;
+        text-align: center;
+        background: #ccc;
+        border-radius: 10px;
+        color: blue;
+        transition: all linear 0.1s;
+        cursor: pointer;
+        background: skyblue;
+      }
+      .btn:hover {
+        transform: scale(1.05);
+      }
+      .active {
+        background: #999;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="item">电动牙刷</div>
+      <div class="item">谢谢惠顾</div>
+      <div class="item">迈凯伦跑车</div>
+      <div class="item">1块钱</div>
+      <div class="btn ">点我抽奖</div>
+      <div class="item">二氧化碳一斤</div>
+      <div class="item">海边大别墅</div>
+      <div class="item">1个亿</div>
+      <div class="item">美女一枚</div>
+    </div>
+    <script>
+      ;(function() {
+        let btn = document.querySelector('.btn'),
+          timer = null,
+          count = 185,
+          t = 0,
+          speed = 360,
+          flag = true,
+          list = (function() {
+            let arr = [1, 2, 3, 6, 9, 8, 7, 4]
+            return arr.map((item, index) =>
+              document.querySelector(`.box div:nth-child(${item})`)
+            )
+          })()
+        btn.addEventListener(
+          'click',
+          function() {
+            if (flag) {
+              //  185 - 192  为对应的奖品
+              let arr = [185, 187, 188, 189, 190, 191, 192]
+              let random = Math.random()
+              if (random > 0.8) {
+                let random_ = Math.floor(Math.random() * 6)
+                count = arr[random_]
+              } else {
+                count = 186
+              }
+              console.log(count, 'iiiiiiiiiiiiiiiiiiiiiii')
+              flag = false
+              active()
+              move()
+            }
+          },
+          false
+        )
+        function move() {
+          timer = setTimeout(function() {
+            t++
+            console.log(t, speed, count, '-------')
+            if (t <= 30) {
+              speed -= 10
+            }
+            if (t > 145 && t <= 170) {
+              speed += 10
+            }
+            if (t > 170) {
+              speed += 50
+            }
+            if (t === count) {
+              clearTimeout(timer)
+              alert(
+                `恭喜您！获得了${
+                  document.querySelector('.item.active').innerHTML
+                }`
+              )
+              timer = null
+              count = 185
+              t = 0
+              speed = 360
+              flag = true
+              list = (function() {
+                let arr = [1, 2, 3, 6, 9, 8, 7, 4]
+                return arr.map((item, index) =>
+                  document.querySelector(`.box div:nth-child(${item})`)
+                )
+              })()
+              return
+            }
+            active()
+            move()
+          }, speed)
+        }
+        function active() {
+          toggleClass(list)
+          list.push(list.shift())
+        }
+        function toggleClass(list) {
+          list.forEach((element, ind) => {
+            if (ind === 0) {
+              element.className = 'item active'
+            } else {
+              element.className = 'item'
+            }
+          })
+        }
+      })()
+    </script>
+  </body>
+</html>
