@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //  密码长度6-12位，由数字、小写字符、大写字母组成，但必须至少包括2种字符。
+      let checkVal = str =>
+        /(?!^(\d+|[a-zA-Z]+)$)^[\w~!@#$%\^&*?]{6,12}$/.test(str)
+      let str = '123456789011'
+      let res = checkVal(str)
+      console.log(res)
+    </script>
+  </body>
+</html>
