@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      let arr = [
+        { name: 'ww', age: 12 },
+        { name: 'dd', age: 10 },
+        { name: 'aa', age: 12 },
+        { name: 'ww', age: 12 },
+        { name: 'ww' },
+        { name: 'ww', age: 12 },
+        { name: 'ww', age: 12, skill: 'eat' },
+        { name: 'ww', age: 12 }
+      ]
+      // set数据结构写法
+      let reduce1 = arr => [...new Set(arr.map(JSON.stringify))].map(JSON.parse)
+      // reduce
+      let reduce2 = arr =>
+        arr.reduce(
+          (prev, item) => (
+            !prev.find(
+              child => JSON.stringify(child) === JSON.stringify(item)
+            ) && prev.push(item),
+            prev
+          ),
+          []
+        )
+      // 比较键值对
+      let reduce3 = arr =>
+        arr.reduce(
+          (prev, item) => (!isInObj(prev, item) && prev.push(item), prev),
+          []
+        )
+      function isInObj(arr, item) {
+        return arr.some((child, index) => {
+          if (Object.keys(child).length === Object.keys(item).length) {
+            let flag = true
+            for (let key in child) {
+              if (!(key in item) || child[key] != item[key]) {
+                flag = false
+                break
+              }
+            }
+            return flag
+          }
+          return false
+        })
+      }
+      let res1 = reduce1(arr)
+      let res2 = reduce2(arr)
+      let res3 = reduce3(arr)
+      console.log(res1, res2, res3)
+    </script>
+  </body>
+</html>
