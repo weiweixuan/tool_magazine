@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // let loadImg = url => {
+      //   let image = new Image(100, 100)
+      //   image.onload = function() {
+      //     console.log('onload')
+      //   }
+      //   image.onerror = function() {
+      //     console.log('error')
+      //   }
+      //   image.src = url
+      //   document.body.appendChild(image)
+      // }
+      // 改成promise版本
+      let loadImgPromise = url =>
+        new Promise((resolve, reject) => {
+          let img = new Image(100, 100)
+          img.onload = function() {
+            resolve(img)
+          }
+          img.onerror = function() {
+            reject('error in ' + url)
+          }
+          img.src = url
+        })
+      let renderPages = dom => document.body.appendChild(dom)
+      let imgList = [
+        'http://b-ssl.duitang.com/uploads/item/201607/05/20160705091524_nUB28.jpeg',
+        'http://b-ssl.duitang.com/uploads/item/201506/19/20150619182752_iTm5A.jpeg',
+        'http://b-ssl.duitang.com/uploads/item/201701/06/20170106190611_sf8zw.jpeg'
+      ]
+      Promise.all(imgList.map(child => loadImgPromise(child))).then(arr =>
+        arr.forEach(element => {
+          renderPages(element)
+        })
+      )
+    </script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [
+        { id: 'animals', parent: null },
+        { id: 'mammals', parent: 'animals' },
+        { id: 'cats', parent: 'mammals' },
+        { id: 'dogs', parent: 'mammals' },
+        { id: 'chihuahua', parent: 'dogs' },
+        { id: 'labrador', parent: 'dogs' },
+        { id: 'persian', parent: 'cats' },
+        { id: 'siamese', parent: 'cats' }
+      ]
+      let mapArrToTree = (arr, father) => {
+        let obj = {}
+        arr
+          .filter(item => item.parent == father)
+          .forEach(element => {
+            obj[element.id] = mapArrToTree(arr, element.id)
+          })
+        return obj
+      }
+      let res = mapArrToTree(arr, null)
+      console.log(res)
+    </script>
+  </body>
+</html>

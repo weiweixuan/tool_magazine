@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>拼图游戏</title>
+  </head>
+  <h2>拼图小游戏</h2>
+  <div id="play"></div>
+  <body>
+    <script>
+      // 拼图图片url
+      const url =
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572617784089&di=5a45b1d176da911775dc2efacd53774d&imgtype=0&src=http%3A%2F%2Fwww.qqtouxiang.com%2Fd%2Ffile%2Ftupian%2Fmx%2F20180508%2Fjingdze1fnfun.jpg'
+      // 默认图片url
+      const defaultUrl =
+        'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1886628417,4029144385&fm=26&gp=0.jpg'
+
+      // 洗牌算法,生成随机数组
+      let random = arr => {
+        arr = [...arr]
+        let len = arr.length
+        for (let i = 0; i < arr.length; i++) {
+          let random = Math.floor(Math.random() * (len - i)) + i
+          ;[arr[i], arr[random]] = [arr[random], arr[i]]
+        }
+        return arr
+      }
+      // 外层框框类
+      class Puzzle {
+        constructor({ id, url, width = 300, height = 300 }) {
+          this.width = width
+          this.height = height
+          this.father = document.querySelector(`#${id}`)
+          this.url = url
+          this.initParent()
+        }
+        // 初始化父类
+        initParent() {
+          this.father.style.cssText = `width:${this.width}px;height:${this.height}px;border:1px solid gray;display:flex;flex-wrap: wrap;margin:100px auto;`
+          // 初始化子类
+          let res = new PuzzleItem({
+            father: this.father,
+            url: this.url,
+            width: this.width,
+            height: this.height
+          })
+        }
+      }
+      // 里面九个item类
+      class PuzzleItem {
+        constructor({ father, url, width, height }) {
+          this.father = father
+          this.width = width / 3
+          this.height = height / 3
+          this.url = url
+          this.itemList = [] //保存子item的顺序
+          //result => 正确的结果(用来做对比)
+          this.result = JSON.stringify([
+            [0, 0],
+            [-height / 3, 0],
+            [(-2 * height) / 3, 0],
+            [0, -width / 3],
+            [-height / 3, -width / 3],
+            [(-2 * height) / 3, -width / 3],
+            [0, (-2 * width) / 3],
+            [-height / 3, (-2 * width) / 3],
+            // [(-2 * height) / 3, -2*width / 3],
+            'default'
+          ])
+          // 初始化随机的item(交换item也要修改bglist，根据bglist和result的string做对比判断是否win))
+          this.bgList = random([
+            [0, 0],
+            [-height / 3, 0],
+            [(-2 * height) / 3, 0],
+            [0, -width / 3],
+            [-height / 3, -width / 3],
+            [(-2 * height) / 3, -width / 3],
+            [0, (-2 * width) / 3],
+            'default',
+            [-height / 3, (-2 * width) / 3]
+          ])
+          this.initItem()
+        }
+        // 创建item，绑定点击事件，stop是判断是否赢了，赢了也需要调用一次
+        createItem(val, stop = false) {
+          let dom = document.createElement('div'),
+            that = this
+          if (stop) {
+            const [top, left] = val
+            dom.style.cssText = `
+          width:${this.width}px;
+          height:${this.height}px;
+          background: url(${this.url}) ${top}px ${left}px;
+          background-size:${this.width * 3}px;
+          `
+          } else {
+            if (typeof val === 'string') {
+              dom.setAttribute('default', 'true')
+              dom.style.cssText = `
+          width:${this.width}px;
+          height:${this.height}px;
+          background: url(${defaultUrl}) center;
+          background-size:${this.width}px;
+          border:1px solid #000;
+          box-sizing:border-box;
+          `
+            } else {
+              const [top, left] = val
+              dom.style.cssText = `
+          width:${this.width}px;
+          height:${this.height}px;
+          background: url(${this.url}) ${top}px ${left}px;
+          background-size:${this.width * 3}px;
+          border:1px solid #000;
+          box-sizing:border-box;
+          `
+            }
+            function changeItem() {
+              const { itemList, bgList } = that
+              // 获取空值
+              let defaultIndex = itemList.findIndex(
+                  item => item.getAttribute('default') === 'true'
+                ),
+                // 获取点击dom
+                index = itemList.findIndex(item => this === item),
+                // ary保存了default下标下，那些item可以点击
+                ary = [
+                  [1, 3],
+                  [0, 2, 4],
+                  [1, 5],
+                  [0, 4, 6],
+                  [1, 3, 5, 7],
+                  [2, 4, 8],
+                  [3, 7],
+                  [4, 6, 8],
+                  [5, 7]
+                ]
+              // 判断哪些按钮可以有点击权限
+              if (ary[defaultIndex].includes(index)) {
+                // itemList和bglist都需要交换
+                ;[itemList[defaultIndex], itemList[index]] = [
+                  itemList[index],
+                  itemList[defaultIndex]
+                ]
+                ;[bgList[defaultIndex], bgList[index]] = [
+                  bgList[index],
+                  bgList[defaultIndex]
+                ]
+                // 重新渲染页面
+                that.render()
+              }
+            }
+            dom.addEventListener('click', changeItem, false)
+          }
+          return dom
+        }
+        initItem() {
+          this.itemList = this.bgList.map(item => this.createItem(item))
+          this.render()
+        }
+        render(isWin = false) {
+          // console.log(JSON.stringify(this.bgList), 'render')
+          this.father.innerHTML = ''
+          let fragment = document.createDocumentFragment()
+          this.itemList.forEach(item => {
+            fragment.appendChild(item)
+          })
+          this.father.appendChild(fragment)
+          // 判断输赢
+          this.isWin() && !isWin && this.stop()
+          isWin &&
+            setTimeout(() => {
+              alert('you win!')
+            }, 500)
+        }
+        isWin() {
+          return this.result === JSON.stringify(this.bgList)
+        }
+        stop() {
+          // 渲染完整的图片
+          this.itemList = [
+            [0, 0],
+            [-this.height, 0],
+            [-2 * this.height, 0],
+            [0, -this.width],
+            [-this.height, -this.width],
+            [-2 * this.height, -this.width],
+            [0, -2 * this.width],
+            [-this.height, -2 * this.width],
+            [-2 * this.height, -2 * this.width]
+          ].map(item => this.createItem(item, true))
+          this.render(true)
+        }
+      }
+      // 实例化对象
+      new Puzzle({
+        id: 'play',
+        url
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [
+        { id: 1, children: [{ id: 3 }] },
+        { id: 2, children: [{ id: 4 }] },
+        { id: 5, children: [{ id: 6, children: [{ id: 9 }] }] },
+        { id: 7, children: [{ id: 8 }] }
+      ]
+      console.log(arr)
+      let getObj = (arr, id, obj = {}) => {
+        console.log(arr, id, 'iiii')
+        for (let item of arr) {
+          if (item.id === id) {
+            obj.keyWords = item
+          }
+          if (item.children && Array.isArray(item.children)) {
+            getObj(item.children, id, obj)
+          }
+        }
+        return obj
+      }
+      let obj = getObj(arr, 5)
+      console.log(obj, 'q')
+    </script>
+  </body>
+</html>
