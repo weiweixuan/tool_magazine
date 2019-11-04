@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let getsplitVal = (num, val) => [parseInt(num / val), num % val]
+
+      let formatDuration = ms => {
+        let str = ''
+        let [s, ms_] = getsplitVal(ms, 1000)
+        str = ms_ ? `${ms_} milliseconds,` + str : str
+        if (s >= 60) {
+          let [m, s_] = getsplitVal(s, 60)
+          str = s_ ? `${s_} seconds,` + str : str
+          if (m >= 60) {
+            let [h, m_] = getsplitVal(m, 60)
+            str = m_ ? `${m_} minutes,` + str : str
+            if (h >= 24) {
+              let [d, h_] = getsplitVal(h, 24)
+              str = h_ ? `${h_} hours,` + str : str
+
+              str = d ? `${d} days,` + str : str
+            } else {
+              str = h ? `${h} hours,` + str : str
+            }
+          } else {
+            str = m ? `${m} minutes,` + str : str
+          }
+        } else {
+          str = s ? `${s} seconds,` + str : str
+        }
+        return str.slice(0, -1)
+      }
+      let res1 = formatDuration(1001) // '1 second, 1 millisecond'
+      let res2 = formatDuration(34325055574) // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
+      console.log(res1, '-----------------', res2)
+    </script>
+  </body>
+</html>

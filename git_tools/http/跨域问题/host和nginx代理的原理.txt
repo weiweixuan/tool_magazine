@@ -1,0 +1,21 @@
+本地起了个127.0.0.1:8887服务，返回个HTML页面
+此时直接访问127.0.0.1:8887，是可以看到page的
+
+我们host 配置：
+127.0.0.1 www.test.com
+
+nginx 配置：
+server {
+      listen 80;
+      server_name www.test.com;
+
+      location / {
+        proxy_pass http://127.0.0.1:8887;
+      }
+    }
+
+配置完成后启动nginx，
+打开浏览器：输入www.test.com，我们来分析一下全过程：
+首先浏览器会在本地host中查询该域名对应的ip，找到127.0.0.1，
+然后会是www.test.com 域名向127.0.0.1发起请求，
+然后nginx代理拦截请求，找到nginx上一样域名(nginx.conf配置文件中server里的server_name)，对应的反向映射地址，由nginx向proxy_pass 的ip发起请求，然后把结果分发给浏览器
