@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //  encodeURI和 encodeURIComponent比较
+      let str = 'https://www.baidu.com/temp/mk dir/#/wwwroot/$ui'
+      let e1 = encodeURI(str) //https://www.baidu.com/temp/mk%20dir/#/wwwroot/$ui
+      let e2 = encodeURIComponent(str) //https%3A%2F%2Fwww.baidu.com%2Ftemp%2Fmk%20dir%2F%23%2Fwwwroot%2F%24ui
+      console.log(e1, e2)
+      // 区别；encodeURI会对uri的非常规部分编码(https://www.baidu.com)不编码，encodeURIComponent会对整个uri编码；
+      // 解码只需要把e换成d就行了
+      let d1 = decodeURI(e1)
+      let d2 = decodeURIComponent(e2)
+      console.log(d1, d2)
+    </script>
+  </body>
+</html>

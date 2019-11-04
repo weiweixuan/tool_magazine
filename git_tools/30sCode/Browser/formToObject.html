@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="a b c" id="div"></div>
+    <form action="#">
+      <input type="text" name="name" id="" value="魏玮璇" />
+      <input type="password" name="password" id="" value="112233" />
+      <input type="submit" value="提交" name="" id="" />
+    </form>
+    <script>
+      let form = document.forms[0]
+      console.log(form, 'iii')
+      let formToObject = form =>
+        Array.from(new FormData(form)).reduce(
+          (prev, item) => ((prev[item[0]] = item[1]), prev),
+          {}
+        )
+      let obj = formToObject(form)
+      console.log(obj)
+    </script>
+  </body>
+</html>
