@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, 2, 3, 5, 4];
+      Array.prototype.myFilter = function(fn, that) {
+        if (this === null || this === undefined) {
+          throw new TypeError(
+            "Cannot read property 'filter' of null or undefined"
+          );
+        }
+        // 处理回调类型异常
+        if (Object.prototype.toString.call(fn) != "[object Function]") {
+          throw new TypeError(fn + " is not a function");
+        }
+        let O = Object(this),
+          arr = [],
+          len = O.length;
+        for (let i = 0; i < len; i++) {
+          if (i in O) {
+            let item = O[i];
+            fn.call(that, item, i, O) && arr.push(item);
+          }
+        }
+        return arr;
+      };
+      Array.prototype.filter = function(callbackfn, thisArg) {
+        // 处理数组类型异常
+        if (this === null || this === undefined) {
+          throw new TypeError(
+            "Cannot read property 'filter' of null or undefined"
+          );
+        }
+        // 处理回调类型异常
+        if (Object.prototype.toString.call(callbackfn) != "[object Function]") {
+          throw new TypeError(callbackfn + " is not a function");
+        }
+        let O = Object(this);
+        let len = O.length >>> 0;
+        let resLen = 0;
+        let res = [];
+        for (let i = 0; i < len; i++) {
+          if (i in O) {
+            let element = O[i];
+            if (callbackfn.call(thisArg, O[i], i, O)) {
+              res[resLen++] = element;
+            }
+          }
+        }
+        return res;
+      };
+      let res = arr.myFilter(item => item % 2 == 0);
+      console.log(res, arr);
+    </script>
+  </body>
+</html>

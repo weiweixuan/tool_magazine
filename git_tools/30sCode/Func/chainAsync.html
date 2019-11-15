@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let chainAsync = arr => {
+        let len = arr.length,
+          arr_ = []
+        for (let i = len; i > 0; i--) {
+          arr_.unshift(arr[i - 1].bind(this, arr_[0]))
+        }
+        arr_[0]()
+      } //注意点：bind生成的新函数要保留引用，下个方法要传递改引用
+
+      chainAsync([
+        next => {
+          console.log('0 seconds')
+          setTimeout(next, 1000)
+        },
+        next => {
+          console.log('1 second')
+          setTimeout(next, 1000)
+        },
+        () => {
+          console.log('2 second')
+        }
+      ])
+    </script>
+  </body>
+</html>

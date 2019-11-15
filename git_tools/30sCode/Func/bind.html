@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let bind = (fn, this_, ...args) => {
+        return function(...args2) {
+          return fn.apply(this_, args.concat(args2))
+        }
+      }
+      function greet(greeting, punctuation) {
+        return greeting + ' ' + this.user + punctuation
+      }
+      const freddy = { user: 'fred' }
+      const freddyBound = bind(greet, freddy)
+      console.log(freddyBound('hi', '!')) // 'hi fred!'
+    </script>
+  </body>
+</html>

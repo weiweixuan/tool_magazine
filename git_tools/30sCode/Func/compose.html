@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //方法不好，不可复用
+      let compose = (...fnList) => (...count) => {
+        return fnList.reduce((prev, item, index) => {
+          prev = !prev
+            ? fnList[fnList.length - 1 - index](...count)
+            : fnList[fnList.length - 1 - index](prev)
+          return prev
+        }, 0)
+      }
+      // const compose = (...fns) => fns.reduce((f, g) => (...args) => f(g(...args)));
+      const add5 = x => x + 5
+      const multiply = (x, y) => x * y
+      const multiplyAndAdd5 = compose(
+        add5,
+        multiply
+      )
+      let res = multiplyAndAdd5(5, 2) // 15
+      console.log(res, 'ii')
+    </script>
+  </body>
+</html>

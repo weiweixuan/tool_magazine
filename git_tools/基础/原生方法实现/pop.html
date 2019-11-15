@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, 2, 3];
+
+      Array.prototype.myPop = function() {
+        let O = Object(this),
+          len = O.length;
+        if (!len) {
+          O.length = 0;
+          return undefined;
+        }
+        len--;
+        let val = O[len];
+        delete O[len];
+        O.length = len;
+        return val;
+      };
+      // V8
+      Array.prototype.pop = function() {
+        let O = Object(this);
+        let len = this.length >>> 0;
+        if (len === 0) {
+          O.length = 0;
+          return undefined;
+        }
+        len--;
+        let value = O[len];
+        delete O[len];
+        O.length = len;
+        return value;
+      };
+      let res = arr.myPop();
+      console.log(res, arr);
+    </script>
+  </body>
+</html>

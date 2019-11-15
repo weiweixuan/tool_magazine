@@ -23,84 +23,84 @@
       */
       class Route {
         constructor(config) {
-          this.route = config.routes
-          this.mode = config.mode === 'hash' ? 'hash' : 'history'
-          this.init()
+          this.route = config.routes;
+          this.mode = config.mode === "hash" ? "hash" : "history";
+          this.init();
         }
         init() {
-          let that = this
+          let that = this;
           // 第一步，注册所有的点击按钮
-          let clickBtns = document.querySelectorAll('.router-item')
+          let clickBtns = document.querySelectorAll(".router-item");
           for (let i = 0; i < clickBtns.length; i++) {
             clickBtns[i].addEventListener(
-              'click',
+              "click",
               function(e) {
-                e.preventDefault()
-                let path = this.getAttribute('href'),
-                  replace = this.getAttribute('replace')
+                e.preventDefault();
+                let path = this.getAttribute("href"),
+                  replace = this.getAttribute("replace");
                 if (replace) {
                   window.history.replaceState(
                     {},
-                    '',
+                    "",
                     window.location.origin + path
-                  )
-                  that.randerView()
+                  );
+                  that.randerView();
                 } else {
                   window.history.pushState(
                     {},
-                    '',
+                    "",
                     window.location.origin + path
-                  )
-                  that.randerView()
+                  );
+                  that.randerView();
                 }
               },
               false
-            )
+            );
           }
           // 注册监听方法
           window.addEventListener(
-            'popstate',
+            "popstate",
             function() {
-              that.randerView()
+              that.randerView();
             },
             false
-          )
-          this.randerView()
+          );
+          this.randerView();
         }
         randerView() {
-          let path = location.pathname || '',
-            routerView = document.querySelector('#router-view')
-          let index = this.route.findIndex(item => item.path === path)
+          let path = location.pathname || "",
+            routerView = document.querySelector("#router-view");
+          let index = this.route.findIndex(item => item.path === path);
           if (index > -1) {
-            routerView.innerHTML = this.route[index].component
+            routerView.innerHTML = this.route[index].component;
           } else {
-            let Index_ = this.route.findIndex(item => item.path === '*')
+            let Index_ = this.route.findIndex(item => item.path === "*");
             if (Index_ > -1) {
               window.history.pushState(
                 {},
-                '',
+                "",
                 window.location.origin + this.route[Index_].redirect
-              )
-              this.randerView()
+              );
+              this.randerView();
             }
           }
         }
       }
       let config = {
-        mode: 'history',
+        mode: "history",
         routes: [
           {
-            path: '/eat',
-            component: '<h1>吃饭</h1><h4>吃饭</h4>'
+            path: "/eat",
+            component: "<h1>吃饭</h1><h4>吃饭</h4>"
           },
-          { path: '/work', component: '<h1>工作</h1><h4>工作</h4>' },
-          { path: '/sleep', component: '<h1>睡觉</h1><h4>睡觉</h4>' },
-          { path: '/play', component: '<h1>玩游戏</h1><h4>玩游戏</h4>' },
-          { path: '/404', component: '<h1>没有找到页面</h4>' },
-          { path: '*', redirect: '/404' }
+          { path: "/work", component: "<h1>工作</h1><h4>工作</h4>" },
+          { path: "/sleep", component: "<h1>睡觉</h1><h4>睡觉</h4>" },
+          { path: "/play", component: "<h1>玩游戏</h1><h4>玩游戏</h4>" },
+          { path: "/404", component: "<h1>没有找到页面</h4>" },
+          { path: "*", redirect: "/404" }
         ]
-      }
-      new Route(config)
+      };
+      new Route(config);
     </script>
   </body>
 </html>
