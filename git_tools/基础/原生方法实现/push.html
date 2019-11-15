@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 数组的push方法
+      let arr = [];
+      // 我的代码
+      Array.prototype.myPush = function(...args) {
+        let O = Object(this),
+          len = O.length,
+          count = args.length;
+        for (let i = 0; i < count; i++) {
+          O[i + len] = args[i];
+        }
+        return O.length;
+      };
+      // v8代码
+      Array.prototype.push = function(...items) {
+        let O = Object(this);
+        let len = this.length >>> 0;
+        let argCount = items.length >>> 0;
+        // 2 ** 53 - 1 为JS能表示的最大正整数
+        if (len + argCount > 2 ** 53 - 1) {
+          throw new TypeError(
+            "The number of array is over the max value restricted!"
+          );
+        }
+        for (let i = 0; i < argCount; i++) {
+          O[len + i] = items[i];
+        }
+        let newLength = len + argCount;
+        O.length = newLength;
+        return newLength;
+      };
+      let res = arr.myPush(1, 2, 3);
+      console.log(arr, res);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现reduce方法
+      let arr = [1, 2, 3, 4, 5];
+      // 我的写法
+      Array.prototype.myReduce = function(fn, temp) {
+        // 判断fn
+        if (this === null || this === undefined) {
+          throw new TypeError(
+            "Cannot read property 'map' of null or undefined"
+          );
+        }
+        // 处理fn
+        if (Object.prototype.toString.call(fn) != "[object Function]") {
+          throw new TypeError(fn + " is not a function");
+        }
+        // 把this转换为对象
+        let O = Object(this);
+        let len = O.length;
+        let t = temp || O[0];
+        for (let i = temp ? 0 : 1; i < len; i++) {
+          if (i in O) {
+            let item = O[i];
+            t = fn(t, item, i, O);
+          }
+        }
+        return t;
+      };
+      // V8源码
+      Array.prototype.reduce_ = function(callbackfn, initialValue) {
+        // 异常处理，和 map 一样
+        // 处理数组类型异常
+        if (this === null || this === undefined) {
+          throw new TypeError(
+            "Cannot read property 'reduce' of null or undefined"
+          );
+        }
+        // 处理回调类型异常
+        if (Object.prototype.toString.call(callbackfn) != "[object Function]") {
+          throw new TypeError(callbackfn + " is not a function");
+        }
+        let O = Object(this);
+        let len = O.length >>> 0;
+        let k = 0;
+        let accumulator = initialValue;
+        if (accumulator === undefined) {
+          for (; k < len; k++) {
+            // 查找原型链
+            if (k in O) {
+              accumulator = O[k];
+              k++;
+              break;
+            }
+          }
+        }
+        // 表示数组全为空
+        if (k === len && accumulator === undefined)
+          throw new Error("Each element of the array is empty");
+        for (; k < len; k++) {
+          if (k in O) {
+            // 注意，核心！
+            accumulator = callbackfn.call(undefined, accumulator, O[k], k, O);
+          }
+        }
+        return accumulator;
+      };
+      let res = arr.reduce_((prev, item, index, arr) => {
+        prev.push(item * 3);
+        return prev;
+      }, []);
+      console.log(res, "iii");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      #demo {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+      }
+      .left {
+        width: 30%;
+        font-size: 26px;
+        text-align: center;
+        height: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
+        border-right: 1px solid #000;
+      }
+      .left .title {
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        border-bottom: 1px solid #000;
+        box-sizing: border-box;
+      }
+      .right {
+        width: 70%;
+        font-size: 20px;
+        text-align: center;
+        height: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      .right .item {
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-bottom: 1px solid #000;
+        box-sizing: border-box;
+      }
+      .active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="demo">
+      <div class="left">
+        <!-- <div class="title">
+          火锅
+        </div> -->
+      </div>
+      <div class="right">
+        <!-- <div class="item">
+          火锅1
+        </div> -->
+      </div>
+    </div>
+    <script>
+      let list = [
+        { title: '火锅', subList: [] },
+        { title: '香锅', subList: [] },
+        { title: '冒菜', subList: [] },
+        { title: '肉夹馍', subList: [] },
+        { title: '烧饼', subList: [] },
+        { title: '烤鸭', subList: [] },
+        { title: '自助餐', subList: [] },
+        { title: '黄焖鸡', subList: [] },
+        { title: '水饺', subList: [] },
+        { title: '馄饨', subList: [] },
+        { title: '烤鱼', subList: [] },
+        { title: '奥特曼', subList: [] }
+      ]
+      // 创建dom方法
+      function createDom(text, className, option, fn) {
+        let dom = document.createElement('div')
+        dom.innerText = text
+        option && option.id && dom.setAttribute('id', option.id)
+        option && option.dataset && dom.setAttribute('data-key', option.dataset)
+        dom.className = className
+        dom.addEventListener('click', fn, false)
+        return dom
+      }
+
+      let res = list.map(
+        item => (
+          (item.subList = Array.from(
+            { length: 15 },
+            (child, index) => `${item.title}==>${index}`
+          )),
+          item
+        )
+      )
+      // 滚动到指定id的位置
+      function scrollIntoView(dom, isAnimete = true) {
+        isAnimete && dom.scrollIntoView({ behavior: 'smooth' })
+        !isAnimete && dom.scrollIntoView({ block: 'center' })
+      }
+      function changeActive(dom) {
+        let titleList = [...document.querySelectorAll('.title')],
+          currIndex = titleList.findIndex(i => i === dom)
+        titleList.forEach((child, ind) => {
+          child.className = currIndex === ind ? 'title active' : 'title'
+        })
+      }
+      // 渲染视图
+      function render() {
+        let left = document.querySelector('.left')
+        let right = document.querySelector('.right')
+        let leftFrg = document.createDocumentFragment()
+        let rightFrg = document.createDocumentFragment()
+        const titleH = 80,
+          itemH = 60
+        let scrollHeightAry = [],
+          timer = null
+        count = 0
+        list.forEach((item, index) => {
+          leftFrg.appendChild(
+            createDom(
+              item.title,
+              !index ? 'title active' : 'title',
+              { dataset: index + 1 },
+              function() {
+                // 获取对应的下标的dom
+                let dom = document.getElementById(this.dataset.key)
+                // console.log(dom, this, 'dom')
+                scrollIntoView(dom, false)
+                changeActive(this)
+              }
+            )
+          )
+          // 添加滚动数组数据
+          count += item.subList.length
+          scrollHeightAry.push(
+            (count - Math.floor(item.subList.length / 2)) * itemH
+          )
+          item.subList.forEach((child, key) => {
+            rightFrg.appendChild(
+              createDom(child, 'item', key === 0 && { id: index + 1 })
+            )
+          })
+        })
+        right.addEventListener(
+          'scroll',
+          function() {
+            if (!timer) {
+              timer = setTimeout(() => {
+                timer = null
+              }, 100)
+              let scrollHeight = this.scrollTop
+              let ind = scrollHeightAry.findIndex(item => scrollHeight < item),
+                count = ind >= 0 ? ind : scrollHeightAry.length
+              let titleDom = [...document.querySelectorAll('.title')][count]
+              changeActive(titleDom)
+              scrollIntoView(titleDom, false)
+            }
+          },
+          false
+        )
+        left.appendChild(leftFrg)
+        right.appendChild(rightFrg)
+      }
+      render()
+    </script>
+  </body>
+</html>

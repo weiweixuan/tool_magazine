@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let attempt = (fn, ...args) => {
+        try {
+          return fn.apply(args)
+        } catch (err) {
+          return new Error(err)
+        }
+      }
+      var elements = attempt(function(selector) {
+        return document.querySelectorAll(selector)
+      }, '>_>')
+      if (elements instanceof Error) elements = [] // elements = []
+    </script>
+  </body>
+</html>

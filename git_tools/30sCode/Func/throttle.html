@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let throttle = (fn, timer) => {
+        let flag = true
+        return function(...args) {
+          if (!flag) return false
+          flag = false
+          fn(...args)
+          setTimeout(() => {
+            flag = true
+          }, timer)
+        }
+      }
+      window.addEventListener(
+        'resize',
+        throttle(function(evt) {
+          console.log(window.innerWidth)
+          console.log(window.innerHeight)
+        }, 250)
+      ) // Will log the window dimensions at most every 250ms
+    </script>
+  </body>
+</html>

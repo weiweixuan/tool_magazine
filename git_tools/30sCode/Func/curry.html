@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 这个方法是不需要设置传递的个数，直接求值
+      let curry = (fn, ...args) => {
+        let gets = function(...args_) {
+          args = [...args, ...args_]
+          return gets
+        }
+        // gets.valueOf = () => fn(...args)
+        gets.toString = () => fn(...args)
+        return gets
+      }
+      // 可以设置传递参数
+      let curry2 = (fn, len = fn.length, ...args) =>
+        len <= args.length ? fn(...args) : curry2.bind(null, fn, len, ...args)
+      let res1 = curry2(Math.pow)(2)(10) // 1024
+      let res2 = curry2(Math.min, 3)(10)(50)(2) // 3
+      console.log(res1, res2)
+    </script>
+  </body>
+</html>

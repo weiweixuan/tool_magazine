@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function uncurry(fn, count) {
+        let len = 0
+        return function(...args) {
+          for (let i = 0; i < count - 1; i++) {
+            let len_ = fn.length
+            fn = fn(...args.slice(len, len + len_))
+            len += len_
+          }
+          return fn(...args.slice(len))
+        }
+      }
+      const add = (a, b) => (c, d) => (e, f, g) => a + b + c + d + e + f + g
+      const uncurriedAdd = uncurry(add, 3)
+      let res = uncurriedAdd(1, 2, 3, 4, 5, 6, 7) // 6
+      console.log(res, 'iii')
+    </script>
+  </body>
+</html>

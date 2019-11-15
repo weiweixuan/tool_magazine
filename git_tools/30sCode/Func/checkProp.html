@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let checkProp = (fn, key) => arr => console.log(fn(arr[key]))
+
+      let lengthIs4 = checkProp(l => l === 4, 'length')
+      lengthIs4([]) // false
+      lengthIs4([1, 2, 3, 4]) // true
+      lengthIs4(new Set([1, 2, 3, 4])) // false (Set uses Size, not length)
+
+      // const session = { user: {} }
+      // const validUserSession = checkProps(u => u.active && !u.disabled, 'user')
+
+      // validUserSession(session) // false
+
+      // session.user.active = true
+      // validUserSession(session) // true
+
+      // const noLength(l => l === undefined, 'length');
+      // noLength([]); // false
+      // noLength({}); // true
+      // noLength(new Set()); // true
+    </script>
+  </body>
+</html>

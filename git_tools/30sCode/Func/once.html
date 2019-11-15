@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="change">触发</button>
+    <script>
+      // 改变引用值
+      let once = fn => () => {
+        try {
+          fn()
+          fn = null
+        } catch {}
+      }
+      // 闭包缓存开关
+      let once_GF = (fn, flag = false) => (...args) => {
+        if (flag) return
+        let res = fn.apply(this, args)
+        flag = true
+        return res
+      }
+      const startApp = function(event) {
+        console.log(this, event) // document.body, MouseEvent
+      }
+      let fn = once_GF(startApp)
+      document.getElementById('change').addEventListener('click', fn) // only runs `startApp` once upon click
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现map方法
+      let arr = [1, 2, 3, 4, 5];
+      Array.prototype.myMap = function(fn, c_this) {
+        // 判断fn
+        if (this === null || this === undefined) {
+          throw new TypeError(
+            "Cannot read property 'map' of null or undefined"
+          );
+        }
+        // 处理fn
+        if (Object.prototype.toString.call(fn) != "[object Function]") {
+          throw new TypeError(fn + " is not a function");
+        }
+        // 把this转换为对象
+        let O = Object(this),
+          C = c_this,
+          len = O.length,
+          arr = new Array(len);
+        for (let key = 0; key < len; key++) {
+          if (key in O) {
+            let item = O[key];
+            let res = fn.call(C, item, key, O);
+            arr[key] = res;
+          }
+        }
+        return arr;
+      };
+      let res = arr.myMap(item => item * 2);
+      console.log(res, "iii");
+    </script>
+  </body>
+</html>
