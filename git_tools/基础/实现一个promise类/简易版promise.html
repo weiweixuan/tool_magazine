@@ -8,45 +8,88 @@
   </head>
   <body>
     <script>
-      const PENDING = 'pending'
-      const RESOLVED = 'resolved'
-      const REJECTED = 'rejected'
+      const PENDING = "pending";
+      const RESOLVED = "resolved";
+      const REJECTED = "rejected";
+      // 判断变量否为function
+      const isFunction = variable => typeof variable === "function";
       class MyPromise {
         constructor(fn) {
-          this.state = PENDING
-          this.value = null
-          this.resolveList = []
-          this.rejectList = []
-          this.resolve = val => {
-            if (this.state === PENDING) {
-              this.state = RESOLVED
-              this.value = val
-              this.resolveList.map(cb => cb(val))
+          if (!isFunction(fn)) {
+            throw new Error("MyPromise must accept a function as a parameter");
+          }
+          this.state = PENDING;
+          this.value = null;
+          this.resolveList = [];
+          this.rejectList = [];
+          var resolve = val => {
+            // 判断传入类型是否为Promise实例
+            if (val instanceof MyPromise) {
+              return value.then(resolve, reject);
             }
-          }
-          this.reject = val => {
-            this.state = PENDING
-            this.value = val
-            this.rejectList.map(cb => cb(val))
-          }
+            //模拟异步
+            setTimeout(() => {
+              if (this.state === PENDING) {
+                this.state = RESOLVED;
+                this.value = val;
+                this.resolveList.map(cb => cb(val));
+              }
+            }, 0);
+          };
+          var reject = val => {
+            //模拟异步
+            setTimeout(() => {
+              if (this.state === PENDING) {
+                this.state = REJECTED;
+                this.value = val;
+                this.rejectList.map(cb => cb(val));
+              }
+            }, 0);
+          };
           try {
-            fn(this.resolve, this.reject)
+            fn(resolve, reject);
           } catch (e) {
-            reject(e)
+            reject(e);
           }
+        }
+        // then方法
+        then(
+          res = v => v,
+          rej = v => {
+            throw v;
+          }
+        ) {
+          /*
+            then方法注意点：
+            1 里面两个参数都为函数，判断类型,默认参数已经判断
+            2 判断Promise状态，执行不同的操作
+          */
+          if (this.state === PENDING) {
+            this.resolveList.push(res);
+            this.rejectList.push(rej);
+          }
+          if (this.state === RESOLVED) {
+            res(this.value);
+          }
+          if (this.state === REJECTED) {
+            rej(this.value);
+          }
+          return this;
+          // console.log("then", this.value);
         }
 
-        static resolve() {
-          console.log('resolve')
+        static resolve(val) {
+          console.log("resolve");
         }
         static reject() {
-          console.log('reject')
+          console.log("reject");
         }
       }
       let p1 = new MyPromise(function(resolve, reject) {
-        resolve('成功')
-      })
-      console.log(p1)
+        resolve("成功");
+      });
+      // console.log(p1);
+      p1.then().then(val => console.log("object", val, "哈哈哈"));
       // MyPromise.resolve()
       // MyPromise.reject()
     </script>

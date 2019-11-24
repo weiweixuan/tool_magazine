@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1、这是一道大题目,把考点拆成了4个小项;需要候选人用递归算法实现(限制15行代码以内实现;限制时间 10分钟以内完成):
+      // a)创建一个长度为5的空数组arr.
+      // b)生成一个(2~32)之间的随机整数rand..
+      // c)把随机数rand插入到数组arr内,如果数组arr内已存在与rand相同的数字,则重新生成随机数rand并插到arr内【需要使用递归实现,不能使用for/while等循环】
+      // d)最终输出一个长度为5,且内容不重复的数组arr.
+      // 请开始答题：
+      let getRandomNumber = (start, end) =>
+        Math.floor(Math.random() * (end - start)) + start;
+      let arr = Array.from({ length: 5 });
+      function digui(arr) {
+        let item = getRandomNumber(2, 32);
+        if (!arr.includes(item)) {
+          let key = arr.filter(Boolean).length;
+          arr.splice(key, 1, item);
+          if (key === 4) return;
+        }
+        digui(arr);
+      }
+      digui(arr);
+      console.log(arr, "arr");
+    </script>
+  </body>
+</html>
