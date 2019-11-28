@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // app组件
+      function App() {
+        // 首先声明useState是react的类属性之一，可以这么调用
+        const [count, setCount] = MyReact.useState(0);
+        MyReact.useEffect(() => {
+          console.log(count, "effectLog");
+        }, [count]);
+        // 模拟页面点击效果，返回个对象
+        return {
+          handleChangeCount() {
+            //改变count值
+            console.log("调用啦，改变count值");
+            setCount(count + 1);
+          },
+          handleNoChangeCount() {
+            //不改变count值
+            console.log("调用啦，不改变count值");
+            setCount(count);
+          },
+          render() {
+            //刷新数据
+            console.log(count, "count");
+          }
+        };
+      }
+      // react类
+      const MyReact = (function() {
+        let state, saveList; // 在作用域内保持状态和依赖
+        return {
+          render(component) {
+            const temp = component();
+            temp.render();
+            return temp;
+          },
+          useState(initVal) {
+            state = state || initVal; //初始化第一次state为空使用传递的值，后面所有的更新都用外层闭包缓存的值
+            function setState(newVal) {
+              state = newVal;
+            }
+            return [state, setState];
+          },
+          useEffect(fn, list) {
+            // 如果第二个参数不存在，每次都刷新
+            let temp = !list;
+            // 如果第二个参数数组有维护的数据，如果相对应的值变更了，刷新，否则不刷新
+            let temp2 = saveList
+              ? !list.every((item, index) => item === saveList[index]) //比较对应位置的值是否有变化
+              : true;
+            if (temp || temp2) {
+              fn();
+              saveList = list;
+            }
+          }
+        };
+      })();
+      let temp;
+      temp = MyReact.render(App);
+      temp.handleChangeCount();
+      temp = MyReact.render(App);
+      temp.handleChangeCount();
+      temp = MyReact.render(App);
+      temp.handleChangeCount();
+      temp = MyReact.render(App);
+      console.log("----------------------------");
+      temp.handleNoChangeCount();
+      temp = MyReact.render(App);
+      // 问题：
+      // 此时已经能实现了useState 和 useeffect 基础功能了，但是多状态值就不行了，所以我们要用一个数组维护每一组值
+    </script>
+  </body>
+</html>
