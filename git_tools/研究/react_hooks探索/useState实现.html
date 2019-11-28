@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个react的hook函数
+      /*
+    一般引入hook=> useState 后
+    const [name,setName] = useState('hello')
+    name // hello
+    setName("hi")
+    name // hi
+
+    */
+      // demo1
+      // function myUseState(val) {
+      //   let state = val;
+      //   return [
+      //     state,
+      //     function(newVal) {
+      //       state = newVal;
+      //     },
+      //     function() {
+      //       return state;
+      //     }
+      //   ];
+      // }
+      // const [name, setName, getName] = myUseState("hello");
+      // console.log(name, "name1");
+      // setName("hi");
+      // console.log(name, "name2");
+      // console.log(getName());
+      // 问题：此时发现修改name值后name 没有更新,但是name 的值是修改过的，所以我们用双层闭包实现
+
+      // 实现代码：
+      // app组件
+      function App() {
+        // 首先声明useState是react的类属性之一，可以这么调用
+        const [count, setCount] = MyReact.useState(0);
+        // 模拟页面点击效果，返回个对象
+        return {
+          handleChangeCount() {
+            //改变count值
+            console.log("调用啦");
+            setCount(count + 1);
+          },
+          render() {
+            //刷新数据
+            console.log(count, "count");
+          }
+        };
+      }
+      // react类
+      const MyReact = (function() {
+        let state;
+        return {
+          render(component) {
+            const temp = component();
+            temp.render();
+            return temp;
+          },
+          useState(initVal) {
+            state = state || initVal; //初始化第一次state为空使用传递的值，后面所有的更新都用外层闭包缓存的值
+            function setState(newVal) {
+              state = newVal;
+            }
+            return [state, setState];
+          }
+        };
+      })();
+      let temp;
+      temp = MyReact.render(App);
+      temp.handleChangeCount();
+      temp = MyReact.render(App);
+      temp.handleChangeCount();
+      temp = MyReact.render(App);
+      temp.handleChangeCount();
+      temp = MyReact.render(App);
+    </script>
+  </body>
+</html>
