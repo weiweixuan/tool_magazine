@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // let arr = Array.from({ length: 1000 }, (_, key) => 2 * key + 1);
+      let arr2 = [1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 5, 7, 11, 111, 222];
+      function erfen_digui(arr, val, left = 0, right = arr.length - 1) {
+        if (left > right) {
+          return -1;
+        }
+        let cent = Math.floor((right + left) / 2);
+        if (arr[cent] <= val) {
+          /****************改动点********************/
+          if (arr[cent + 1] <= val) {
+            left = cent + 1;
+          } else {
+            return `最终查找结果下标为${cent}`;
+          }
+          /*****************************************/
+        } else if (arr[cent] > val) {
+          right = cent - 1;
+        } else {
+          left = cent + 1;
+        }
+        return erfen_digui(arr, val, left, right);
+      }
+      console.log(erfen_digui(arr2, 3.5));
+    </script>
+  </body>
+</html>

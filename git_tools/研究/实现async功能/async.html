@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 首先声明两个异步函数，基于promise
+      let fn1 = () =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("事件1完成！");
+          }, 1000);
+        });
+      let fn2 = val =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(val + "___事件2完成！");
+          }, 1000);
+        });
+      // 看原生效果
+      async function async() {
+        let res1 = await fn1();
+        console.log(res1, "---1");
+        let res2 = await fn2();
+        console.log(res2, "---2");
+      }
+      // async(); //它会等待第一个事件完成后再去执行第二个异步事件
+
+      /**own**/
+      // 一个自动迭代器是基于generator和co库来开始实现;
+      function* gen() {
+        let res1 = yield fn1();
+        console.log(res1, "111");
+        let res2 = yield fn2(res1);
+        console.log(res2, "222");
+      }
+      // co库实现
+      function co(gen) {
+        let it = gen();
+        // 初始化调一次
+        function digui(val) {
+          const { value, done } = it.next(val);
+          if (!done) {
+            value.then(data => digui(data));
+          }
+          return value;
+        }
+        digui();
+      }
+
+      let myAsync = gen => {
+        co(gen);
+      };
+      myAsync(gen);
+    </script>
+  </body>
+</html>
