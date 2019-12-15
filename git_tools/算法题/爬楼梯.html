@@ -25,19 +25,23 @@
       1.  1 阶 + 1 阶 + 1 阶
       2.  1 阶 + 2 阶
       3.  2 阶 + 1 阶*/
-      let str = 10
+      let str = 4;
       // 递归，效率低
       var climbStairs = function(n) {
-        if (n == 1) {
-          return 1
+        var count = 0;
+        function digui(n) {
+          if (n === 0) {
+            count++;
+          } else if (n > 0) {
+            digui(n - 1);
+            digui(n - 2);
+          }
         }
-        if (n == 2) {
-          return 2
-        }
-        return climbStairs(n - 1) + climbStairs(n - 2)
-      }
-      let res = climbStairs(str)
-      console.log(res)
+        digui(n);
+        return count;
+      };
+      let res = climbStairs(str);
+      console.log(res);
     </script>
   </body>
 </html>

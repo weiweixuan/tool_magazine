@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 二叉树的数据结构
+      let erchashu = {
+        data: "A",
+        left: {
+          data: "B",
+          left: {
+            data: "D"
+          },
+          right: {
+            data: "E"
+          }
+        },
+        right: {
+          data: "C",
+          left: {
+            data: "F"
+          },
+          right: {
+            data: "G"
+          }
+        }
+      };
+      console.log(erchashu);
+      /**
+        遍历二叉树有三种方式
+        1.前序遍历 --> 中左右
+        2.中序遍历 --> 左中右
+        3.后序遍历 --> 左右中
+      */
+      function qianxu(obj) {
+        if (obj.data) {
+          console.log(obj.data);
+        }
+        if (obj.left) {
+          qianxu(obj.left);
+        }
+        if (obj.right) {
+          qianxu(obj.right);
+        }
+      }
+      qianxu(erchashu);
+      console.log("-------------------------中序---------------------------");
+      function zhongxu(obj) {
+        if (obj.left) {
+          zhongxu(obj.left);
+        }
+        if (obj.data) {
+          console.log(obj.data);
+        }
+        if (obj.right) {
+          zhongxu(obj.right);
+        }
+      }
+      zhongxu(erchashu);
+      console.log("-------------------------后序---------------------------");
+      function houxu(obj) {
+        if (obj.left) {
+          houxu(obj.left);
+        }
+        if (obj.right) {
+          houxu(obj.right);
+        }
+        if (obj.data) {
+          console.log(obj.data);
+        }
+      }
+      houxu(erchashu);
+    </script>
+  </body>
+</html>
