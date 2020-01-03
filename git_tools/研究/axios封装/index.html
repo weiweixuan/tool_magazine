@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <style type="text/css">
+    html {
+      height: 100%;
+    }
+
+    body {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #container {
+      height: 100%;
+    }
+  </style>
+  <script
+    type="text/javascript"
+    src="http://api.map.baidu.com/api?v=3.0&ak=igEkXFR3kDo9MXwSoYfmGfD8jK5jPFh0"
+  ></script>
+
+  <body>
+    <button onclick="getFetch()">点击请求接口</button>
+    <div id="container"></div>
+    <script src="./fetch.js"></script>
+    <script>
+      // http://rap2api.taobao.org/app/mock/239926/getNavbar
+      async function getFetch() {
+        let res = await $fetch({ url: "/app/mock/239926/getNavbar" });
+        console.log(res, "回参");
+      }
+      var map = new BMap.Map("container");
+      // 创建地图实例
+      var point = new BMap.Point(116.404, 39.915);
+      // 创建点坐标
+      map.centerAndZoom(point, 15);
+      map.addControl(new BMap.OverviewMapControl());
+      map.addControl(new BMap.NavigationControl());
+      map.addControl(new BMap.GeolocationControl());
+      map.addControl(new BMap.Control());
+      map.addControl(new BMap.MapTypeControl());
+      map.addControl(new BMap.GeolocationControl());
+      map.addControl(new BMap.ScaleControl());
+    </script>
+  </body>
+</html>
+<!-- {"isOk":false,"errMsg":"未匹配到任何接口，请检查请求类型是否一致。"} -->
