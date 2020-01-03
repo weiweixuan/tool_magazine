@@ -26,5 +26,3 @@ function getLength(something: string | number): number {
 let res1 = getLength("abc");
 let res2 = getLength(123);
 console.log(res1, res2);
-
-console.log("我是测试代码");
