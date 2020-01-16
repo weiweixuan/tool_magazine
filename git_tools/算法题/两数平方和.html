@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <p>
+      给定一个非负整数 c ，你要判断是否存在两个整数 a 和 b，使得 a2 + b2 = c。
+      示例1: 输入: 5 输出: True 解释: 1 * 1 + 2 * 2 = 5   示例2: 输入: 3 输出:
+      False
+    </p>
+    <script>
+      // 双指针算法
+      function judgeSquareSum(c) {
+        let start = 0,
+          end = Math.floor(Math.sqrt(c));
+        while (start <= end) {
+          let sum = start ** 2 + end ** 2;
+          if (c === sum) {
+            return true;
+          } else if (c > sum) {
+            start++;
+          } else {
+            end--;
+          }
+        }
+        return false;
+      }
+
+      console.log(judgeSquareSum(2));
+    </script>
+  </body>
+</html>

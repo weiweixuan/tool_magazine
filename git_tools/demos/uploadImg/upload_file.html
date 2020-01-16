@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+      .upload {
+        height: 100px;
+        width: 100px;
+        position: relative;
+        border: 1px solid #ccc;
+        background: url("./images/upload_0.png") no-repeat center center;
+        background-size: 50%;
+        transition: all linear 0.2s;
+        cursor: pointer;
+      }
+      .upload .iptFile {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        z-index: 1;
+      }
+      .icon {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        display: none;
+      }
+      .upload .preview {
+        left: 15%;
+      }
+      .upload .delete {
+        right: 15%;
+      }
+      .showImgBox {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+        transition: all ease-in-out 1s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background: rgba(0, 0, 0, 0.5); */
+      }
+      .selectImg {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        transition: all ease-in-out 1s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="upload">
+      <input type="file" accept=".md" class="iptFile" />
+      <!-- 图片展示 -->
+      <div class="showImgBox">
+        <img src="" alt="" class="selectImg" />
+      </div>
+    </div>
+    <div class="title"></div>
+    <script>
+      (() => {
+        let fileList = [];
+        let ipt = document.querySelector(".iptFile");
+        let box = document.querySelector(".upload");
+        let selectImg = document.querySelector(".selectImg");
+        let showBox = document.querySelector(".showImgBox");
+        let title = document.querySelector(".title");
+        // 初始化背景色
+        upLoadBg = () => {
+          box.style.cssText = `transition: none`;
+          setTimeout(() => {
+            box.style.cssText = `background: url('./images/upload_0.png') no-repeat center center;background-size: 50%;transition:all linear 0.2s`;
+          });
+        };
+
+        ipt.onchange = function(e) {
+          console.log(e, "iii");
+          let iptCurrent = document.querySelector(".iptFile");
+          const { files, value } = event.target;
+          if (files.length > 0) {
+            let formData = new FormData();
+            formData.append("file", files);
+            console.log(formData, formData.get("file"), "-------");
+            title.innerHTML = value;
+          }
+          // if (files.length > 0) {
+          //   var reader = new FileReader();
+          //   // 用来把文件读入内存，并且读取文件中的数据。FileReader接口提供了一个异步API，使用该API可以在浏览器主线程中异步访问文件系统，读取文件中的数据。
+          //   reader.onload = function(evt) {
+          //     selectImg.src = evt.target.result;
+          //     console.log("加载成功！", value, evt, event.target.value);
+          //     fileList = [evt.target.result];
+          //     iptCurrent.type = "text";
+          //     iptCurrent.type = "file";
+          //   };
+          //   reader.readAsDataURL(files[0]);
+          // }
+        };
+
+        showBox.onclick = function() {
+          showBox.style.cssText =
+            "width:100px;height:100px;background:none;z-index:-1;position:absolute;";
+        };
+      })();
+    </script>
+  </body>
+</html>

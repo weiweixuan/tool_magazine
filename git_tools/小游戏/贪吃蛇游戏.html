@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      #box {
+        width: 800px;
+        height: 500px;
+        margin: 100px auto 0;
+        background: #ccc;
+        position: relative;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box" class="box"></div>
+  </body>
+  <script>
+    // 创建随机数
+    function suiji_location(w, h) {
+      let location = {};
+      location.top = parseInt((Math.random() * h) / 20) * 20;
+      location.left = parseInt((Math.random() * w) / 20) * 20;
+      return location;
+    }
+    // 食物初始化
+    function FOOD(width = 20, height = 20, color = "green") {
+      this.list = [];
+      this.el = document.createElement("div");
+      this.width = width;
+      this.height = height;
+      this.x = 0;
+      this.y = 0;
+      this.color = color;
+    }
+    FOOD.prototype.del = function() {
+      for (let i = 0; i < this.list.length; i++) {
+        this.list[i].parentElement.removeChild(this.list[i]);
+      }
+      this.list = [];
+    };
+    FOOD.prototype.init = function() {
+      // this.del();
+      let box = document.getElementById("box");
+      let W = box.offsetWidth;
+      let H = box.offsetHeight;
+      let location = suiji_location(W, H);
+      this.x = location.left;
+      this.y = location.top;
+      this.el.style.cssText = `width:${this.width}px;height:${this.height}px;position:absolute;background:${this.color}`;
+      this.el.style.top = this.y + "px";
+      this.el.style.left = this.x + "px";
+      this.list.push(this.el);
+      box.appendChild(this.el);
+    };
+
+    // 小蛇构造函数
+    let Snake = function(width = 20, height = 20, direction = "right") {
+      this.width = width;
+      this.height = height;
+      this.direction = direction; //方向
+      this.body = [
+        //身体初始化
+        {
+          x: 80,
+          y: 40,
+          color: "red"
+        },
+        {
+          x: 60,
+          y: 40,
+          color: "orange"
+        },
+        {
+          x: 40,
+          y: 40,
+          color: "orange"
+        }
+      ];
+      this.list = [];
+    };
+    Snake.prototype.del = function() {
+      for (let i = 0; i < this.list.length; i++) {
+        this.list[i].parentElement.removeChild(this.list[i]);
+      }
+      this.list = [];
+    };
+    Snake.prototype.init = function() {
+      let box = document.getElementById("box");
+      for (let i = 0; i < this.body.length; i++) {
+        let snake = document.createElement("div");
+        snake.style.cssText = `width:${this.width}px;height:${this.height}px;background:${this.body[i].color};position:absolute;left:${this.body[i].x}px;top:${this.body[i].y}px`;
+        box.appendChild(snake);
+        this.list.push(snake);
+      }
+    };
+    Snake.prototype.active = function() {
+      // 超越边界结束游戏
+      let timer = setInterval(() => {
+        if (
+          this.body[0].x >= 800 ||
+          this.body[0].x < 0 ||
+          this.body[0].y < 0 ||
+          this.body[0].y >= 500
+        ) {
+          clearInterval(timer);
+          alert("游戏结束");
+          return;
+        }
+        // 碰到尾巴结束游戏、
+        for (let i = this.body.length - 1; i > 0; i--) {
+          if (
+            this.body[0].x == this.body[i].x &&
+            this.body[0].y == this.body[i].y
+          ) {
+            console.log(
+              this.body[0].x,
+              this.body[i].x,
+              this.body[0].y,
+              this.body[i].y
+            );
+            clearInterval(timer);
+            alert("游戏结束");
+            return;
+          }
+        }
+        // 清除小蛇
+        this.del();
+        // 判断方向，重新书写body里面小蛇的身体
+        let direction = this.direction;
+        switch (direction) {
+          case "right":
+            var head = JSON.parse(JSON.stringify(this.body[0]));
+            this.body[0].color = "orange";
+            this.body.pop();
+            head.x += 20;
+            this.body.unshift(head);
+            break;
+          case "left":
+            var head = JSON.parse(JSON.stringify(this.body[0]));
+            this.body[0].color = "orange";
+            this.body.pop();
+            head.x -= 20;
+            this.body.unshift(head);
+            break;
+          case "top":
+            var head = JSON.parse(JSON.stringify(this.body[0]));
+            this.body[0].color = "orange";
+            this.body.pop();
+            head.y -= 20;
+            this.body.unshift(head);
+            break;
+          case "bottom":
+            var head = JSON.parse(JSON.stringify(this.body[0]));
+            this.body[0].color = "orange";
+            this.body.pop();
+            head.y += 20;
+            this.body.unshift(head);
+            break;
+        }
+        // 初始化小蛇
+        this.init();
+        // 吃食物
+        if (this.body[0].x == food.x && this.body[0].y == food.y) {
+          let body = JSON.parse(
+            JSON.stringify(this.body[this.body.length - 1])
+          );
+          this.body.push(body);
+          food.init();
+        }
+      }, 150);
+    };
+    // let tcs = new FOOD();
+    // tcs.init();
+    // let xs = new Snake();
+    // xs.init();
+    // xs.active();
+    // 封装的贪吃蛇游戏类
+    let Game = function() {
+      this.food = new FOOD();
+      this.snake = new Snake();
+      window.food = this.food;
+      window.snake = this.snake;
+    };
+    Game.prototype.init = function() {
+      this.food.init();
+      this.snake.init();
+      this.snake.active();
+    };
+    // 开始游戏
+    let gm = new Game();
+    gm.init();
+    // 绑定上下左右事件
+    document.onkeydown = function(e) {
+      var currKey = e.keyCode || e.which || e.charCode;
+      switch (currKey) {
+        case 38:
+          // alert("上");     不能倒退和多次点击同一方向
+          if (snake.direction !== "top" && snake.direction !== "bottom") {
+            snake.direction = "top";
+          }
+          break;
+        case 40:
+          // alert("下");
+          if (snake.direction !== "bottom" && snake.direction !== "top") {
+            snake.direction = "bottom";
+          }
+          break;
+        case 37:
+          // alert("左");
+          if (snake.direction !== "left" && snake.direction !== "right") {
+            snake.direction = "left";
+          }
+          break;
+        case 39:
+          // alert("右");
+          if (snake.direction !== "right" && snake.direction !== "left") {
+            snake.direction = "right";
+          }
+          break;
+      }
+    };
+  </script>
+</html>
