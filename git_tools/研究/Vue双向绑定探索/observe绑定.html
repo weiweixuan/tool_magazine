@@ -7,74 +7,80 @@
     <title>Document</title>
   </head>
   <body>
+    <h1 id="app">{{name}}</h1>
     <script>
-      // let obj_ = {
-      //   book1: {
-      //     name: 'js高级程序设计'
-      //   },
-      //   book2: 'jquery'
-      // }
-      // function define_(data, key, val) {
-      //   observe(val)
-      //   Object.defineProperty(data, key, {
-      //     get() {
-      //       console.log('get数据被劫持')
-      //       return val
-      //     },
-      //     set() {},
-      //     enumerable: true,
-      //     configurable: true
-      //   })
-      // }
-      // function observe(obj) {
-      //   if (!obj || typeof data !== 'object') return false
-      //   Object.keys(obj).forEach(item => define_(obj, item, obj[item]))
-      // }
-      // observe(obj_)
-      // console.log(obj_.book2)
-      //--------------------------------------------------------------------------
-      console.log('=++++++++++++++++++++++++++++++++++++++=')
-      function defineReactive(data, key, val) {
-        observe(val) // 递归遍历所有子属性
-        Object.defineProperty(data, key, {
+      let h1 = document.getElementById('name')
+
+      let obj_ = {
+        book1: {
+          name: 'js高级程序设计'
+        },
+        book2: 'jquery',
+        book3: [11, 22, 33]
+      }
+
+      // 实现一个订阅发布者模式
+      class Dep {
+        constructor() {
+          this.list = []
+        }
+        subscribe(fn) {
+          this.list.push(fn)
+        }
+        notify() {
+          console.log(this.list, 'ii')
+          this.list.forEach(item => item())
+        }
+        unSubscribe(fn) {
+          let index = this.list.findIndex(item => item == fn)
+          if (index > -1) {
+            this.list.splice(index, 1)
+          }
+        }
+      }
+
+      // Object.defineProperty() 实现
+      function observe(obj) {
+        if (!obj || typeof obj != 'object') return
+        for (let key in obj) {
+          // 判断是否为自有属性
+          if (obj.hasOwnProperty(key)) {
+            defineReactive(obj, key, obj[key])
+          }
+        }
+      }
+      function defineReactive(obj, key, value) {
+        observe(value)
+        let dep = new Dep()
+        Object.defineProperty(obj, key, {
           enumerable: true,
           configurable: true,
-          get: function() {
-            console.log('11被劫持了')
-            return val
+          get() {
+            console.log('Jianting', key, value)
+            return value
           },
-          set: function(newVal) {
-            val = newVal
-            console.log(
-              '属性' +
-                key +
-                '已经被监听了，现在值为：“' +
-                newVal.toString() +
-                '”'
-            )
+          set(newVal) {
+            if (newVal === value) return
+            console.log('旧值', value, '新值', newVal)
+            value = newVal
           }
         })
       }
+      observe(obj_)
 
-      function observe(data) {
-        if (!data || typeof data !== 'object') {
-          return
+      class Vue {
+        constructor({ el, data }) {
+          this.el = document.getElementById(`#${el}`)
+          this.data = data
+          observe(data)
         }
-        Object.keys(data).forEach(function(key) {
-          defineReactive(data, key, data[key])
-        })
       }
-
-      var library = {
-        book1: {
-          name: ''
-        },
-        book2: ''
-      }
-      observe(library)
-      console.log(library.book1.name)
-      // library.book1.name = 'vue权威指南' // 属性name已经被监听了，现在值为：“vue权威指南”
-      // library.book2 = '没有此书籍' // 属性book2已经被监听了，现在值为：“没有此书籍”
+      // console.log(obj_.book1.name);
+      console.log('')
+      let a = []
+      a.splice(item => {
+        console.log('')
+      })
     </script>
   </body>
 </html>

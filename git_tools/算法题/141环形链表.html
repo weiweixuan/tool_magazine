@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+     给定一个链表，判断链表中是否有环。
+
+      为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。
+      */
+
+      function ListNode(val) {
+        this.val = val;
+        this.next = null;
+      }
+
+      /**
+       * @param {ListNode} head
+       * @return {boolean}
+       */
+      // var hasCycle = function(head) {
+      //   let sb = new ListNode("哨兵");
+      //   sb.next = head;
+      //   let list = [];
+      //   while (sb.next) {
+      //     let temp = sb.next;
+      //     if (list.find(item => item === temp)) return true;
+      //     list.push(temp);
+      //     sb = temp;
+      //   }
+      //   return false;
+      // };
+      // 双指针法
+      var hasCycle = function(head) {
+        let sb = new ListNode("哨兵");
+        sb.next = head;
+        let point1 = (point2 = sb);
+        while (point1.next && point2.next && point2.next.next) {
+          //  point1走一步，point2走两步
+          point1 = point1.next;
+          point2 = point2.next.next;
+          if (point1 === point2) return true;
+        }
+        return false;
+      };
+
+      function getList(num = 5) {
+        let head = new ListNode(0),
+          current = head,
+          random = {
+            index: Math.ceil(Math.random() * (num - 1)),
+            obj: null
+          };
+        console.log(random.index, "xxx");
+        for (let i = 1; i < num; i++) {
+          let temp = new ListNode(i);
+          i == random.index && (random.obj = temp);
+          current.next = temp;
+          current = temp;
+        }
+        // 形成环
+        current.next = random.obj;
+        return head;
+      }
+      let head = getList();
+      console.log(hasCycle(head));
+    </script>
+  </body>
+</html>

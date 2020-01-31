@@ -1,15 +1,15 @@
-const fs = require("fs");
+const fs = require('fs')
 
 function formatErr(err) {
   if (err) {
-    console.log("err", err);
+    console.log('err', err)
   } else {
-    console.log("ok");
+    console.log('ok')
   }
 }
 function cb(err, data) {
-  formatErr(err);
-  console.log(data, "data");
+  formatErr(err)
+  console.log(data, 'data')
 }
 // !创建文件夹
 // 异步
@@ -38,4 +38,4 @@ function cb(err, data) {
 // fs.rename("demoSync", "newDemo", cb);
 
 // !删除文件夹(空文件夹)
-fs.rmdir("newDemo", cb);
+fs.rmdir('newDemo', cb)

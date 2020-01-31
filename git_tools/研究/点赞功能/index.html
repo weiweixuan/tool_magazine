@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="http://at.alicdn.com/t/font_1622868_exi58t97n2u.css"
+    />
+    <link rel="stylesheet" href="./animate.css" />
+    <style>
+      body {
+        min-width: 100vw;
+        padding: 0;
+        margin: 0;
+        min-height: 100vh;
+      }
+      #box {
+        padding: 500px 0 0 0;
+        text-align: center;
+      }
+      #box::before {
+        content: '';
+        display: block;
+      }
+      .btn {
+        position: relative;
+        transition: all linear 0.2s;
+        color: #ccc;
+        z-index: 1000;
+      }
+      .btn:hover {
+        cursor: pointer;
+      }
+      .active {
+        color: red;
+      }
+      img {
+        width: 40px;
+        /* height: 40px; */
+      }
+      @keyframes tada {
+        from {
+          -webkit-transform: scale3d(1, 1, 1);
+          transform: scale3d(1, 1, 1);
+        }
+
+        10%,
+        20% {
+          -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+          transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+        }
+
+        30%,
+        50%,
+        70%,
+        90% {
+          -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+          transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+        }
+
+        40%,
+        60%,
+        80% {
+          -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+          transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+        }
+
+        to {
+          -webkit-transform: scale3d(1, 1, 1);
+          transform: scale3d(1, 1, 1);
+        }
+      }
+
+      .count {
+        color: rgb(247, 28, 137);
+
+        display: inline-block;
+      }
+      .count.tada {
+        animation: tada 1s linear infinite 2s;
+      }
+      .block {
+        display: block;
+      }
+      .none {
+        display: none;
+      }
+      .overflow {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box">
+      <div class="btn">
+        <!-- // 在飞的小人 -->
+        <!-- <div class="box1">
+          <img src="./images/9.png" alt="" class="img1" />
+        </div> -->
+        <i class="iconfont icon-zan1" style="font-size: 40px;"></i>
+
+        <div class="overflow">
+          <div class="count tada"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    ;(function() {
+      let box = document.getElementById('box')
+      let btn = document.querySelector('.btn')
+      let zan = document.querySelector('.icon-zan1')
+      let count = document.querySelector('.count')
+      // fly对象
+      let flyObj = {
+        timer: null,
+        begin(dom, x, y) {
+          this.timer = setInterval(() => {
+            this.create()
+            this.addCount()
+          }, 20)
+        },
+        addCount() {
+          btnObj.count++
+          count.innerHTML = `点赞+${btnObj.count}次`
+        },
+        end() {
+          if (!this.timer) return
+          clearInterval(this.timer)
+          this.timer = null
+        },
+        create() {
+          let index = Math.floor(Math.random() * 1000)
+          let obj = document.createElement('div')
+          let Img = document.createElement('img')
+          Img.src = `./images/${Math.ceil(Math.random() * 104)}.png`
+          obj.style.cssText = `
+          position: absolute;
+          z-index:1;
+          left: 50%;
+          top: 50%;
+          opacity: 1;
+          animation: box${index} 0.5s cubic-bezier(0.05, 0.08, 0.12, 1.05);
+          `
+          Img.style.cssText = `
+          animation: img${index}  0.5s linear;
+          `
+          obj.appendChild(Img)
+          btn.insertBefore(obj, zan)
+          let timer = setTimeout(() => {
+            btn.removeChild(obj)
+            clearTimeout(timer)
+            timer = null
+          }, 500)
+        }
+      }
+      // btn对象
+      let btnObj = {
+        count: 0,
+        active(dom) {
+          dom.className = dom.className + ' active'
+          count.className = 'count tada block'
+          flyObj.begin()
+        },
+        normal(dom) {
+          setTimeout(() => {
+            count.className = ' count block '
+          }, 1000)
+          flyObj.end()
+        }
+      }
+      const { active, normal } = btnObj
+      /*
+        鼠标提起时不再btn按钮上的补丁事件
+      */
+      document.body.addEventListener('mouseup', function() {
+        normal(btn)
+      })
+
+      zan.addEventListener('mousedown', function(e) {
+        active(this)
+      })
+      zan.addEventListener('mouseup', function(e) {
+        normal(this)
+      })
+    })()
+  </script>
+</html>
