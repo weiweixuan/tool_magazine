@@ -8,20 +8,18 @@
   </head>
   <body>
     <script>
-      function uncurry(fn, count) {
-        let len = 0
-        return function(...args) {
-          for (let i = 0; i < count - 1; i++) {
-            let len_ = fn.length
-            fn = fn(...args.slice(len, len + len_))
-            len += len_
-          }
-          return fn(...args.slice(len))
+      const uncurry = (fn, count = 1) => (...args) => {
+        for (let i = count; i > 0; i--) {
+          const len = fn.length
+          let params = args.slice(0, len)
+          args = args.slice(len)
+          fn = fn.apply(null, params)
         }
+        return fn
       }
-      const add = (a, b) => (c, d) => (e, f, g) => a + b + c + d + e + f + g
+      const add = x => y => z => x + y + z
       const uncurriedAdd = uncurry(add, 3)
-      let res = uncurriedAdd(1, 2, 3, 4, 5, 6, 7) // 6
+      let res = uncurriedAdd(1, 2, 3) // 6
       console.log(res, 'iii')
     </script>
   </body>

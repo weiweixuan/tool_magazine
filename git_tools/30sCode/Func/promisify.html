@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const promisify = fn => (...args) =>
+        new Promise((resolve, reject) =>
+          fn(...args, (err, result) => (err ? reject(err) : resolve(result)))
+        )
+      const delay = promisify((d, cb) => setTimeout(cb, d))
+      delay(2000).then(() => console.log('Hi!')) // // Promise resolves after 2s
+    </script>
+  </body>
+</html>

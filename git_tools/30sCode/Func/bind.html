@@ -8,9 +8,14 @@
   </head>
   <body>
     <script>
-      let bind = (fn, this_, ...args) => {
-        return function(...args2) {
-          return fn.apply(this_, args.concat(args2))
+      // let bind = (fn, this_, ...args) => {
+      //   return function(...args2) {
+      //     return fn.apply(this_, args.concat(args2))
+      //   }
+      // }
+      let bind = (fn, obj) => {
+        return (...args) => {
+          return fn.apply(obj, args)
         }
       }
       function greet(greeting, punctuation) {
