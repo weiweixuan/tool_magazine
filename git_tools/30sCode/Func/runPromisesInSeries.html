@@ -8,15 +8,33 @@
   </head>
   <body>
     <script>
-      async function runPromisesInSeries(arr) {
-        console.time()
-        for (let item of arr) {
-          await item()
-        }
-        console.timeEnd()
-      }
-      const delay = d => new Promise(r => setTimeout(r, d))
-      runPromisesInSeries([() => delay(1000), () => delay(2000)]) // Executes each promise sequentially, taking a total of 3 seconds to complete
+      // async function runPromisesInSeries(arr) {
+      //   console.time()
+      //   for (let item of arr) {
+      //     await item()
+      //   }
+      //   console.timeEnd()
+      // }
+      const runPromisesInSeries = arr =>
+        arr.reduce((prev, fn) => {
+          console.log('111', prev)
+          return prev.then(() => {
+            fn()
+          })
+        }, Promise.resolve())
+
+      const delay = d =>
+        new Promise(r =>
+          setTimeout(() => {
+            console.log('object')
+            r()
+          }, d)
+        )
+      runPromisesInSeries([
+        () => delay(1000),
+        () => delay(2000),
+        () => delay(3000)
+      ]) // Executes each promise sequentially, taking a total of 3 seconds to complete
     </script>
   </body>
 </html>

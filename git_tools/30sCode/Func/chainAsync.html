@@ -8,26 +8,58 @@
   </head>
   <body>
     <script>
-      let chainAsync = arr => {
-        let len = arr.length,
-          arr_ = []
-        for (let i = len; i > 0; i--) {
-          arr_.unshift(arr[i - 1].bind(this, arr_[0]))
+      // 这是官方的链式调用
+      // let chainAsync = arr => {
+      //   let len = arr.length,
+      //     arr_ = []
+      //   for (let i = len; i > 0; i--) {
+      //     arr_.unshift(arr[i - 1].bind(this, arr_[0]))
+      //   }
+      //   arr_[0]()
+      // } //注意点：bind生成的新函数要保留引用，下个方法要传递改引用
+
+      // chainAsync([
+      //   next => {
+      //     console.log('0 seconds')
+      //     setTimeout(next, 1000)
+      //   },
+      //   next => {
+      //     console.log('1 second')
+      //     setTimeout(next, 1000)
+      //   },
+      //   () => {
+      //     console.log('2 second')
+      //   }
+      // ])
+      // 可以把单独的方法抽象出来，封装一个抽象高阶方法
+      let createAsyncFn = (fn, timer = 1000, ...args) => {
+        return new Promise(resolve =>
+          setTimeout(() => {
+            let res = fn && fn.apply(null, args)
+            resolve(res)
+          }, timer)
+        )
+      }
+      let chainAsync = async arr => {
+        let res = '你好，'
+        for (let i = 0; i < arr.length; i++) {
+          res = await createAsyncFn(arr[i], (i + 1) * 1000, res)
         }
-        arr_[0]()
-      } //注意点：bind生成的新函数要保留引用，下个方法要传递改引用
+        console.log(res, '最后的结果')
+      }
 
       chainAsync([
-        next => {
+        val => {
           console.log('0 seconds')
-          setTimeout(next, 1000)
+          return `${val}我的名字叫魏玮璇，`
         },
-        next => {
-          console.log('1 second')
-          setTimeout(next, 1000)
+        val => {
+          console.log('1 seconds')
+          return `${val}我今年25岁啦，`
         },
-        () => {
-          console.log('2 second')
+        val => {
+          console.log('2 seconds')
+          return `${val}我最爱我家二货大宝贝！！！`
         }
       ])
     </script>

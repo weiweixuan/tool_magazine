@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const pipeFunctions = (...fns) =>
+        fns.reduce((f, g) => (...args) => g(f(...args)))
+      // reduce高阶函数第二个参数如果没有，就默认是数组的第一个值，后面循环走第二个值开始
+      const add5 = x => x + 5
+      const multiply = (x, y) => x * y
+      const multiplyAndAdd5 = pipeFunctions(multiply, add5)
+      let res = multiplyAndAdd5(5, 2) // 15
+      console.log(res, 'res')
+    </script>
+  </body>
+</html>
