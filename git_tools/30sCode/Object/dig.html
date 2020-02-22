@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const dig = (obj, key) => {
+        if (typeof obj != 'object') throw new Error('请传递一个对象')
+        let res = undefined
+
+        function getKeyForValue(params) {
+          Object.keys(params).forEach(item => {
+            const value = params[item]
+            if (key === item) {
+              res = value
+            } else {
+              if (typeof value === 'object') {
+                getKeyForValue(value)
+              }
+            }
+          })
+        }
+        getKeyForValue(obj)
+        return res
+      }
+      const data = {
+        level1: {
+          level2: {
+            level3: 'some data'
+          }
+        }
+      }
+      let res1 = dig(data, 'level3') // 'some data'
+      console.log(res1, 'iii')
+      let res2 = dig(data, 'level4') // undefined
+      console.log(res2, 'qqq')
+    </script>
+  </body>
+</html>

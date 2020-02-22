@@ -13,8 +13,8 @@
         return function(...args) {
           if (!flag) return false
           flag = false
-          fn(...args)
           setTimeout(() => {
+            fn(...args)
             flag = true
           }, timer)
         }
@@ -23,7 +23,6 @@
         'resize',
         throttle(function(evt) {
           console.log(window.innerWidth)
-          console.log(window.innerHeight)
         }, 250)
       ) // Will log the window dimensions at most every 250ms
     </script>

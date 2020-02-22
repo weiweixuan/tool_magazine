@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const deepClone = data => {
+        if (data === null) return null
+        // 1. 判断参数类型
+        if (typeof data !== 'object') {
+          return data
+        }
+        // 2.创建相对应的对象或数组
+        let params
+        if (Array.isArray(data)) {
+          params = []
+        } else {
+          params = Object.create(null)
+        }
+        // 3.循环，递归判断值
+        for (let key in data) {
+          // 判断是否是自身属性(原型也会被for in 遍历)
+          if (data.hasOwnProperty(key)) {
+            params[key] = deepClone(data[key])
+          }
+        }
+        return params
+      }
+      const a = { foo: 'bar', obj: { a: 1, b: 2 } }
+
+      const b = deepClone(a) // a !== b, a.obj !== b.obj
+      console.log(b, 'bbb')
+    </script>
+  </body>
+</html>

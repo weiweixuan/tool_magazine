@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const deepMapKeys = (data, fn) => {
+        // 判断非对象和数组就返回
+        if (typeof data != 'object') return data
+        // 判断是数组就遍历递归
+        if (Array.isArray(data)) {
+          return data.map(item => deepMapKeys(item, fn))
+        } else {
+          // 是对象就对属性调用方法，然后递归value
+          return Object.keys(data).reduce(
+            (prev, item) => (
+              (prev[fn(item)] = deepMapKeys(data[item], fn)), prev
+            ),
+            {}
+          )
+        }
+      }
+      const obj = {
+        foo: '1',
+        nested: {
+          child: {
+            withArray: [
+              {
+                grandChild: ['hello']
+              }
+            ]
+          }
+        }
+      }
+      const upperKeysObj = deepMapKeys(obj, key => key.toUpperCase())
+      console.log(upperKeysObj, 'upperKeysObj')
+    </script>
+  </body>
+</html>

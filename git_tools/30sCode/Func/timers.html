@@ -8,11 +8,14 @@
   </head>
   <body>
     <script>
-      function times(count, fn) {
-        for (let i = 0; i < count; i++) {
-          fn(i)
-        }
-      }
+      // function times(count, fn) {
+      //   for (let i = 0; i < count; i++) {
+      //     fn(i)
+      //   }
+      // }
+
+      const times = (count, fn) =>
+        Array.from({ length: count }, (_, index) => fn(index))
       var output = ''
       times(5, i => (output += i))
       console.log(output) // 01234

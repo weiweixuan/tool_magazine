@@ -10,22 +10,28 @@
     <script>
       const memoize = fn => {
         let map = new Map()
-        let myFn = key =>
-          map.has(key) ? map.get(key) : map.set(key, fn()) && map.get(key)
-        myFn.cache = map
-        return myFn
-      }
-
-      // See the `anagrams` snippet.执行一个很耗时的方法，把值缓存起来，再次调用直接取值
-      function anagrams() {
-        for (let i = 0; i < 10000; i++) {
-          console.log(++i)
+        function anagramsCached(val) {
+          return (
+            map.has(val) ? map.get(val) : map.set(val, fn(val)), map.get(val)
+          )
         }
-        return 'end'
+        anagramsCached.cache = map
+        return anagramsCached
+      }
+      // See the `anagrams` snippet.执行一个很耗时的方法，把值缓存起来，再次调用直接取值
+      function anagrams(count) {
+        let sum = 0
+        for (let i = 0; i < count; i++) {
+          sum += i
+        }
+        return sum
       }
       const anagramsCached = memoize(anagrams)
-      let res1 = anagramsCached('javascript') // takes a long time
-      let res2 = anagramsCached('javascript') // returns virtually instantly since it's now cached
+      console.log(1)
+      let res1 = anagramsCached(1000000000) // takes a long time
+      console.log(2)
+      let res2 = anagramsCached(1000000000) // returns virtually instantly since it's now cached
+      console.log(3)
       console.log(res1, res2)
       console.log(anagramsCached.cache) // The cached anagrams map
     </script>
