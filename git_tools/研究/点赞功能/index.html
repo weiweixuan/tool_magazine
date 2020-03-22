@@ -22,7 +22,7 @@
         text-align: center;
       }
       #box::before {
-        content: '';
+        content: "";
         display: block;
       }
       .btn {
@@ -110,34 +110,34 @@
     </div>
   </body>
   <script>
-    ;(function() {
-      let box = document.getElementById('box')
-      let btn = document.querySelector('.btn')
-      let zan = document.querySelector('.icon-zan1')
-      let count = document.querySelector('.count')
+    (function() {
+      let box = document.getElementById("box");
+      let btn = document.querySelector(".btn");
+      let zan = document.querySelector(".icon-zan1");
+      let count = document.querySelector(".count");
       // fly对象
       let flyObj = {
         timer: null,
         begin(dom, x, y) {
           this.timer = setInterval(() => {
-            this.create()
-            this.addCount()
-          }, 20)
+            this.create();
+            this.addCount();
+          }, 20);
         },
         addCount() {
-          btnObj.count++
-          count.innerHTML = `点赞+${btnObj.count}次`
+          btnObj.count++;
+          count.innerHTML = `点赞+${btnObj.count}次`;
         },
         end() {
-          if (!this.timer) return
-          clearInterval(this.timer)
-          this.timer = null
+          if (!this.timer) return;
+          clearInterval(this.timer);
+          this.timer = null;
         },
         create() {
-          let index = Math.floor(Math.random() * 1000)
-          let obj = document.createElement('div')
-          let Img = document.createElement('img')
-          Img.src = `./images/${Math.ceil(Math.random() * 104)}.png`
+          let index = Math.floor(Math.random() * 1000);
+          let obj = document.createElement("div");
+          let Img = document.createElement("img");
+          Img.src = `./images/${Math.ceil(Math.random() * 104)}.png`;
           obj.style.cssText = `
           position: absolute;
           z-index:1;
@@ -145,48 +145,48 @@
           top: 50%;
           opacity: 1;
           animation: box${index} 0.5s cubic-bezier(0.05, 0.08, 0.12, 1.05);
-          `
+          `;
           Img.style.cssText = `
           animation: img${index}  0.5s linear;
-          `
-          obj.appendChild(Img)
-          btn.insertBefore(obj, zan)
+          `;
+          obj.appendChild(Img);
+          btn.insertBefore(obj, zan);
           let timer = setTimeout(() => {
-            btn.removeChild(obj)
-            clearTimeout(timer)
-            timer = null
-          }, 500)
+            btn.removeChild(obj);
+            clearTimeout(timer);
+            timer = null;
+          }, 500);
         }
-      }
+      };
       // btn对象
       let btnObj = {
         count: 0,
         active(dom) {
-          dom.className = dom.className + ' active'
-          count.className = 'count tada block'
-          flyObj.begin()
+          dom.className = dom.className + " active";
+          count.className = "count tada block";
+          flyObj.begin();
         },
         normal(dom) {
           setTimeout(() => {
-            count.className = ' count block '
-          }, 1000)
-          flyObj.end()
+            count.className = " count block ";
+          }, 1000);
+          flyObj.end();
         }
-      }
-      const { active, normal } = btnObj
+      };
+      const { active, normal } = btnObj;
       /*
         鼠标提起时不再btn按钮上的补丁事件
       */
-      document.body.addEventListener('mouseup', function() {
-        normal(btn)
-      })
+      document.body.addEventListener("mouseup", function() {
+        normal(btn);
+      });
 
-      zan.addEventListener('mousedown', function(e) {
-        active(this)
-      })
-      zan.addEventListener('mouseup', function(e) {
-        normal(this)
-      })
-    })()
+      zan.addEventListener("mousedown", function(e) {
+        active(this);
+      });
+      zan.addEventListener("mouseup", function(e) {
+        normal(this);
+      });
+    })();
   </script>
 </html>
