@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>this is main page</h2>
+    <button id="btn">请求数据</button>
+    <div class="box"></div>
+    <script>
+      const btn = document.querySelector("#btn");
+      btn.onclick = () => {
+        fetch("/users/layout")
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(myJson) {
+            console.log(myJson, "sss");
+            let box = document.querySelector(".box");
+            let Fragment = document.createDocumentFragment();
+            myJson.forEach(child => {
+              let temp = document.createElement("div");
+              temp.innerHTML = child.title;
+              Fragment.appendChild(temp);
+            });
+            box.appendChild(Fragment);
+          });
+      };
+    </script>
+  </body>
+</html>
