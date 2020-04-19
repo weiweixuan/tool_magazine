@@ -24,14 +24,14 @@ app.use(favicon(__dirname + "/public/images/favicon.ico"));
 
 // 鉴权中间件
 function auth(req, res, next) {
-  console.log("req", req.header, "token-------------------------");
-  User.getData({ uname: "234" })
-    .then((data) => {
-      console.log(data, "ddd");
-    })
-    .catch((err) => {
-      console.log(err, "errsss");
-    });
+  console.log("req", req.headers.accesstoken, "token-------------------------");
+  // User.getData({ uname: "234" })
+  //   .then((data) => {
+  //     console.log(data, "ddd");
+  //   })
+  //   .catch((err) => {
+  //     console.log(err, "errsss");
+  //   });
   next();
 }
 app.use(auth);
