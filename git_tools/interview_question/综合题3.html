@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var x = 0,
+        y = 1
+      function fn(y) {
+        x += 2
+        fn = function (y) {
+          console.log(y + --x)
+        }
+        console.log(x, y)
+      }
+      fn(3) // x = 2 ， log:2,3
+      fn(4) // x = 1 , log: 5
+      console.log(x, y) // log:1,1
+    </script>
+  </body>
+</html>

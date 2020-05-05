@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var x = 2
+      var y = {
+        x: 3,
+        z: (function (x) {
+          // 此时的this指向为window
+          this.x *= x
+          x += 2
+          return function (n) {
+            this.x *= n
+            x += 3
+            console.log(x)
+          }
+        })(x),
+      }
+      // y.x = 3 , x_ = 4 , x = 4
+      var m = y.z
+      m(4) // x = 16 , x_ = 7 log(7)
+      y.z(5) // y.x = 15 , x_ = 10 log(10)
+      console.log(x, y.x) // log(16) log(15)
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function A() {
+        console.log('1')
+      }
+
+      function Fn() {
+        A = function () {
+          console.log('2')
+        }
+        return this
+      }
+
+      Fn.A = A
+
+      Fn.prototype = {
+        A: () => {
+          console.log('3')
+        },
+      }
+
+      A() //1
+      Fn.A() //1
+      Fn().A() // 2
+      new Fn.A() // 1
+      new Fn().A() //  3
+      new new Fn().A() // error  A is not a constructor
+    </script>
+  </body>
+</html>
