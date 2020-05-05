@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" class="ipt" value="${v1}+${v2}" />
+    <script>
+      /*
+        输入框失去焦点的时候判断输入的数据是否都是依赖与checkList项填写，不是的就把哪一项置空
+      */
+      let checkList = ["v1", "v2", "v3"];
+      let ipt = document.querySelector(".ipt");
+      ipt.onblur = (e) => {
+        checkValue(e.target.value);
+        console.log(e.target.value, "blur");
+      };
+      function checkValue(str) {
+        // 判断非空
+        if (!str) return;
+        try {
+          // 根据+切割字符串
+          let list = str.split("+").map((c) => c.trim());
+          let flag = true,
+            regexp = /^(\${).+(\})$/;
+          for (let item of list) {
+            if (flag && regexp.test(item)) {
+              let val = item.slice(2, -1);
+              console.log(val, "哈哈哈");
+            } else {
+              console.log("有错");
+            }
+          }
+        } catch (e) {
+          alert("报错啦", e);
+        }
+      }
+    </script>
+  </body>
+</html>

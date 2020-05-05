@@ -42,6 +42,25 @@
       };
       let res = climbStairs(str);
       console.log(res);
+
+      const all = 44,
+        step = [1, 2];
+      var climbStairs_ = function(all, step = [1, 2]) {
+        var count = 0;
+        function digui(all, curIndex = 0) {
+          if (all === curIndex) {
+            count++;
+            return;
+          } else if (all > curIndex) {
+            step.forEach(item => digui(all, item + curIndex));
+          }
+        }
+        digui(all);
+        return count;
+      };
+
+      let res2 = climbStairs_(all, step);
+      console.log(res2, "res2");
     </script>
   </body>
 </html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/immutable/4.0.0-rc.12/immutable.min.js"></script>
+  </head>
+  <body>
+    <script>
+      // 文档 ： https://juejin.im/post/5ac437436fb9a028c97a437c
+
+      const { fromJS, toJS, is } = Immutable;
+      console.log("immutable", Immutable);
+
+      // js对象
+      let info = {
+        name: "weiwei",
+        age: 25,
+        skill: ["vue", "react", "taro"],
+        father: {
+          name: "dengxiang",
+          father: {
+            name: "daosheng",
+          },
+        },
+      };
+      let info2 = JSON.parse(JSON.stringify(info));
+
+      // fromJS => js对象转成 Immutable对象 , is 用来判断两个对象是否是一样的；
+      const imm_info = fromJS(info);
+      const imm_info2 = fromJS(info2);
+      console.log(
+        info,
+        info2,
+        info === info2,
+        is(imm_info, imm_info2),
+        "-----"
+      );
+
+      /*
+      //获取List索引的元素
+      ImmutableData.get(0);
+
+      // 获取Map对应key的value
+      ImmutableData.get('a');
+
+      // 获取嵌套数组中的数据
+      ImmutableData.getIn([1, 2]);
+
+      // 获取嵌套map的数据
+      ImmutableData.getIn(['a', 'b']);
+      */
+      let father = imm_info.getIn(["father"]).toJS();
+
+      console.log(father, "+++");
+
+      // 设置 set(),setIn() 返回一个新的数据引用
+      let otherImm = imm_info.set("name", "penny");
+      let otherImm2 = imm_info.setIn(["father", "father", "name"], "道胜");
+      console.log(imm_info.toJS(), otherImm.toJS(), otherImm2.toJS(), "ii");
+    </script>
+  </body>
+</html>
