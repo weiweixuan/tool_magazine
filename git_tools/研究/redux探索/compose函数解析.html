@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // compose 解析
+      /*
+         const chain = [A, B, C];
+         dispatch = compose(...chain)(store.dispatch)
+       */
+      let fnList = Array.from({ length: 10 }, (_, index) => (next) => {
+        console.log(index);
+        return next;
+      });
+      let compose = (list) => (next) => {
+        if (list.length === 1) {
+          return list[0].call(null, next);
+        }
+        return list.reduce(
+          (prev, item) => (...args) => prev(item(...args)),
+          next
+        );
+      };
+      // return list.reduce((prev, item) => item(prev), next);
+      function logger() {
+        console.log("执行完毕");
+      }
+      let dispatch = compose(fnList.reverse())(logger);
+      dispatch();
+    </script>
+  </body>
+</html>
