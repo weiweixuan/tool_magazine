@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 输入一个整数N，算出所有和为N的连续整数
+      function createArr(val) {
+        let middle = Math.ceil(val / 2),
+          arr = [];
+        for (let i = 1; i < middle; i++) {
+          add([i], i, val, arr);
+        }
+        return arr;
+      }
+
+      function add(ary, sum, val, arr) {
+        if (sum === val) {
+          arr.push(ary);
+        } else if (sum < val) {
+          let end = ary[ary.length - 1] + 1;
+          ary.push(end);
+          sum += end;
+          add(ary, sum, val, arr);
+        }
+      }
+
+      let res = createArr(15);
+      console.log(res, "res");
+    </script>
+  </body>
+</html>
