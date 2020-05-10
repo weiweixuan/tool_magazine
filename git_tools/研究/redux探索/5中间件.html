@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      button {
+        padding: 10px;
+        outline: none;
+        border: none;
+        background: #d5f5f5;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="button" id="settingName" value="update setting name" />
+    <input type="button" id="settingAge" value="update setting age" />
+    <input type="button" id="mainName" value="update main name" />
+    <input type="button" id="mainAge" value="update main age" />
+    <pre id="pre"></pre>
+    <script>
+      function mainReducer(
+        state = { name: "首页name", age: "首页age" },
+        action
+      ) {
+        const { type, payload } = action;
+        switch (type) {
+          case "mainName":
+            return {
+              ...state,
+              name: payload,
+            };
+          case "mainAge":
+            return {
+              ...state,
+              age: payload,
+            };
+          default:
+            return state;
+        }
+      }
+      function settingReducer(
+        state = { name: "设置name", age: "设置age" },
+        action
+      ) {
+        const { type, payload } = action;
+        switch (type) {
+          case "settingName":
+            return {
+              ...state,
+              name: payload,
+            };
+          case "settingAge":
+            return {
+              ...state,
+              age: payload,
+            };
+          default:
+            return state;
+        }
+      }
+      function combineReducers(reducers) {
+        let keys = Object.keys(reducers); // 闭包缓存了所有reducers的keys 和 总的reducers对象
+        //返回一个reducer传递state和action
+        return function (prevState = {}, action) {
+          let newState = {};
+          for (let i = 0; i < keys.length; i++) {
+            let key = keys[i]; //拿到每一个key的值
+            let itemReducer = reducers[key]; //获取对应的reducer
+            let prevItem = prevState[key]; //找到相对应模块的state
+            newState[key] = itemReducer(prevItem, action); // 执行该模块的reducer返回一个该模块的新state
+          }
+          return newState;
+        };
+      }
+      let reducerAll = combineReducers({
+        main: mainReducer,
+        setting: settingReducer,
+      });
+
+      function renderData(state) {
+        pre.innerHTML = JSON.stringify(state, null, 2);
+      }
+
+      // 实现一个createStore
+      function createStore(reducer, state = {}) {
+        let state_ = state,
+          listeners = []; //闭包缓存一个集中state_和订阅队列
+        // 获取state_
+        function getState() {
+          return state_;
+        }
+        // 订阅
+        function subscribe(fn) {
+          listeners.push(fn);
+          // 退订
+          return function unSubscribe(fn) {
+            let index = listeners.indexOf(fn);
+            listeners.splice(index, 1);
+          };
+        }
+
+        // 更新state_
+        function dispatch(action) {
+          // 匹配reducer里的规则
+          state_ = reducer(state_, action);
+          for (let i = 0; i < listeners.length; i++) {
+            // 获取每个事件调用
+            let itemFn = listeners[i];
+            itemFn();
+          }
+          renderData(state_);
+        }
+        // 初始化一下state
+        dispatch({ type: Symbol() });
+        // 暴露出接口
+        return {
+          getState,
+          subscribe,
+          dispatch,
+        };
+      }
+      // 创建一个state
+      let store = createStore(reducerAll, {});
+
+      // ------------------------------------------------------中间件拓展部分-----------------------------------------------------
+      // 洋葱模型
+      // const logger1Middleware = (store) => (next) => (action) => {
+      //   console.log(store.getState(), action, "logger1获取数据");
+      //   next(action);
+      // };
+      // const logger2Middleware = (store) => (next) => (action) => {
+      //   console.log(store.getState(), action, "logger2获取数据");
+      //   next(action);
+      // };
+      // const logger3Middleware = (store) => (next) => (action) => {
+      //   console.log(store.getState(), action, "logger3获取数据");
+      //   next(action);
+      // };
+
+      // let logger1 = logger1Middleware(store);
+      // let logger2 = logger2Middleware(store);
+      // let logger3 = logger3Middleware(store);
+
+      // let next = store.dispatch;
+
+      // let exceptionMiddleware = (next) => (action) => {
+      //   try {
+      //     next(action);
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // };
+
+      // store.dispatch = exceptionMiddleware(logger1(logger2(logger3(next))));
+
+      // 队列模型
+      const logger1Middleware = (store) => (action) => {
+        console.log(store.getState(), action, "logger1获取数据");
+      };
+      const logger2Middleware = (store) => (action) => {
+        console.log(store.getState(), action, "logger2获取数据");
+      };
+      const logger3Middleware = (store) => (action) => {
+        console.log(store.getState(), action, "logger3获取数据");
+      };
+
+      let logger1 = logger1Middleware(store);
+      let logger2 = logger2Middleware(store);
+      let logger3 = logger3Middleware(store);
+
+      let next = store.dispatch;
+
+      let exceptionMiddleware = (list) => (action) => {
+        try {
+          list.forEach((c) => c(action));
+          next(action);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      store.dispatch = exceptionMiddleware([logger1, logger2, logger3]);
+
+      // ------------------------------------------------------中间件拓展部分-----------------------------------------------------
+
+      //  修改数据后logger中间件
+      function logger() {
+        let state = store.getState();
+        console.log("修改后的state为", state);
+      }
+
+      // 订阅 logger中间件
+      let unSubscribeLogger = store.subscribe(logger);
+
+      // 10s后退订
+      setTimeout(() => {
+        console.log("退订啦");
+        unSubscribeLogger();
+      }, 10000);
+
+      console.log(store.getState());
+
+      // 修改数据方法
+      function change(type, payload) {
+        store.dispatch({
+          type,
+          payload,
+        });
+      }
+
+      settingName.addEventListener("click", () => {
+        change(
+          "settingName",
+          "修改后的设置name:" + Math.random().toString(32).slice(2)
+        );
+      });
+      settingAge.addEventListener("click", () => {
+        change(
+          "settingAge",
+          "修改后的设置age:" + parseInt(Math.random() * 100)
+        );
+      });
+      mainName.addEventListener("click", () => {
+        change(
+          "mainName",
+          "修改后的主页name:" + Math.random().toString(32).slice(2)
+        );
+      });
+      mainAge.addEventListener("click", () => {
+        change("mainAge", "修改后的主页age" + parseInt(Math.random() * 100));
+      });
+    </script>
+  </body>
+</html>
