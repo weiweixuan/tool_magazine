@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
+  <body>
+    <script>
+      let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 7, 76, 87, 6, 6, 55];
 
-<body>
-  <script>
-    let arr = [1, 4, 7, 4, 7, 9, 3, 2, 7, 9, 6, 7, 9, 0, 1, 4, 5, 7, 76, 87, 6, 6, 55];
-
-    function maopao(arr) {
-      for (let i = 1; i < arr.length; i++) {
-        for (let j = 0; j < arr.length - i; j++) {
-          if (arr[j] > arr[j + 1]) {
-            change(arr, j, j + 1)
+      function maopao(arr) {
+        arr = [...arr];
+        let len = arr.length;
+        for (let i = 0; i < len - 1; i++) {
+          let flag = true;
+          for (let j = 0; j < len - 1 - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+              flag = false;
+              change(arr, j, j + 1);
+            }
           }
+          if (flag) break;
         }
+        return arr;
       }
-      return arr;
-    }
 
-    function change(arr, prev, next) {
-      [arr[prev], arr[next]] = [arr[next], arr[prev]]
-    }
+      function change(arr, prev, next) {
+        [arr[prev], arr[next]] = [arr[next], arr[prev]];
+      }
 
-    let res = maopao(arr)
-    console.log(res)
-  </script>
-</body>
-
+      let res = maopao(arr);
+      console.log(res);
+    </script>
+  </body>
 </html>

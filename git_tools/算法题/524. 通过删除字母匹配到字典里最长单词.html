@@ -33,10 +33,10 @@
 
        */
 
-      var findLongestWord = function(s, d) {
+      var findLongestWord = function (s, d) {
         return d[
           d
-            .filter(element => hasWorld(s, element))
+            .filter((element) => hasWorld(s, element))
             .reduce(
               (prev, item, index) => (
                 item.length > prev.len &&
@@ -47,6 +47,7 @@
             ).key
         ];
       };
+      l;
       function hasWorld(s, val) {
         let i = 0,
           index = 0;
@@ -61,9 +62,32 @@
         }
         return i === val.length;
       }
-      let s = "bab",
-        d = ["ba", "ab", "a", "b"];
+      let s = "abpcplea",
+        d = ["a", "b", "c"];
 
+      var my = function (s, d) {
+        d = d.map((c) => ({ first: "", rest: c }));
+        console.log(d, "d");
+        for (let item of s) {
+          d.forEach((child) => {
+            if (child.rest && item === child.rest[0]) {
+              child.first += item;
+              child.rest = child.rest.slice(1);
+            }
+          });
+        }
+        let arr = d
+          .filter((c) => !c.rest)
+          .sort((a, b) => {
+            return b.first.length - a.first.length;
+          });
+        if (arr.length > 0) {
+          return arr[0].first;
+        } else {
+          return "";
+        }
+      };
+      console.log(my(s, d), "哈哈哈");
       console.log(findLongestWord(s, d));
     </script>
   </body>
