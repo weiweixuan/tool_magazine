@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 输出以下代码运行结果，为什么？如果希望每隔 1s 输出一个结果，应该如何改造？注意不可改动 square 方法
+      const list = [1, 2, 3];
+      const square = (num) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(num * num);
+          }, 1000);
+        });
+      };
+
+      // function test() {
+      //   list.forEach(async (x) => {
+      //     const res = await square(x);
+      //     console.log(res);
+      //   });
+      // }
+
+      // 改造1
+      // async function test() {
+      //   for (let item of list) {
+      //     const res = await square(item);
+      //     console.log(res);
+      //   }
+      // }
+
+      // 改造2
+      // async function test() {
+      //   for (let i = 0; i < list.length; i++) {
+      //     let x = list[i];
+      //     const res = await square(x);
+      //     console.log(res);
+      //   }
+      // }
+
+      // 改造3
+      // function test(count = 0, pro = Promise.resolve()) {
+      //   if (count === list.length) return;
+      //   pro = pro.then((res) =>
+      //     square(list[count]).then((res) => console.log(res))
+      //   );
+      //   test(count + 1, pro);
+      // }
+
+      // 改造4
+      // function test(params) {
+      //   list.reduce(async (_, x) => {
+      //     console.log(_, "_");
+      //     await _;
+      //     const res = await square(x);
+      //     console.log(res);
+      //   }, undefined);
+      // }
+
+      // 改造5
+      function test() {
+        list.reduce(
+          (pre, cur) => pre.then(() => square(cur)).then(console.log),
+          Promise.resolve()
+        );
+      }
+
+      test();
+      // A:1s后全部打印结果
+
+      /*
+        《ES6 入门》里面是这样介绍的：
+        reduce 方法的第一个参数是 async 函数，导致该函数的第一个参数是前一步操作返回的 Promise 对象
+        所以await或.then 第一个参数后面的代码 是放入异步队列的
+      */
+    </script>
+  </body>
+</html>
