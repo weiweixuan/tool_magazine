@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 下面代码执行结果是什么？ 如果想让输出为该实例，可以怎么改？
+      class Foo {
+        render() {
+          this.exec(this.sayThis);
+        }
+        exec(cb) {
+          cb();
+        }
+        sayThis() {
+          console.log(this);
+        }
+      }
+      // 1. 构造器中绑定this
+      // class Foo {
+      //   constructor(data) {
+      //     this.sayThis = this.sayThis.bind(this);
+      //   }
+      //   render() {
+      //     this.exec(this.sayThis);
+      //   }
+      //   exec(cb) {
+      //     cb();
+      //   }
+      //   sayThis() {
+      //     console.log(this);
+      //   }
+      // }
+      // 2. 使用箭头函数写法
+      // class Foo {
+      //   render() {
+      //     this.exec(this.sayThis);
+      //   }
+      //   exec(cb) {
+      //     cb();
+      //   }
+      //   sayThis = () => {
+      //     console.log(this);
+      //   };
+      // }
+      let f = new Foo();
+      f.render();
+    </script>
+  </body>
+</html>

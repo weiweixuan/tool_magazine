@@ -15,7 +15,7 @@
             resolve("事件1完成！");
           }, 1000);
         });
-      let fn2 = val =>
+      let fn2 = (val) =>
         new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve(val + "___事件2完成！");
@@ -45,14 +45,41 @@
         function digui(val) {
           const { value, done } = it.next(val);
           if (!done) {
-            value.then(data => digui(data));
+            value.then((data) => digui(data));
           }
           return value;
         }
         digui();
       }
 
-      let myAsync = gen => {
+      // 标准写法
+      function asyncToGenerator(generatorFunc) {
+        return function () {
+          const gen = generatorFunc.apply(this, arguments);
+          return newPromise((resolve, reject) => {
+            function step(key, arg) {
+              let generatorResult;
+              try {
+                generatorResult = gen[key](arg);
+              } catch (error) {
+                return reject(error);
+              }
+              const { value, done } = generatorResult;
+              if (done) {
+                return resolve(value);
+              } else {
+                returnPromise.resolve(value).then(
+                  (val) => step("next", val),
+                  (err) => step("throw", err)
+                );
+              }
+            }
+            step("next");
+          });
+        };
+      }
+
+      let myAsync = (gen) => {
         co(gen);
       };
       myAsync(gen);
