@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        position: relative;
+        margin-top: 200px;
+      }
+      .span {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+      }
+      .span:hover {
+        color: blue;
+      }
+      .box:hover .dialog {
+        display: block;
+      }
+      .dialog {
+        position: absolute;
+        z-index: 1000;
+        left: 50%;
+        top: -50%;
+        transform: translateX(-50%);
+        color: green;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box"></div>
+    <script>
+      let src = "100";
+      let dom = `<div class='box'  style="text-align:center ;color:red;" >
+          <div class='span'>测试效果</div>
+          <div class='dialog'> 文章 </div>
+        </div>`;
+      box.innerHTML = dom;
+    </script>
+  </body>
+</html>
