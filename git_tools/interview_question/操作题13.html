@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = ["ab", "c", "ab", "d", "c"];
+      // 要求让重复的字符串标上序号
+      // 最终  ['ab1','c1','ab2','d','c2']
+
+      function changeValue(arr) {
+        let res = [];
+        arr.reduce((prev, item, index) => {
+          if (prev[item]) {
+            prev[item] += 1;
+            res.push(`${item}${prev[item]}`);
+          } else {
+            prev[item] = 1;
+            // 判断是否只有一个元素
+            if (arr.indexOf(item) === arr.lastIndexOf(item)) {
+              res.push(item);
+            } else {
+              res.push(`${item}1`);
+            }
+          }
+          return prev;
+        }, {});
+        return res;
+      }
+
+      console.log(changeValue(arr));
+    </script>
+  </body>
+</html>
