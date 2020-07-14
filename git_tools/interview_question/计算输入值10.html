@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      inner = "window";
+      function say() {
+        console.log(inner);
+        console.log(this.inner);
+      }
+
+      var obj1 = (function () {
+        var inner = "1-1";
+        return {
+          inner: "1-2",
+          say() {
+            console.log(inner);
+            console.log(this.inner);
+          },
+        };
+      })();
+
+      say(); // window window
+      obj1.say(); // 1-1 , 1-2
+      obj1.say = say; // 释放了闭包缓存的inner
+      obj1.say(); // window , 1-2
+    </script>
+  </body>
+</html>

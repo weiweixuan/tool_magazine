@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 判断数组里的时间是否时连续的自然日
+      let arr = [
+        "2016-02-27",
+        "2016-02-28",
+        "2016-02-29",
+        "2016-03-01",
+        "2016-03-02",
+        "2016-03-03",
+        "2016-03-04",
+      ];
+
+      function getValue(arr) {
+        let day = 24 * 60 * 60 * 1000,
+          current;
+        return arr.reduce((prev, item) => {
+          if (current && prev) {
+            let temp = +new Date(item);
+            if (temp === current + day) {
+              current = temp;
+            } else {
+              prev = false;
+            }
+          } else {
+            current = +new Date(item);
+          }
+          return prev;
+        }, true);
+      }
+      console.log(getValue(arr));
+    </script>
+  </body>
+</html>
