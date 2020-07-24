@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 挑战AIf我们列出所有低于10的是3或5的倍数的自然数，我们得到3、5、6和9。这些倍数的和是23。请实现一个函数，返回1000以下3或5的所有倍数的和。
+      let count = 10,
+        aimKeyList = [3, 5];
+      let sumOfMultiples = (count, aimKeyList) =>
+        Array.from({ length: count }).reduce(
+          (prev, _, item) => (
+            aimKeyList.some((key) => Number.isInteger(item / key)) &&
+              (prev += item),
+            prev
+          ),
+          0
+        );
+
+      let res = sumOfMultiples(1000, aimKeyList);
+      console.log(res, "res");
+    </script>
+  </body>
+</html>
