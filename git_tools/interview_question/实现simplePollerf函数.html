@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个方法，传递一个函数和回调，执行延迟1s调用，如果该函数返回值为真，即执行回调，如果返回值为假，延迟1.5倍时间继续调用该函数;
+      /**
+      queryFn异步方法，cb回调
+      */
+      function simplePoller(queryFn, cb, dealyTime = 1) {
+        if (typeof queryFn !== "function") {
+          throw new Error("queryFn is not a function");
+        }
+        setTimeout(() => {
+          queryFn().then((res) => {
+            console.log(res, dealyTime * 1000, "res");
+            res ? cb && cb() : simplePoller(queryFn, cb, dealyTime * 1.5);
+          });
+        }, dealyTime * 1000);
+      }
+
+      let queryFn = () =>
+        new Promise((resolve) => resolve(Math.random() > 0.5));
+
+      let cb = () => console.log("执行回调");
+
+      simplePoller(queryFn, cb);
+    </script>
+  </body>
+</html>
