@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+                实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject
+              */
+
+      // 同步获得Promise状态和值，这样写很low，要是更好的写法大家call我一下
+      async function checkPromise(getFlag) {
+        try {
+          let res = await getFlag();
+          return { flag: true, value: res };
+        } catch (e) {
+          return { flag: false, value: e };
+        }
+      }
+
+      async function retry(pro, count = 10) {
+        let result = {
+            flag: false,
+            value: null,
+          },
+          length = count;
+        while (count && !result.flag) {
+          console.log(`调用了${length - count + 1}次`);
+          result = await checkPromise(pro);
+          const { flag, value } = result;
+          if (!flag) {
+            count--;
+          }
+        }
+        return result.value;
+      }
+      Promise.retry = retry;
+
+      getFlag = function () {
+        return Math.random() > 0.5 ? Promise.resolve(1) : Promise.reject(-1);
+      };
+
+      // Promise.retry(getFlag, 10)
+      //   .then((res) => {
+      //     console.log("成功结果", res);
+      //   })
+      //   .catch((e) => {
+      //     console.log("失败结果", e);
+      //   });
+
+      function retry2(promFn, resolve1, reject1, max = 1) {
+        console.log("max", max);
+        return new Promise((resolve, reject) => {
+          reject1 = reject1 || reject;
+          resolve1 = resolve1 || resolve;
+          promFn().then(
+            (res) => {
+              resolve1(res);
+            },
+            (err) => {
+              if (!max) {
+                reject1(err);
+              } else {
+                this.retry2(promFn, resolve1, reject1, --max);
+              }
+            }
+          );
+        });
+      }
+      Promise.retry2 = retry2;
+
+      // Promise.retry2(getFlag)
+      //   .then((res) => console.log(res, "成功"))
+      //   .catch((err) => console.log(err, "失败"));
+    </script>
+  </body>
+</html>
