@@ -1,4 +1,5 @@
 html,
 body {
   background: #aaa;
+  backface-visibility: hidden;
 }

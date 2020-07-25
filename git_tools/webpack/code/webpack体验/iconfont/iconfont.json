@@ -1,0 +1,44 @@
+{
+  "id": "1934692",
+  "name": "de'mo",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "609493",
+      "name": "是的",
+      "font_class": "shideright39",
+      "unicode": "e6fc",
+      "unicode_decimal": 59132
+    },
+    {
+      "icon_id": "634539",
+      "name": "是的_right149",
+      "font_class": "shideright149",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "9193133",
+      "name": "是-通用",
+      "font_class": "shi-tongyong",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "5334168",
+      "name": "箭头",
+      "font_class": "jiantou",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "12025963",
+      "name": "箭头",
+      "font_class": "jiantou1",
+      "unicode": "e7a7",
+      "unicode_decimal": 59303
+    }
+  ]
+}
