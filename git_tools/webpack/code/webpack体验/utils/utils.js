@@ -1,5 +1,9 @@
-function sum(a, b) {
-  return a + b;
-}
+import $ from "jquery";
 
-export { sum };
+const sum = function sum(a, b) {
+  // eslint-disable-next-line no-console
+  console.log($, "Jquery");
+  return a + b;
+};
+
+export default sum;
