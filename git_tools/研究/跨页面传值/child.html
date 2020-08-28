@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h2>child page</h2>
+      <p>
+        当前点击数
+        <span id="childSpan"></span>
+      </p>
+      <button onclick="sendParent()">Parent add</button>
+    </div>
+    <script>
+      const render = (() => {
+        let count = 100;
+        return () => {
+          childSpan.innerHTML = ++count;
+        };
+      })();
+      render();
+      // 子传父
+      function sendParent() {
+        console.log("子页面开始发送数据");
+        window.parent.postMessage(
+          {
+            msg: "parentAdd",
+          },
+          "*"
+        );
+      }
+
+      // 接受 传递信息的回调
+      window.addEventListener("message", function (e) {
+        console.log(e.data);
+        if (e.data.msg === "childAdd") {
+          console.log("子页面拿到数据---开始渲染");
+          render();
+        }
+      });
+    </script>
+  </body>
+</html>

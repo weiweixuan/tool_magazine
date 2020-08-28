@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>parent page</h1>
+      <p>
+        当前点击数
+        <span id="parentSpan"></span>
+      </p>
+      <button onclick="sendChild()">child add</button>
+      <hr />
+      <iframe
+        id="myframe"
+        src="http://localhost:5000/"
+        frameborder="0"
+      ></iframe>
+    </div>
+    <script>
+      const render = (() => {
+        let count = 0;
+        return () => {
+          parentSpan.innerHTML = ++count;
+        };
+      })();
+      render();
+      // 接受 传递信息的回调
+      window.addEventListener("message", function (e) {
+        console.log(e.data);
+        if (e.data.msg === "parentAdd") {
+          console.log("父页面拿到数据---开始渲染");
+          render();
+        }
+      });
+
+      // 父传子
+      function sendChild() {
+        console.log("父页面开始发送数据");
+        myframe.contentWindow.postMessage(
+          { msg: "childAdd" },
+          "http://localhost:5000/"
+        ); //childDomain是子页面的源（协议+主机+端口号）
+      }
+    </script>
+  </body>
+</html>

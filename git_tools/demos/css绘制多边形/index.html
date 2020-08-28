@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .flex {
+      display: flex;
+    }
+    .triangle {
+      display: inline-block;
+      padding: 0 30px;
+      height: 40px;
+      line-height: 40px;
+      background: #999;
+      /* border: 1px solid red; */
+      /* box-shadow: 5px 5px 5px 5px #666 inset; */
+      filter: drop-shadow(30px 10px 4px #4444dd);
+      clip-path: polygon(
+        calc(100% - 20px) 0,
+        100% 50%,
+        calc(100% - 20px) 100%,
+        0 100%,
+        20px 50%,
+        0 0
+      );
+    }
+    .flex .triangle:not(:first-child) {
+      margin-left: -10px;
+    }
+    .duibi div {
+      width: 200px;
+      height: 200px;
+      /* background: skyblue; */
+      /* border: 2px solid green; */
+      /* box-shadow: 5px 5px 5px 5px #666; */
+      filter: drop-shadow(0px 0px 2px#666);
+    }
+    .box {
+      /* clip-path: circle(50%); */
+      /* clip-path: polygon(90% 0, 100% 50%, 100% 100%, 0 100%, 0 0); */
+      background: linear-gradient(
+        45deg,
+        skyblue 0,
+        skyblue 50%,
+        transparent 50%,
+        transparent 100%
+      );
+    }
+    .drop {
+      background: skyblue;
+      border-radius: 50%;
+    }
+  </style>
+  <body>
+    <div class="flex">
+      <div class="triangle">
+        房间里威附件为附件件
+      </div>
+      <div class="triangle">
+        房间里威风极了附件为附件
+      </div>
+      <div class="triangle">
+        房间里威风极了附件为附件
+      </div>
+      <div class="triangle">
+        房间里威风极了附件为附件
+      </div>
+    </div>
+    <div class="duibi">
+      <div class="box"></div>
+      <div class="drop"></div>
+    </div>
+  </body>
+</html>

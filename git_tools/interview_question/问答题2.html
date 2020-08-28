@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var thinkive = { child: 1 };
+      var gentou = thinkive;
+      thinkive.kaihu = thinkive = { child: 2 };
+      console.log(thinkive, gentou); // undefined
+      // 这题考的是连等时点运算符和=运算符的优先级
+      // 成员访问 优先级19 , 赋值优先级 3 , 高的先执行
+      // 1 . 先声明(注意:此时thinkive的地址是{child:1})  thinkive.kaihu = undefined ;
+      // 2 . 赋值右往左执行 thinkive = { child: 2 };thinkive = { child: 2 } 返回值是 { child: 2 } , 再赋值给 thinkive.kaihu (thinkive的地址是{child:1})
+
+      // thinkive  ==> {child:2}
+      // gentou ==> {child:1,hkaihu:{child:2}}
+    </script>
+  </body>
+</html>

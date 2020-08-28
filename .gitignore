@@ -4,3 +4,4 @@ git_tools/Ts/node_modules
 git_tools/node/node_modules
 git_tools/node/express/express-app/node_modules
 git_tools/node/auth/node_modules
+git_tools/webpack/node_modules

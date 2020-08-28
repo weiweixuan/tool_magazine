@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="example"></div>
+    <div id="box"></div>
+    <script src="./lib.js"></script>
+    <script>
+      class toDoDemo {
+        constructor() {
+          this.todos = [];
+
+          this.render = () =>
+            m.render(
+              document.getElementById("example"),
+
+              { children: [this.showToDos()] }
+            );
+
+          this.render();
+        }
+
+        showToDos() {
+          return m("div", [
+            m("h3", "ToDo示例"),
+
+            m("input", { placeholder: "添加todo" }),
+
+            m(
+              "button",
+
+              {
+                onclick: (e) => this.addTodo(e),
+              },
+
+              "+"
+            ),
+
+            m(
+              "ul",
+
+              this.todos.map((item, i) =>
+                m("li", [
+                  m("span", item),
+
+                  m(
+                    "button",
+
+                    {
+                      onclick: () => this.removeTodo(i),
+                    },
+
+                    "-"
+                  ),
+                ])
+              )
+            ),
+          ]);
+        }
+
+        removeTodo(i) {
+          this.todos.splice(i, 1);
+
+          this.render();
+        }
+
+        addTodo(e) {
+          const input = e.target.previousSibling;
+
+          const todo = input.value;
+
+          if (!todo.trim()) return;
+
+          input.value = "";
+
+          this.todos.push(todo);
+
+          this.render();
+        }
+      }
+
+      new toDoDemo();
+
+      /**
+        分析: m方法 规则 1.第一个参数是 元素名 ， 后面数组是children , 对象是属性， 字符串是值 , 返回值是个dom元素
+      */
+
+      // 辅助判断类型方法 [object String] , [object Array] , [object Object]
+      // function getAttr(val, attr) {
+      //   return Object.prototype.toString.call(val) === `[object ${attr}]`;
+      // }
+
+      function m_(el, ...other) {
+        // 最终创建的是个虚拟dom
+        let options = { el };
+        // 遍历配置参数
+        if (other.length > 0) {
+          for (let item of other) {
+            switch (Object.prototype.toString.call(item)) {
+              // 如果是数组，追加到虚拟dom下
+              case "[object Array]":
+                options.children = item;
+                break;
+              // 如果是对象，添加到该虚拟dom上
+              case "[object Object]":
+                for (let attr in item) {
+                  options.attributes = {};
+                  options.attributes[attr] = item[attr];
+                }
+                break;
+              case "[object String]":
+                // 如果是字符串，添加到innerHTML
+                options.value = item;
+                break;
+
+              default:
+                break;
+            }
+          }
+        }
+        console.log(options, "----");
+        return options;
+        // // 最终创建的是个dom
+        // let dom = document.createElement(`${el}`);
+        // // 遍历配置参数
+        // if (other.length > 0) {
+        //   for (let item of other) {
+        //     switch (Object.prototype.toString.call(item)) {
+        //       // 如果是数组，追加到dom下
+        //       case "[object Array]":
+        //         for (let child of item) {
+        //           dom.appendChild(child);
+        //         }
+        //         break;
+        //       // 如果是对象，添加到该dom上
+        //       case "[object Object]":
+        //         for (let attr in item) {
+        //           dom[attr] = item[attr];
+        //         }
+        //         break;
+        //       case "[object String]":
+        //         // 如果是字符串，添加到innerHTML
+        //         dom.innerHTML = item;
+        //         break;
+
+        //       default:
+        //         break;
+        //     }
+        //   }
+        // }
+        // return dom;
+      }
+      function renderDom() {
+        let dom = m_("div", [
+          m_("h2", "我是标题"),
+          m_("input", {
+            placeholder: "请输入",
+          }),
+          m_(
+            "button",
+            {
+              onclick: () => {
+                console.log("点击了");
+              },
+            },
+            "添加"
+          ),
+        ]);
+        console.log(dom, "ddd");
+        // render_("#box", dom);
+      }
+      function render_(el, dom) {
+        document.querySelector(`${el}`).appendChild(dom);
+      }
+      let temp = renderDom();
+      console.log(temp, "temp");
+    </script>
+  </body>
+</html>

@@ -7,45 +7,31 @@
   </head>
   <body>
     <script>
-      /*
-        如下为一段代码，请完成sum函数，实现 sum(1,2,3,4,5,6) 函数返回值为21 ， 需要在 sum 中 调用 asyncAdd 函数 ， 且不能改 asyncAdd函数
-      */
+      let arr = ["ab", "c", "ab", "d", "c"];
+      // 要求让重复的字符串标上序号
+      // 最终  ['ab1','c1','ab2','d','c2']
 
-      function asyncAdd(a, b, cb) {
-        setTimeout(() => {
-          cb(null, a + b);
-        }, 1000);
-      }
-
-      // 先基于promise实现一个 cb
-      function callback(a, b) {
-        return new Promise((reslove) => {
-          asyncAdd(a, b, (_, sum_) => {
-            reslove(sum_);
-          });
-        });
-      }
-
-      async function sum(...reset) {
-        let res = reset.reduce((prev, item, index) => {
-          if (!(index % 2)) {
-            prev.push([item]);
+      function changeValue(arr) {
+        let res = [];
+        arr.reduce((prev, item, index) => {
+          if (prev[item]) {
+            prev[item] += 1;
+            res.push(`${item}${prev[item]}`);
           } else {
-            prev[prev.length - 1].push(item);
+            prev[item] = 1;
+            // 判断是否只有一个元素
+            if (arr.indexOf(item) === arr.lastIndexOf(item)) {
+              res.push(item);
+            } else {
+              res.push(`${item}1`);
+            }
           }
           return prev;
-        }, []);
-        let result = await Promise.all(
-          res.map((child) => callback(...child, 0))
-        );
-        return result.reduce((sums, a) => sums + a);
+        }, {});
+        return res;
       }
 
-      let start = window.performance.now();
-      sum(1, 2, 3, 4, 5, 6).then((res) => {
-        console.log(res, "res");
-        console.log(`程序共耗时：${window.performance.now() - start}`);
-      });
+      console.log(changeValue(arr));
     </script>
   </body>
 </html>
