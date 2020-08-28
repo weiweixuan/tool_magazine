@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        如下为一段代码，请完成sum函数，实现 sum(1,2,3,4,5,6) 函数返回值为21 ， 需要在 sum 中 调用 asyncAdd 函数 ， 且不能改 asyncAdd函数
+      */
+
+      function asyncAdd(a, b, cb) {
+        setTimeout(() => {
+          cb(null, a + b);
+        }, 1000);
+      }
+
+      // 先基于promise实现一个 cb
+      function callback(a, b) {
+        return new Promise((reslove) => {
+          asyncAdd(a, b, (_, sum_) => {
+            reslove(sum_);
+          });
+        });
+      }
+
+      async function sum(...reset) {
+        let res = reset.reduce((prev, item, index) => {
+          if (!(index % 2)) {
+            prev.push([item]);
+          } else {
+            prev[prev.length - 1].push(item);
+          }
+          return prev;
+        }, []);
+        let result = await Promise.all(
+          res.map((child) => callback(...child, 0))
+        );
+        return result.reduce((sums, a) => sums + a);
+      }
+
+      let start = window.performance.now();
+      sum(1, 2, 3, 4, 5, 6).then((res) => {
+        console.log(res, "res");
+        console.log(`程序共耗时：${window.performance.now() - start}`);
+      });
+    </script>
+  </body>
+</html>
