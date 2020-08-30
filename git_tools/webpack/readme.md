@@ -402,7 +402,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 删除打包�
 
       --> source-map / cheap-module-souce-map
 */
-// 改 devtool 配置
+// 改 devtool 配置(在webpack.config.js最外层)
 {
   devtool: "eval-source-map";
 }
@@ -496,10 +496,10 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 删除打包�
 ```javascript
 /*
   缓存：
-    babel缓存
+    1.babel缓存
       cacheDirectory: true
       --> 让第二次打包构建速度更快
-    文件资源缓存
+    2.文件资源缓存
       hash: 每次wepack构建时会生成一个唯一的hash值。
         问题: 因为js和css同时使用一个hash值。
           如果重新打包，会导致所有缓存失效。（可能我却只改动一个文件）
@@ -510,7 +510,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 删除打包�
       --> 让代码上线运行缓存更好使用
 */
 
-// loader
+// loader（babel缓存）
  {
     test: /\.js$/,
     exclude: /node_modules/,
@@ -535,11 +535,41 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 删除打包�
     }
   },
 
-  // 路径
+  // 路径（文件资源缓存）
   {filename: 'css/built.[contenthash:10].css'}
 ```
 
-5. 代码分割
+5.树摇 （tree shakeing）
+
+- 生产模式下，webpack 打包会将没有引用的方法或者文件排除在打包之外
+
+```javascript
+/*
+ tree shaking：去除无用代码
+   前提：1. 必须使用ES6模块化  2. 开启production环境
+   作用: 减少代码体积
+
+   在package.json中配置 
+     "sideEffects": false 所有代码都没有副作用（都可以进行tree shaking）
+       问题：可能会把css / @babel/polyfill （副作用）文件干掉
+     "sideEffects": ["*.css", "*.less"]
+*/
+```
+
+6. 代码分割
+
+- 1.可以指定多入口打包，这样会生成多个 js 文件
+
+```javascript
+entry: {
+  // 多入口：有一个入口，最终输出就有一个bundle
+  index: './src/js/index.js',
+  test: './src/js/test.js'
+},
+
+```
+
+- 2. 代码分割
 
 ```javascript
    /*
@@ -552,6 +582,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 删除打包�
     }
   },
 
+  3. 使用动态导入
   /*
   通过js代码，让某个文件被单独打包成一个chunk
   import动态导入语法：能将某个文件单独打包
@@ -567,4 +598,103 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 删除打包�
       console.log('文件加载失败~');
     });
 
+```
+
+7. 文件懒加载和预加载
+
+补充：Vue 里的路由懒加载
+
+```javascript
+// 1. 使用require
+  {
+    path: '/',
+    name: 'HelloWorld',
+    component: resolve=>(require(["@/components/HelloWorld"],resolve))
+  }
+  // 2. es10 的import
+  const HelloWorld = ()=>import("@/components/HelloWorld")
+  export default new Router({
+    routes: [
+      {
+        path: '/',
+        name: 'HelloWorld',
+        component:HelloWorld
+      }
+    ]
+  })
+```
+
+```javascript
+console.log("index.js文件被加载了~");
+
+// import { mul } from './test';
+
+document.getElementById("btn").onclick = function () {
+  // 懒加载~：当文件需要使用时才加载~
+  // 预加载 prefetch：会在使用之前，提前加载js文件
+  // 区别：
+  // 正常加载可以认为是并行加载（同一时间加载多个文件）
+  // 预加载 prefetch：等其他资源加载完毕，浏览器空闲了，再偷偷加载资源，兼容性不太好，慎用
+  import(/* webpackChunkName: 'test', webpackPrefetch: true */ "./test").then(
+    ({ mul }) => {
+      console.log(mul(4, 5));
+    }
+  );
+};
+```
+
+8. pwa
+
+9. 多进程打包 thread-loader
+
+```javascript
+// 安装 npm i thread-loader -D
+  // 一般是给使用比较长久的loader配置，babel-loader
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: [
+              /*
+                开启多进程打包。
+                进程启动大概为600ms，进程通信也有开销。
+                只有工作消耗时间比较长，才需要多进程打包
+              */
+              {
+                loader: 'thread-loader',
+                options: {
+                  workers: 2 // 进程2个
+                }
+              },
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: [
+                    [
+                      '@babel/preset-env',
+                      {
+                        useBuiltIns: 'usage',
+                        corejs: { version: 3 },
+                        targets: {
+                          chrome: '60',
+                          firefox: '50'
+                        }
+                      }
+                    ]
+                  ],
+                  // 开启babel缓存
+                  // 第二次构建时，会读取之前的缓存
+                  cacheDirectory: true
+                }
+              }
+            ]
+          },
+```
+
+10. 拒绝打包
+
+```javascript
+externals: {
+  // 拒绝jQuery被打包进来,可以通过cdn引入
+  jquery: "jQuery";
+}
 ```

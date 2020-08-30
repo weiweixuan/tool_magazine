@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-extraneous-dependencies */
 // webpack 是基于node 运行打包的 配置文件里 遵循 CommonJs规范
 
 const { resolve, join } = require("path");
@@ -142,8 +144,8 @@ module.exports = {
       // },
     }),
     new HtmlWebpackPlugin({
-      filename: "login.html", //打包html模版的路径和文件名称
-      template: "./src/login.html", //打包html模版的路径和文件名称
+      filename: "login.html", // 打包html模版的路径和文件名称
+      template: "./src/login.html", // 打包html模版的路径和文件名称
       // minify: {
       //   //对html文件进行压缩
       //   removeAttributeQuotes: true, //去掉属性的双引号

@@ -204,11 +204,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /*!************************!*\
   !*** ./utils/utils.js ***!
   \************************/
-/*! exports provided: default */
+/*! exports provided: reduce, cheng, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"../../node_modules/_jquery@3.5.1@jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar sum = function sum(a, b) {\n  // eslint-disable-next-line no-console\n  console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default.a, \"Jquery\");\n  return a + b;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (sum);\n\n//# sourceURL=webpack:///./utils/utils.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"reduce\", function() { return reduce; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"cheng\", function() { return cheng; });\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"../../node_modules/_jquery@3.5.1@jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar sum = function sum(a, b) {\n  // eslint-disable-next-line no-console\n  console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default.a, \"Jquery\");\n  return a + b;\n};\n\nfunction reduce(a, b) {\n  return a - b;\n}\nfunction cheng(a, b) {\n  return a * b;\n}\n/* harmony default export */ __webpack_exports__[\"default\"] = (sum);\n\n//# sourceURL=webpack:///./utils/utils.js?");
 
 /***/ })
 
