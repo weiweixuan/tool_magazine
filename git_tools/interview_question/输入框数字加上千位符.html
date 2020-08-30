@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="ipt" oninput="handleChange(this)" />
+    <script>
+      function handleChange(e) {
+        let val = e.value.replace(/,/g, "");
+        val = String(Number(val));
+
+        if (val === "NaN" || val === "0") {
+          e.value = e.value.replace(/,/g, "");
+          throw new Error("不启用格式化");
+          return;
+        }
+        let res = (
+          [...val].reverse().reduce((prev, item, index) => {
+            if (index % 3) {
+              prev[0].unshift(item);
+            } else {
+              prev.unshift([]);
+              prev[0].unshift(item);
+              prev[1] && prev[1].unshift(",");
+            }
+            return prev;
+          }, []) || []
+        )
+          .flat(2)
+          .join("");
+        e.value = res;
+      }
+    </script>
+  </body>
+</html>
