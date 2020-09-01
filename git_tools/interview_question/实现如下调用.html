@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 实现如下调用，new LazyMan('xxx').sleep(1000).eat('333').sleepFirst(2000) sleepFirst 最先执行。
+    // lazyMan 是个构造函数
+    class LazyMan {
+      constructor(name){
+        this.list=[];
+        this.name = name;
+      }
+
+      sleep(timer){
+        this.list.push(()=>{
+          console.log('sleep开始执行');
+          new Promise(resolve=> setTimeout(() => {
+            resolve()
+          }, timer)
+        )
+        })
+        return this
+      }
+
+      eat(food){
+        this.list.push(()=>console.log(`${this.name} 吃了 ${food}`))
+        return this
+      }
+
+      async sleepFirst(timer){
+        this.list.unshift(()=>new Promise(resolve=> setTimeout(() => {
+            resolve()
+          }, timer)
+        ))
+        console.log('sleepFirst开始执行');
+        // 执行list 队列
+        for(let fn of this.list){
+          await fn();
+        }
+        return this
+      }
+    }
+
+    // let p1 = new LazyMan("魏巍").sleep(1000).eat('333').sleepFirst(2000)
+    // console.log(p1,'p1');
+
+    // 这是上面自己写的方法
+
+    // 改良版
+    class LazyManGood {
+      constructor(name){
+        this.list=[];
+        this.name = name;
+        setTimeout(() => {
+          console.log(this.list,'list');
+          this.run();
+        }, 0);
+      }
+
+      sleep(timer){
+        this.list.push(()=>{
+          console.log('sleep开始执行');
+          return new Promise(resolve=> setTimeout(() => {
+            resolve()
+          }, timer)
+        )
+        })
+        return this
+      }
+
+      run(){
+        let pro = Promise.resolve();
+        for(let item of this.list){
+          pro =  pro.then(_=>item())
+        }
+      }
+
+      eat(food){
+        this.list.push(()=>console.log(`${this.name} 吃了 ${food}`))
+        return this
+      }
+
+      sleepFirst(timer){
+        this.list.unshift(()=>{
+        console.log('sleepFirst开始执行');
+          return  new Promise(resolve=> setTimeout(() => {
+            resolve()
+          }, timer)
+        )}
+        )
+        return this
+      }
+    }
+
+    let p1 = new LazyManGood("魏巍").sleep(1000).eat('333').sleepFirst(2000)
+  </script>
+</body>
+</html>
