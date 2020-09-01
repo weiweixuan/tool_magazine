@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //  期望id按顺序打印 0 1 2 3 4 ，且只能修改 start 函数 且必须调用execute方法来打印输出
+    function start(id) {
+      execute(id)
+    }
+    for (let i = 0;i < 5;i++) {
+      start(i);
+    }
+    function sleep() {
+      const duration = Math.floor(Math.random() * 500);
+      return new Promise(resolve => setTimeout(resolve, duration));
+    }
+    function execute(id) {
+      return sleep().then(() => {
+        console.log("id", id);
+      });
+    }
+
+    // 方法1 全局保留一个 promise 链式调用
+    // function start(id) {
+    //   this.pro = this.pro ? this.pro.then(res=>execute(id)) : execute(id)
+    // }
+
+    // 方法二 把这些方法保留在全局队列中 , 利用定时器来启动 Promise数组的链式调用
+    // function start(id) {
+    //   if(!this.list){
+    //     this.list = []
+    //   }
+    //   this.list.push(()=>execute(id));
+    //   this.timer;
+    //   if(this.timer) clearTimeout(this.timer);
+    //  this.timer =  setTimeout(() => {
+    //     this.list.reduce((prev,item)=>prev.then(_=>item()),Promise.resolve());
+    //   }, 0);
+    // }
+
+    // 方法三 使用async 
+    // function start(id) {
+    //   if (!this.list) {
+    //     this.list = []
+    //   }
+    //   this.list.push(() => execute(id));
+    //   this.timer;
+    //   if (this.timer) clearTimeout(this.timer);
+    //   this.timer = setTimeout(async () => {
+    //     for (let fn of this.list) {
+    //       await fn();
+    //     }
+    //   }, 0);
+    // }
+  </script>
+</body>
+
+</html>
