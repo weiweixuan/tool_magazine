@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 实现一个 normalize 函数，能将输入的特定的字符串转化为特定的结构化数据
+    // 示例一: 'abc' --> {value: 'abc'}
+    // 示例二：'[abc[bcd[def]]]' --> {value: 'abc', children: {value: 'bcd', children: {value: 'def'}}}
+
+    // 1.-----------------------------------------------------
+    // function normalize(params) {
+    //   // 正则匹配
+    //   let reg = /\[(\w)*\]/, result, prev = {},current = prev;
+
+    //   // 先行判断
+    //   if (/\[(\w)*\]/.exec(params)) {
+    //     while (result = params.match(reg)) {
+    //       console.log(result);
+    //       if (result) {
+    //         current.value = result[0].slice(1, -1);
+    //         prev = {children:current};
+    //         current = prev;
+    //         params = params.replace(result[0], '')
+    //       } else {
+    //         break;
+    //       }
+    //     }
+    //   }else{
+    //     prev.children = {value:params}
+    //   }
+    //   return prev.children
+    // }
+    // let res = normalize('[abc[bcd[def]]]')
+    // let res2 = normalize('abc')
+    // console.log(res,res2, 'res');
+
+
+
+
+// 2.-----------------------------------------------------
+    // let normalize = str => {
+    //   let result = {}
+    //   let c
+
+    //   // 字符串转化为数组
+    //   let arr = str.split(/[\[\]]/g).filter(Boolean)
+    //   // 生成结构化数据
+    //   arr.forEach((item, index) => {
+    //     if (index != 0) {
+    //       c.children = {}
+    //       c.children.value = item
+    //       c = c.children
+    //     } else {
+    //       result.value = item
+    //       c = result
+    //     }
+    //   })
+
+    //   return result
+    // }
+    // let str = '[abc[bcd[def]]]'
+    // console.log(normalize(str))
+
+
+// 3.-----------------------------------------------------
+    function normalize(str) {
+      let arr = str.match(/\w+/g)
+      console.log(arr,'arr');
+      let temp = {}
+      let obj
+      while (arr.length) {
+        let item = arr.pop()
+        temp.value = item
+        obj && (temp.children = obj)
+        if (arr.length) {
+          obj = { ...temp }
+          temp = {}
+        } else {
+          obj = temp
+        }
+      }
+      return obj
+    }
+     let str = '[abc[bcd[def]]]'
+    console.log(normalize(str))
+  </script>
+</body>
+
+</html>
