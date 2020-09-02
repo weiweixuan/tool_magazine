@@ -33,13 +33,49 @@
             attrObj: { class: "item", style: "color:pink" },
             children: ["我是第4个元素"],
           },
-          "我是文本元素",
+          "我是文本元素1",
+        ],
+      };
+      let virtual2 = {
+        type: "ul",
+        attrObj: { class: "list_2" },
+        children: [
+          {
+            type: "li",
+            attrObj: { class: "item", style: "color:blue" },
+            children: ["我是第一个元素_new"],
+          },
+          {
+            type: "li",
+            attrObj: { class: "item", style: "color:blue" },
+            children: ["我是第2个元素"],
+          },
+          {
+            type: "li",
+            attrObj: { class: "item" },
+            children: ["我是第3个元素"],
+          },
+          {
+            type: "li",
+            attrObj: { class: "item", style: "color:pink" },
+            children: ["我是第4个元素"],
+          },
+          "我是文本元素2_new",
         ],
       };
 
       // 根据对象生成虚拟dom
       let virtualDom1 = createVirtualDom(virtual1);
-      console.log(virtualDom1, "virtualDom1");
+      let virtualDom2 = createVirtualDom(virtual2);
+      console.log(virtualDom1, virtualDom2 , "virtualDom1,virtualDom2");
+
+      // 创建一个全局的 key
+      let Index = 0;
+      // 全局补丁包
+      let patches = {};
+      // 比较diff
+      diff(virtualDom1,virtualDom2,Index,patches)
+      console.log(patches,'patches_');
       // 渲染到页面上
       let el = render(virtualDom1);
       renderDom(el, document.body);
