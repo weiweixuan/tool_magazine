@@ -7,6 +7,7 @@
     <script src="./utils.js"></script>
   </head>
   <body>
+    <div id="el0"></div>
     <div id="el"></div>
     <script>
       let virtual1 = {
@@ -42,7 +43,7 @@
         children: [
           {
             type: "li",
-            attrObj: { class: "item", style: "color:blue" },
+            attrObj: { class: "item_2", style: "color:blue" },
             children: ["我是第一个元素_new"],
           },
           {
@@ -67,18 +68,24 @@
       // 根据对象生成虚拟dom
       let virtualDom1 = createVirtualDom(virtual1);
       let virtualDom2 = createVirtualDom(virtual2);
-      console.log(virtualDom1, virtualDom2 , "virtualDom1,virtualDom2");
+      console.log(virtualDom1, virtualDom2, "virtualDom1,virtualDom2");
 
-      // 创建一个全局的 key
-      let Index = 0;
-      // 全局补丁包
-      let patches = {};
       // 比较diff
-      diff(virtualDom1,virtualDom2,Index,patches)
-      console.log(patches,'patches_');
+      let patches = diff(virtualDom1, virtualDom2);
+      console.log(patches, "patches_");
+
+      // 原 dom （对比）
+      let el0 = render(virtualDom1);
+      renderDom(el0, document.body);
+
       // 渲染到页面上
       let el = render(virtualDom1);
       renderDom(el, document.body);
+
+      // 根据补丁包来更新dom
+      setTimeout(() => {
+        patch(el, patches);
+      }, 2000);
     </script>
   </body>
 </html>
