@@ -88,7 +88,7 @@ function isElement(node) {
 
 function diff(oldNode, newNode) {
   let patches = {};
-  let index = 0;
+  let  index  = 0;
   walk(oldNode, newNode, index, patches);
   return patches;
 }
@@ -185,7 +185,7 @@ function updatePatch(dom, attr) {
       dom.textContent = text;
       break;
     case REPLACE:
-      dom.parentNode.replaceChild(newNode);
+      dom.parentNode.replaceChild(newNode,dom);
       break;
     case ATTRS:
       for (let attrKey in attrPatch) {
