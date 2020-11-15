@@ -553,6 +553,11 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // 删除打包�
      "sideEffects": false 所有代码都没有副作用（都可以进行tree shaking）
        问题：可能会把css / @babel/polyfill （副作用）文件干掉
      "sideEffects": ["*.css", "*.less"]
+
+    如果要在development环境下使用，需要在webpack.config.js中加上
+    optimization: {
+      usedExports: true, // 启用树摇
+    },
 */
 ```
 
