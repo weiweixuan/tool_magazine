@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 空位合并操作符 ?? , 如果表达式在??的左侧运算符求值为 undefined 或 null，就返回其右侧默认值。
+    let a = null,
+      b = undefined,
+      c = 0,
+      d = false,
+      defaultValue = "默认值";
+    a_ = a ?? defaultValue;
+    b_ = b ?? defaultValue;
+    c_ = c ?? defaultValue;
+    d_ = d ?? defaultValue;
+    console.log(a_, b_, c_, d_, "最终-值");
+
+    // Promise.allSettled
+    function returnPro() {
+      return Math.random() > 0.5 ? Promise.resolve("1") : Promise.reject("-1");
+    }
+    let arr = Array.from({length:10},_=>returnPro());
+    Promise.allSettled(arr)
+    .then(res=>{
+      // 过滤掉失败的值
+     let result = res.filter(child=>child.status === "fulfilled")
+      console.log(res,result,'res');
+    })
+    .catch(err=>{
+      console.log(err,'err');
+    })
+
+    // matchAll
+    let str = `'你好' , 'hello' , 'hi' , "bool" , "pig" ,'penny' `
+    let reg = /'([^']+)'/g;
+    let r = str.matchAll(reg) // 获取的是个迭代器，遍历能拿到 所有信息
+    for(let item of r){
+      console.log(item,'item');
+    }
+    console.log(r,'r');
+  </script>
+</body>
+
+</html>

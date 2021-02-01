@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      main {
+        text-align: center;
+      }
+      article {
+        padding: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img
+          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbpic.588ku.com%2Felement_pic%2F17%2F06%2F20%2Fb3fe8378839a8d3448e58c0e732b19a7.jpg&refer=http%3A%2F%2Fbpic.588ku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614784585&t=43082dae14adffc97b49c7db353c5f0d"
+          alt=""
+        />
+      </header>
+      <article>状态: <mark>暂无</mark></article>
+      <p></p>
+      <section>
+        <button id="powerOn">接电</button>
+        <button id="powerOff">断电</button>
+        <button id="cooking">烹饪</button>
+        <button id="start">开盖</button>
+        <button id="off">关盖</button>
+      </section>
+    </main>
+    <script>
+      // 使用状态模式来解耦判断
+
+      // 首先有一个状态类,里面存储状态实例
+      class Progress {
+        constructor(titleEl, tipsEl) {
+          this.titleEl = titleEl; // 显示状态
+          this.tipsEl = tipsEl; // 提示语
+        }
+        changeState(newState) {
+          this.state = newState;
+          this.titleEl.innerHTML = newState.getStatus();
+        }
+        info(val) {
+          this.tipsEl.innerHTML = val;
+        }
+        powerOff() {
+          this.state.powerOff();
+        }
+        powerOn() {
+          this.state.powerOn();
+        }
+        cooking() {
+          this.state.cooking();
+        }
+        start() {
+          this.state.start();
+        }
+        off() {
+          this.state.off();
+        }
+      }
+
+      class SaveStatus {
+        constructor(status) {
+          this.getStatus = () => {
+            return status;
+          };
+        }
+      }
+
+      class PowerOnState extends SaveStatus {
+        constructor(ctx) {
+          super('接电状态');
+          this.ctx = ctx;
+        }
+        powerOn() {
+          this.ctx.info('电源已经接通，请勿重复操作');
+        }
+        powerOff() {
+          this.ctx.changeState(new PowerOffState(this.ctx));
+        }
+        cooking() {
+          this.ctx.changeState(new CookingState(this.ctx));
+        }
+        start() {
+          this.ctx.changeState(new StartState(this.ctx));
+        }
+        off() {
+          this.ctx.info('已经关盖啦，请勿重复操作');
+        }
+      }
+
+      class PowerOffState extends SaveStatus {
+        constructor(ctx) {
+          super('断电状态');
+          this.ctx = ctx;
+        }
+        powerOn() {
+          this.ctx.changeState(new PowerOnState(this.ctx));
+        }
+        powerOff() {
+          this.ctx.info('已经断电啦，请勿重复操作');
+        }
+        cooking() {
+          this.ctx.info('断电状态，无法烹饪');
+        }
+        start() {
+          this.ctx.info('断电状态，请去插电');
+        }
+        off() {
+          this.ctx.info('已经关盖啦，请勿重复操作');
+        }
+      }
+
+      class CookingState extends SaveStatus {
+        constructor(ctx) {
+          super('烹饪中···');
+          this.ctx = ctx;
+        }
+        powerOn() {
+          this.ctx.info('已经在烹饪啦，还插啥电');
+        }
+        powerOff() {
+          this.ctx.changeState(new PowerOffState(this.ctx));
+        }
+        cooking() {
+          this.ctx.info('正在烹饪中，请勿重复操作');
+        }
+        start() {
+          this.ctx.changeState(new StartState(this.ctx));
+        }
+        off() {
+          this.ctx.info('烹饪中，已经关盖啦');
+        }
+      }
+
+      class StartState extends SaveStatus {
+        constructor(ctx) {
+          super('开锅啦，香喷喷的正好吃！！！');
+          this.ctx = ctx;
+        }
+        powerOn() {
+          this.ctx.info('已经在开锅啦，还插啥电');
+        }
+        powerOff() {
+          this.ctx.changeState(new PowerOffState(this.ctx));
+        }
+        cooking() {
+          this.ctx.info('请关上锅盖在烹饪哦');
+        }
+        start() {
+          this.ctx.info('已经开盖啦，请勿重复操作');
+        }
+        off() {
+          this.ctx.changeState(new OffState(this.ctx));
+        }
+      }
+
+      class OffState extends SaveStatus {
+        constructor(ctx) {
+          super('关上锅盖');
+          this.ctx = ctx;
+        }
+        powerOn() {
+          this.ctx.changeState(new PowerOnState(this.ctx));
+        }
+        powerOff() {
+          this.ctx.changeState(new PowerOffState(this.ctx));
+        }
+        cooking() {
+          this.ctx.changeState(new CookingState(this.ctx));
+        }
+        start() {
+          this.ctx.changeState(new StartState(this.ctx));
+        }
+        off() {
+          this.ctx.info('已经关上锅盖啦，请勿重复操作');
+        }
+      }
+
+      const curr = new Progress(
+        document.querySelector('mark'),
+        document.querySelector('p'),
+      );
+
+      curr.changeState(new PowerOffState(curr));
+
+      powerOn.onclick = () => {
+        console.log('接电');
+        curr.powerOn();
+      };
+      powerOff.onclick = () => {
+        console.log('断电');
+        curr.powerOff();
+      };
+      cooking.onclick = () => {
+        console.log('烹饪');
+        curr.cooking();
+      };
+      start.onclick = () => {
+        console.log('开盖');
+        curr.start();
+      };
+      off.onclick = () => {
+        console.log('关盖');
+        curr.off();
+      };
+    </script>
+  </body>
+</html>

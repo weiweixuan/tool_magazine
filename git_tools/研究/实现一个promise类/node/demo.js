@@ -1,14 +1,19 @@
-const MyPromise = require("./MyPromise.js/index.js");
+const MyPromise = require('./MyPromise.js');
 let p1 = new MyPromise(function (resolve, reject) {
   setTimeout(() => {
-    resolve("成功");
+    resolve('成功');
   }, 1000);
 });
 p1.then(
-  res => {
-    console.log(res, "res");
+  (res) => {
+    console.log(res, 'res');
+    return '我看看';
   },
-  rej => {
-    console.log(rej, "rej");
-  }
-);
+  (rej) => {
+    console.log(rej, 'rej');
+    return 000;
+  },
+).then((res) => {
+  console.log(res, '222');
+  return 222;
+});

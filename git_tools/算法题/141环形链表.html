@@ -35,6 +35,19 @@
       //   }
       //   return false;
       // };
+
+      // map 数据结构要比array快一些
+      // var hasCycle = function(head) {
+      //   let list = new Map();
+      //   while (head) {
+      //     let temp = head.next;
+      //     if (list.has(temp)) return true;
+      //     list.set(temp,1);
+      //     head = temp;
+      //   }
+      //   return false;
+      // };
+
       // 双指针法
       var hasCycle = function(head) {
         let sb = new ListNode("哨兵");

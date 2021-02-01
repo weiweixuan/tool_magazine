@@ -9,29 +9,30 @@ const isFunction = variable => typeof variable === "function";
 
 function resolvePromise(p1, x, resolve, reject) {
   if (p1 === x) {
-    throw TypeError("循环引用啦");
+    throw TypeError('循环引用啦');
   }
   let called;
-  if ((typeof x !== "object" && x !== null) || typeof x === "function") {
+  if ((typeof x !== 'object' && x !== null) || typeof x === 'function') {
     try {
       let then = x.then;
-      if (typeof then === "function") {
+      console.log(x, then,  'xxxx');
+      if (typeof then === 'function') {
         then.call(
           x,
-          function(y) {
+          function (y) {
             if (called) {
               return;
             }
             called = true;
             resolvePromise(p1, y, resolve, reject);
           },
-          function(r) {
+          function (r) {
             if (called) {
               return;
             }
             called = true;
             reject(r);
-          }
+          },
         );
       } else {
         resolve(x);

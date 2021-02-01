@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个promise类
+
+      const PENDING = 'pending';
+      const RESOLVED = 'resolved';
+      const REJECTED = 'rejected';
+
+      function isFun(fn) {
+        return typeof fn === 'function';
+      }
+
+      function formatPromise(val, res, rej) {
+        // 判断是否是promise 实例(有then的为promise)
+        let then = val === undefined ? val : val.then;
+        try {
+          if (typeof then === 'function') {
+            then.call(
+              val,
+              (rs) => {
+                formatPromise(rs, res, rej);
+              },
+              (e) => {
+                console.log(e, 'eeeee');
+                rej(e);
+              },
+            );
+            // 简单处理error对象
+          } else if (Object.prototype.toString.call(val) === '[object Error]') {
+            rej(val);
+          } else {
+            res(val);
+          }
+        } catch (error) {
+          rej(error);
+        }
+      }
+
+      class MyPromise {
+        constructor(fn) {
+          // 判断 fn 是否为函数
+          if (!isFun(fn)) {
+            throw new Error('MyPromise must accept a function as a parameter');
+          }
+          this.state = PENDING; // 保存状态
+          this.data = ''; // 保存 resolve的值
+          this.resolveList = [];
+          this.error = ''; // 保存 reject的值
+          this.rejectList = [];
+
+          const resolve = (val) => {
+            if (this.state === PENDING) {
+              this.state = RESOLVED;
+              this.data = val;
+              // 清空成功队列里的数据
+              this.resolveList.forEach((cb) => cb(val));
+            }
+          };
+
+          const reject = (err) => {
+            if (this.state === PENDING) {
+              this.state = REJECTED;
+              this.error = err;
+              // 清空失败队列里的数据
+              this.rejectList.forEach((cb) => cb(err));
+            }
+          };
+          try {
+            fn(resolve, reject);
+          } catch (e) {
+            reject(e);
+          }
+        }
+
+        then(res, rej = (v) => v) {
+          if (!isFun(res)) {
+            throw new Error(
+              'MyPromise then must accept a function as a parameter',
+            );
+          }
+          return new MyPromise((resolve, reject) => {
+            if (this.state === PENDING) {
+              this.resolveList.push(() => {
+                try {
+                  formatPromise(res(this.data), resolve, reject);
+                } catch (error) {
+                  reject(error);
+                }
+              });
+              if (isFun(rej)) {
+                this.rejectList.push(() => {
+                  try {
+                    formatPromise(rej(this.error), resolve, reject);
+                  } catch (error) {
+                    reject(error);
+                  }
+                });
+              }
+            }
+
+            if (this.state === RESOLVED) {
+              // 这里是个微任务， 在node环境里可以使用process.nextTick() 来实现，这是样板代码
+              try {
+                formatPromise(res(this.data), resolve, reject);
+              } catch (error) {
+                reject(error);
+              }
+            }
+            if (this.state === REJECTED) {
+              if (isFun(rej)) {
+                // 这里是个微任务， 在node环境里可以使用process.nextTick() 来实现，这是样板代码
+                try {
+                  formatPromise(rej(this.error), resolve, reject);
+                } catch (error) {
+                  reject(error);
+                }
+              }
+            }
+          });
+        }
+
+        catch(rej) {
+          return this.then(() => {}, rej);
+        }
+
+        static resolve(val) {
+          return new MyPromise((resolve) => resolve(val));
+        }
+
+        static reject(err) {
+          return new MyPromise((_, reject) => reject(err));
+        }
+
+        // static race(list = []){
+        //   if(!Array.isArray(list)){
+        //     throw new Error('TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))')
+        //   }
+        //   let val ;
+        //   list.forEach(c => {
+        //     // 判断是否为MyPromise 的实例
+        //     if(!(c instanceof MyPromise)){
+        //       c = MyPromise.resolve(c)
+        //     }
+        //     c.then(res=>{
+        //       val = res
+        //     },err=>{
+        //       val =
+        //     })
+        //   })
+        // }
+      }
+
+      let p1 = new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('res');
+        }, 1000);
+      });
+
+      p1.then((res) => {
+        console.log(res, '333');
+        return MyPromise.reject('22222222');
+      })
+        .then(
+          (res) => console.log(res, '第二次'),
+          (re) => console.error(re, 're'),
+        )
+        .catch((rej) => console.log(rej, 'rej'));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 实现一个只有加减乘除的运算方法，不许使用eval
+      // let str = '1+2*3/4+5-6*7-8+9';
+      let str = '1+2*3+4-5*6+7-8*2*2*2/4-2';
+      function calc(str) {
+        // 优先级高的为乘除
+        let calcOperate = ['+', '-', '*', '/'],
+          calcHigh = ['*', '/'];
+        // 使用双栈来保存数据和操作符
+        let data = [],
+          operate = [];
+        // 指针保存数据的位置
+        let aim = 0;
+        for (let key = 0; key < str.length; key++) {
+          const item = str[key];
+          if (calcOperate.includes(item)) {
+            let num = +str.slice(aim, key);
+            aim = key + 1;
+            // 判断操作列里的数据是否优先级高
+            if (calcHigh.includes(operate[operate.length - 1])) {
+              // 进行运算
+              let currentOperate = operate.pop();
+              num = +operateFn(data.pop(), currentOperate, num);
+            }
+            if (!calcHigh.includes(item)) {
+              // 是正常操作符
+              if (operate.length) {
+                // 进行运算
+                let currentOperate = operate.pop();
+                num = +operateFn(data.pop(), currentOperate, num)
+              }
+            }
+            operate.push(item);
+            data.push(num)
+          }
+        }
+        const num = +str.slice(aim);
+        return operateFn(data.pop(),operate.pop(),num)
+      }
+
+      function operateFn(val1, operate, val2) {
+        switch (operate) {
+          case '+':
+            return val1 + val2;
+            break;
+          case '-':
+            return val1 - val2;
+            break;
+          case '*':
+            return val1 * val2;
+            break;
+          case '/':
+            return val1 / val2;
+            break;
+          default:
+            break;
+        }
+      }
+      let res = calc(str);
+      console.log(res,'res');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 实现状态和处理逻辑分离的 状态模式
+    
+    class State {
+      constructor(reducer){
+        this.state = [];
+        this.reducer = reducer;
+      }
+
+      setState(newState = []){
+        this.state = newState;
+        this.action();
+      }
+
+      action(){
+        this.state.forEach(el => this.reducer[el].do())
+      }
+    }
+
+    class Content {
+      constructor(name){
+        this.name = name;
+      }
+
+      do(){
+        console.log(`我执行了 ${this.name} 的方法`)
+      }
+    }
+
+    // 实例化几个动作状态
+    let actions = ['left','right','top','down','fire','keepOf'];
+    let reducers = actions.reduce((prev,action) => (prev[action]= new Content(action),prev),{});
+    let state = new State(reducers);
+    state.setState(['left','fire'])
+    console.log('--------------2---------------');
+    state.setState(['right','down'])
+  </script>
+</body>
+</html>

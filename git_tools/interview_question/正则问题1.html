@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <div>
+        <ul>
+          <li>1</li>
+          <!-- <li>2</li> -->
+          <li>3</li>
+          <!-- <li>4</li> -->
+          <li>5</li>
+        </ul>
+      </div>
+      <div>
+        <!-- <p class="name1">1</p> -->
+        <p class="name2">2</p>
+        <!-- <p class="name3">3</p> -->
+        <p class="name4">4</p>
+        <!-- <p class="name5">5</p> -->
+      </div>
+    </div>
+    <script>
+      // 有个dom 元素，实现一个方法getAnnotation，需要把其中的 注释 都获取到 ：例如<!-- xxx -->
+
+      function getAnnotation(str) {
+        let reg = /(<!--)(.|\r\n)+(-->)/g;
+        return str.match(reg);
+      }
+      let text = document.getElementById("box").innerHTML;
+      let annotationList = getAnnotation(text);
+      console.log(annotationList, "text");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    class Node {
+      constructor(val){
+        this.value = val;
+        this.next = null;
+      }
+    }
+
+    /**
+     * @param {ListNode} head
+    * @return {ListNode}
+    */
+var reverseList = function(head) {
+  if(!head)return head;
+  let shaoBin = new Node('哨兵'),current = head;
+  while (current) {
+    let temp = current.next;
+    current.next = shaoBin.next;
+    shaoBin.next = current;
+    current = temp;
+  }
+  return shaoBin.next;
+};
+  function saveLinkList(list = []) {
+    console.log(list,'li');
+    let shaoBin = new Node('哨兵'),
+      current = shaoBin;
+    list.forEach((val) => {
+      current = current.next = new Node(val);
+    });
+    return shaoBin.next;
+  }
+
+let nodeList = saveLinkList(Array.from({length:1},(_,i)=>i+1))
+console.log(nodeList,reverseList(nodeList),'nodeList');
+
+  </script>
+</body>
+</html>
