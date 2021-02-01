@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function ListNode(val, next) {
+        this.val = val === undefined ? 0 : val;
+        this.next = next === undefined ? null : next;
+      }
+      function saveLinkList(list = []) {
+        console.log(list, 'li');
+        let shaoBin = new Node('哨兵'),
+          current = shaoBin;
+        list.forEach((val) => {
+          current = current.next = new Node(val);
+        });
+        return shaoBin.next;
+      }
+
+      var mergeTwoLists = function (l1, l2) {};
+
+      let l1 = saveLinkList([1, 2, 3, 4, 5]);
+      let l2 = saveLinkList([6, 7, 8, 9, 10]);
+    </script>
+  </body>
+</html>
