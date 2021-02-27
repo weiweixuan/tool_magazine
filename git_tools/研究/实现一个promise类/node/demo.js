@@ -1,7 +1,7 @@
 const MyPromise = require('./MyPromise.js');
 let p1 = new MyPromise(function (resolve, reject) {
   setTimeout(() => {
-    resolve('成功');
+    resolve('成功啦！');
   }, 1000);
 });
 p1.then(
