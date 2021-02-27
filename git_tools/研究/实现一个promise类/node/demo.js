@@ -7,7 +7,7 @@ let p1 = new MyPromise(function (resolve, reject) {
 p1.then(
   (res) => {
     console.log(res, 'res');
-    return '我看看';
+    return '我看看222';
   },
   (rej) => {
     console.log(rej, 'rej');
